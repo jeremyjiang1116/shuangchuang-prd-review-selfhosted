@@ -1,0 +1,919 @@
+{
+  "formatVersion": 1,
+  "capturedAt": "2026-09-14T12:55:55.729Z",
+  "tables": {
+    "comments": [
+      {
+        "id": "000b515f-b8a3-4542-8e03-7bef3aedb21c",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做这个",
+        "anchors": "[{\"blockId\":\"M14-05-detail\",\"start\":12,\"end\":17,\"quote\":\"、刷新索引\",\"prefix\":\"可启停整库、删除文件或库\",\"suffix\":\"；页面说明停止后暂停 AI 调用。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:07:25.674Z",
+        "updated_at": "2026-09-12T02:07:25.674Z"
+      },
+      {
+        "id": "168251e5-6b9c-427a-88dc-5f2c6084fca9",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "仅登记信息，没有这个功能吧",
+        "anchors": "[{\"blockId\":\"M07-03-rule\",\"start\":0,\"end\":15,\"quote\":\"实际文件上传与仅登记信息须区分\",\"prefix\":\"\",\"suffix\":\"；新资产关联来源和提交人；不得只有文件名而显示上传成功。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T08:38:40.582Z",
+        "updated_at": "2026-09-11T08:38:40.582Z"
+      },
+      {
+        "id": "20d90716-d525-4479-92e2-3d28bd0a0d35",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做这块",
+        "anchors": "[{\"blockId\":\"M08-08-detail\",\"start\":22,\"end\":39,\"quote\":\"早期文档另有人工采纳/调整参考分。\",\"prefix\":\"项目可进入导师指派、预约排期或后续阶段管理。\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:11:08.388Z",
+        "updated_at": "2026-09-12T03:11:08.388Z"
+      },
+      {
+        "id": "24822586-77e7-41b1-9c43-d8b535216796",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不会做",
+        "anchors": "[{\"blockId\":\"M08-02-detail\",\"start\":9,\"end\":26,\"quote\":\"资格/IP 审查、查重/AI 检测\",\"prefix\":\"流程呈现材料解析、\",\"suffix\":\"、评分分层及结果汇总，确认后进入初筛工作台。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:21:10.595Z",
+        "updated_at": "2026-09-12T02:21:10.595Z"
+      },
+      {
+        "id": "262076fa-62bb-4840-b42a-6d71aabde4a8",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "zip和文件夹",
+        "anchors": "[{\"blockId\":\"M08-01-detail\",\"start\":0,\"end\":56,\"quote\":\"提供报名表 Excel 或 ZIP、教务双创系统直连、历届项目池三种来源；上传区提示 XLSX、ZIP、PDF。\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:19:40.641Z",
+        "updated_at": "2026-09-12T02:19:40.641Z"
+      },
+      {
+        "id": "2fbff8a7-4ef6-4060-9ace-bf6777625ed3",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "“复制路径”，“导出清单”不太需要",
+        "anchors": "[{\"blockId\":\"M07-04-detail\",\"start\":0,\"end\":35,\"quote\":\"可复制路径、内容或摘要，下载单文件及导出清单；部分下载由前端生成内容。\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T08:43:39.284Z",
+        "updated_at": "2026-09-11T08:43:39.284Z"
+      },
+      {
+        "id": "317eac6b-2f87-4fdb-8a11-a87e0fa5db2b",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "目前只是实现知识库的功能，具体建设什么样的知识库，上传什么材料是以后运营阶段的工作",
+        "anchors": "[{\"blockId\":\"M14-01-detail\",\"start\":0,\"end\":54,\"quote\":\"五类为校内专属智库、赛事规程、历史金奖案例、专家经验、OPC 孵化转化；按名称、编码、描述、分类和状态检索。\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T01:54:46.896Z",
+        "updated_at": "2026-09-12T01:54:46.896Z"
+      },
+      {
+        "id": "376b1eea-83d7-4c07-a1c7-6d3c541c7611",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做这个",
+        "anchors": "[{\"blockId\":\"M14-06-detail\",\"start\":13,\"end\":22,\"quote\":\"调用次数及文件命中\",\"prefix\":\"展示文档量、要点数、容量、\",\"suffix\":\"；为教练问答、初筛和训练提供知识。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:08:11.447Z",
+        "updated_at": "2026-09-12T02:08:11.447Z"
+      },
+      {
+        "id": "4041cc29-164c-4047-b30c-8266e21b8d24",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "未来不一定是切片解析，后续可能会删掉",
+        "anchors": "[{\"blockId\":\"M14-04-detail\",\"start\":9,\"end\":23,\"quote\":\"结构化要点、切片数、原文片段\",\"prefix\":\"展示 AI 摘要、\",\"suffix\":\"、录入人和时间，供管理员查看解析质量。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:05:46.887Z",
+        "updated_at": "2026-09-12T02:05:46.887Z"
+      },
+      {
+        "id": "525539f7-5e86-4a91-a486-a57255269ffc",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "可能在Agent实现时使用，用户不直接感受到使用了历史案例",
+        "anchors": "[{\"blockId\":\"M17-03-name\",\"start\":0,\"end\":6,\"quote\":\"历史案例复用\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:15:47.859Z",
+        "updated_at": "2026-09-12T02:15:47.859Z"
+      },
+      {
+        "id": "65631695-ab1a-480d-9b3c-c77e431c1a93",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不用这个字段过滤，可能加一些自定义标签",
+        "anchors": "[{\"blockId\":\"M08-03-detail\",\"start\":21,\"end\":29,\"quote\":\"、名称学院负责人\",\"prefix\":\"按赛道组别、A/B/C/D 梯队、合规状态\",\"suffix\":\"过滤。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:22:50.739Z",
+        "updated_at": "2026-09-12T02:22:50.739Z"
+      },
+      {
+        "id": "74969c48-3557-49f1-adbb-987f186a7204",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "不要这三个按钮了，因为不管同意与否，版本都会保存并且自由选择。并且改为”提交“，当前文件被提交为新的项目版本。",
+        "anchors": "[{\"blockId\":\"M04-05-detail\",\"start\":0,\"end\":44,\"quote\":\"提供同意并合并、否决保留基线、填写改进要求；处理后在对话中回显决定，并继续生成改进版本。\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T06:23:48.873Z",
+        "updated_at": "2026-09-12T06:23:48.873Z"
+      },
+      {
+        "id": "7676c658-acc8-4a2b-95ae-483cc3dd50bf",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "复杂了，标注引用即可，旁边有一个链接指向被引用内容",
+        "anchors": "[{\"blockId\":\"M03-02-rule\",\"start\":9,\"end\":30,\"quote\":\"回答中区分材料事实、知识引用和 AI 建议\",\"prefix\":\"引用具体文件版本；\",\"suffix\":\"；未绑定项目时不默认访问其他项目。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T09:33:39.114Z",
+        "updated_at": "2026-09-11T09:33:39.114Z"
+      },
+      {
+        "id": "7a8584e5-ce04-479f-86ad-82716d927db7",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "这是什么意思",
+        "anchors": "[{\"blockId\":\"M07-02-rule\",\"start\":23,\"end\":37,\"quote\":\"复杂文档保真度需按样本验证。\",\"prefix\":\"预览为实际文件内容；不支持的格式仍可登记下载；\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T08:32:02.902Z",
+        "updated_at": "2026-09-11T08:32:02.902Z"
+      },
+      {
+        "id": "7fd2f417-71fd-4d20-a9fa-bc66dadda0c9",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "批注这个功能 MVP 不做",
+        "anchors": "[{\"blockId\":\"M04-04-name\",\"start\":0,\"end\":4,\"quote\":\"文本批注\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T06:13:28.118Z",
+        "updated_at": "2026-09-12T06:13:28.118Z"
+      },
+      {
+        "id": "800357f3-0fd5-4733-8d1a-18f3cc719697",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "目前只是实现知识库的功能，具体建设什么样的知识库，上传什么材料是以后运营阶段的工作",
+        "anchors": "[{\"blockId\":\"M16-01-detail\",\"start\":3,\"end\":36,\"quote\":\"官方规程、国赛金奖全案、评委洞察与题库、国家部委法规、全国产业资本\",\"prefix\":\"五类为\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:09:53.135Z",
+        "updated_at": "2026-09-12T02:09:53.135Z"
+      },
+      {
+        "id": "888f213a-09f5-40c6-8d20-9d21008317da",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "“变化说明和逐行差异”这个 MVP 阶段不做，因为变化说明需要调用 agent， Word，PPT 等格式做逐行差异，成本高。",
+        "anchors": "[{\"blockId\":\"M07-07-detail\",\"start\":25,\"end\":34,\"quote\":\"变化说明和逐行差异\",\"prefix\":\"通过“查看 diff”展示变更文件、新增删除数量、\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T08:58:21.932Z",
+        "updated_at": "2026-09-11T08:58:21.932Z"
+      },
+      {
+        "id": "89bfa22f-1554-407d-990a-82ea64f4d930",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "目前说的只是 demo 的示例数据。实际的需求是全面的诊断指导与答辩指导：“支持参赛者上传商业计划书或路演PPT草稿，AI基于历年金奖案例、当年大赛文件和评审规则进行\"体检\"。例如：\"帮我检查这份计划书的市场分析部分，指出逻辑漏洞并给出补充建议\"、\"我的PPT前三页如何优化才能抓住评委眼球？\"、\"请帮我优化项目整体逻辑\"等。“",
+        "anchors": "[{\"blockId\":\"M03-07-detail\",\"start\":5,\"end\":29,\"quote\":\"章节速诊、创新壁垒自测、一次生成五道质询题等结果\",\"prefix\":\"会话内呈现\",\"suffix\":\"；可切换考官、复制问题并升级完整流程。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:36:48.774Z",
+        "updated_at": "2026-09-12T03:36:48.774Z"
+      },
+      {
+        "id": "8f6040f9-e41e-4abc-80e4-a2eea811b127",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "导师之间互相看不见",
+        "anchors": "[{\"blockId\":\"M09-03-detail\",\"start\":28,\"end\":38,\"quote\":\"，多导师共同参与项目\",\"prefix\":\"提供一键预约排期入口；导师端定义接收学校邀请、接受或婉拒\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:15:15.203Z",
+        "updated_at": "2026-09-12T03:15:15.203Z"
+      },
+      {
+        "id": "92344f36-1305-449c-8994-4ca317050afb",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做这个",
+        "anchors": "[{\"blockId\":\"M14-06-detail\",\"start\":5,\"end\":9,\"quote\":\"、要点数\",\"prefix\":\"展示文档量\",\"suffix\":\"、容量、调用次数及文件命中；为教练问答、初筛和训练提供知识。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:08:33.780Z",
+        "updated_at": "2026-09-12T02:08:33.780Z"
+      },
+      {
+        "id": "92640d0e-f279-41b4-a978-20f807425fe7",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "可以加上，但先不做权限控制",
+        "anchors": "[{\"blockId\":\"M14-02-detail\",\"start\":8,\"end\":10,\"quote\":\"受众\",\"prefix\":\"录入名称、分类、\",\"suffix\":\"和职能简介，创建后进入库内文件管理；\",\"version\":1}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:05:07.862Z",
+        "updated_at": "2026-09-12T02:05:07.862Z"
+      },
+      {
+        "id": "92c14d7b-5910-44e1-a1d7-98f9c1991eb3",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "静态页面展示，可以不做",
+        "anchors": "[{\"blockId\":\"M16-05-name\",\"start\":0,\"end\":8,\"quote\":\"官方评分细则展示\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:13:43.039Z",
+        "updated_at": "2026-09-12T02:13:43.039Z"
+      },
+      {
+        "id": "9bb2ea4b-b185-4716-b463-00dd8b74b8d3",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "每个版本都保存，鼠标放到某个文件上即可右侧展示版本列表，可以切换，即切换 agent 可见版本。默认使用最新版本。",
+        "anchors": "[{\"blockId\":\"M04-01-rule\",\"start\":23,\"end\":34,\"quote\":\"同名不同版本不能误覆盖\",\"prefix\":\"每项记录文件类型、名称、生成会话、时间和状态；\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T04:00:56.966Z",
+        "updated_at": "2026-09-12T04:00:56.966Z"
+      },
+      {
+        "id": "9c794842-479d-483b-adb5-14b1cf0e31e4",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做这个",
+        "anchors": "[{\"blockId\":\"M15-06-detail\",\"start\":12,\"end\":18,\"quote\":\"导出 CSV\",\"prefix\":\"支持移出平台智库、编辑与\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:18:21.850Z",
+        "updated_at": "2026-09-12T03:18:21.850Z"
+      },
+      {
+        "id": "9eafc5d1-3fe4-45df-b1c2-87aff487d39f",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "具体要做什么另定",
+        "anchors": "[{\"blockId\":\"M08-06-detail\",\"start\":0,\"end\":32,\"quote\":\"呈现资格、IP 权属、查重率、AI 生成痕迹、重复申报与逻辑疑点\",\"prefix\":\"\",\"suffix\":\"，支持批量扫描入口。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:24:19.103Z",
+        "updated_at": "2026-09-12T02:24:19.103Z"
+      },
+      {
+        "id": "a4a7432d-133d-4972-91a7-a3f2a5b18cae",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "生成回话和状态，这俩不需要",
+        "anchors": "[{\"blockId\":\"M04-01-rule\",\"start\":12,\"end\":22,\"quote\":\"生成会话、时间和状态\",\"prefix\":\"每项记录文件类型、名称、\",\"suffix\":\"；同名不同版本不能误覆盖。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:59:26.109Z",
+        "updated_at": "2026-09-12T03:59:26.109Z"
+      },
+      {
+        "id": "bf9fa26d-d848-42a2-afb3-94361f91c74c",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不做",
+        "anchors": "[{\"blockId\":\"M16-06-name\",\"start\":0,\"end\":9,\"quote\":\"规则版本与发布治理\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:14:14.087Z",
+        "updated_at": "2026-09-12T02:14:14.087Z"
+      },
+      {
+        "id": "c33a2cbb-22e3-493b-a346-1d5b3118ed81",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "改为100MB",
+        "anchors": "[{\"blockId\":\"M14-03-detail\",\"start\":61,\"end\":65,\"quote\":\"50MB\",\"prefix\":\"l、Markdown、TXT；记录文件名、格式、大小、摘要，Demo 提示单文件\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T01:55:41.969Z",
+        "updated_at": "2026-09-12T01:55:41.969Z"
+      },
+      {
+        "id": "c6c818ac-68f9-4743-9adc-825ad4c91c4c",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "后续会包括mp4等视频格式，jpg等图片模式，不过不一定是为了索引用",
+        "anchors": "[{\"blockId\":\"M16-03-detail\",\"start\":3,\"end\":34,\"quote\":\"PDF、Word、PPT、Excel、Markdown、TXT\",\"prefix\":\"支持 \",\"suffix\":\"，记录摘要、来源机构、格式、大小；提示单文件100MB。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:11:22.564Z",
+        "updated_at": "2026-09-12T02:11:22.564Z"
+      },
+      {
+        "id": "c76edd86-a374-49de-b083-9a56d5928223",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "经验沉淀除了辅导的工单资产外不实现为功能，可能是后台做",
+        "anchors": "[{\"blockId\":\"M17-04-name\",\"start\":0,\"end\":9,\"quote\":\"专家经验沉淀与审核\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:18:42.996Z",
+        "updated_at": "2026-09-12T02:18:42.996Z"
+      },
+      {
+        "id": "cf9456d1-6948-465f-a95e-f6308f72269d",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "不是学校维护，而是admin 端维护",
+        "anchors": "[{\"blockId\":\"M03-03-rule\",\"start\":32,\"end\":41,\"quote\":\"由学校维护正式口径\",\"prefix\":\"依据绑定届次、赛道、版本、条款与文件；来源缺失或冲突时明确提示，\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:23:50.416Z",
+        "updated_at": "2026-09-12T02:23:50.416Z"
+      },
+      {
+        "id": "d20916bc-e164-4755-8050-cc2a5091c69f",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "不会做这么细",
+        "anchors": "[{\"blockId\":\"M16-04-detail\",\"start\":0,\"end\":29,\"quote\":\"查看知识要点、结构化片段、切片数、引用量、容量和发布机构。\",\"prefix\":\"\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T02:12:16.961Z",
+        "updated_at": "2026-09-12T02:12:16.961Z"
+      },
+      {
+        "id": "dc2ae550-6b30-43a1-b4b3-4c9b80b99eab",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "格式丰富的markdown，GEN UI",
+        "anchors": "[{\"blockId\":\"M11-07-detail\",\"start\":27,\"end\":54,\"quote\":\"，提供 Word 文本和 PPT 大纲、复制下载入口。\",\"prefix\":\"生成核心结论、梯队结构、共性短板、督导成效及下一步建议\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:13:03.801Z",
+        "updated_at": "2026-09-12T03:13:03.801Z"
+      },
+      {
+        "id": "dd07f0ac-6334-4527-9e03-b489a64b8fba",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "提交人 和 作者一个人，在 MVP 阶段不使用在线文档的实时协同模式， 而是用安全锁，所以提交人跟作者一样。\n版本标签、提交标识是什么？",
+        "anchors": "[{\"blockId\":\"M07-05-detail\",\"start\":19,\"end\":44,\"quote\":\"提交人、摘要、时间、版本标签、提交标识和作者筛选。\",\"prefix\":\"采用单主线的 Git 式演进视图，展示\",\"suffix\":\"\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-11T08:47:34.266Z",
+        "updated_at": "2026-09-11T08:47:34.266Z"
+      },
+      {
+        "id": "e5f5c2b1-6ab1-4198-bf0e-428ec751683c",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "body": "不要可点击的卡片形式，成本高。纯文本输出即可",
+        "anchors": "[{\"blockId\":\"M03-09-detail\",\"start\":0,\"end\":22,\"quote\":\"结果卡给出可点击的后续问题，填入会话继续推进\",\"prefix\":\"\",\"suffix\":\"；支持点赞、点踩和查看运营指标。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:51:49.579Z",
+        "updated_at": "2026-09-12T03:51:49.579Z"
+      },
+      {
+        "id": "f3a91355-04bc-4d4c-afa1-2c1ad001d657",
+        "parent_id": null,
+        "feature_id": null,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "body": "初期不用做这么细",
+        "anchors": "[{\"blockId\":\"M09-02-detail\",\"start\":28,\"end\":37,\"quote\":\"、可预约或满载状态\",\"prefix\":\"查看全校及校外导师，可按姓名、擅长领域搜索，显示当前带教\",\"suffix\":\"。\",\"version\":0}]",
+        "resolved": 0,
+        "resolved_by": null,
+        "created_at": "2026-09-12T03:14:16.017Z",
+        "updated_at": "2026-09-12T03:14:16.017Z"
+      }
+    ],
+    "edits": [
+      {
+        "block_id": "M05-02-detail",
+        "text": "提供引导问答（痛点来源、目标用户、解决方案、验证方式）、产出物模板（用户痛点访谈纪要、选题评估表、可行性自测）与产出物提交。早期文档的选题与技术商业可行性分析并入此处。",
+        "version": 1,
+        "author_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "updated_at": "2026-09-11T08:58:39.515Z"
+      },
+      {
+        "block_id": "M05-02-rule",
+        "text": "产出物落项目文件夹并绑定版本；未达产出物标准不推进 L3（与阶段推进的衔接口径待确认）；引导问答可跳过、不可自定义、产出物模板按赛道（创意组/创业组/红旅）区分。",
+        "version": 1,
+        "author_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "updated_at": "2026-09-11T08:59:37.284Z"
+      },
+      {
+        "block_id": "M07-03-detail",
+        "text": "表单包含文件名、目标目录、资产标签（比如 BP，路演 PPT）、说明，支持 Word、PPT、Excel、PDF、代码等类型。",
+        "version": 1,
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "updated_at": "2026-09-11T08:40:17.077Z"
+      },
+      {
+        "block_id": "M09-01-detail",
+        "text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。",
+        "version": 2,
+        "author_id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "updated_at": "2026-09-11T08:00:17.404Z"
+      },
+      {
+        "block_id": "M14-02-detail",
+        "text": "录入名称、分类、受众和职能简介，创建后进入库内文件管理；",
+        "version": 1,
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "updated_at": "2026-09-12T01:48:07.499Z"
+      }
+    ],
+    "people": [
+      {
+        "id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "name": "庄冉",
+        "name_key": "庄冉",
+        "created_at": "2026-09-11T08:03:38.647Z"
+      },
+      {
+        "id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "name": "蒋谞",
+        "name_key": "蒋谞",
+        "created_at": "2026-09-11T07:30:28.699Z"
+      },
+      {
+        "id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "name": "产品",
+        "name_key": "产品",
+        "created_at": "2026-09-11T08:06:07.191Z"
+      },
+      {
+        "id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "name": "柏啸岳",
+        "name_key": "柏啸岳",
+        "created_at": "2026-09-11T08:08:18.704Z"
+      },
+      {
+        "id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "name": "向诗阳",
+        "name_key": "向诗阳",
+        "created_at": "2026-09-11T08:03:57.157Z"
+      }
+    ],
+    "reviews": [
+      {
+        "feature_id": "M02-03",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 任务载荷补两个字段：材料版本（进入时锁定的基准版本）与期望产物（这条任务要交出什么），否则\"返回后能查到对应材料版本\"没有载体，执行过程与产出无法与任务对齐。\n2. 定义任务在工作台内的生命周期：进入 → 执行中 → 完成 / 放弃。。\n3. 明确任务完成口径的显示层：学生点\"完成\"时应显示为\"已提交（待验收）\"，而非\"已完成\"。\n4.明确各状态的再进入规则：已提交、被退回还能再点\"去执行\"。已完成不能再点“去执行”。",
+        "content_hash": "c6e575bfb9903193",
+        "updated_at": "2026-09-11T09:46:22.966Z"
+      },
+      {
+        "feature_id": "M03-01",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "3ac1c93de0b9f1de",
+        "updated_at": "2026-09-11T09:29:53.635Z"
+      },
+      {
+        "feature_id": "M03-04",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 当前不支持PPT",
+        "content_hash": "1d74c93be950e125",
+        "updated_at": "2026-09-11T10:01:19.657Z"
+      },
+      {
+        "feature_id": "M03-04",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "pending",
+        "note": "",
+        "content_hash": "1d74c93be950e125",
+        "updated_at": "2026-09-12T02:24:18.327Z"
+      },
+      {
+        "feature_id": "M03-05",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "435ec306372fbeb6",
+        "updated_at": "2026-09-12T03:20:58.972Z"
+      },
+      {
+        "feature_id": "M03-06",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "9d1cfdc4a5c4ba2d",
+        "updated_at": "2026-09-12T03:30:59.550Z"
+      },
+      {
+        "feature_id": "M03-08",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "c0df3cebb38d8f00",
+        "updated_at": "2026-09-12T03:44:59.786Z"
+      },
+      {
+        "feature_id": "M04-02",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "ff40021d96a942b7",
+        "updated_at": "2026-09-12T04:02:57.011Z"
+      },
+      {
+        "feature_id": "M04-03",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "899fc323ce56f85e",
+        "updated_at": "2026-09-12T04:03:41.904Z"
+      },
+      {
+        "feature_id": "M04-06",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 把\"审批通过、交付物库、项目资产\"三者的关系直接定义成三段状态机：会话产物（待审）→ 审核通过（交付物库）→ 归档入库（项目资产），只保留一份主数据 + 状态标记，避免复制导致版本分叉。\n2. 导出范围与目录结构建议明确：ZIP 导出按项目文件夹结构成包，导出件应携带版本标识与导出时点（否则学生手里多份文件无法区分新旧）。\n3. 建议补导出权限与留痕：谁能导出（成员/负责人/导师/管理员）、导出动作是否记入更改记录（导出等于材料外流，团队场景需要可追溯）。\n4. 建议与工作台内的\"导出计划书\"入口统一：入口可有多处，但导出格式、命名规则、是否含批注/诊断标记必须同一套口径。\n5. 建议明确导出件是否包含审核批注与 AI 诊断标记——对外提交的稿子不应带内部批注。",
+        "content_hash": "668281cf61a2322f",
+        "updated_at": "2026-09-11T09:53:42.232Z"
+      },
+      {
+        "feature_id": "M04-06",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "668281cf61a2322f",
+        "updated_at": "2026-09-12T06:30:48.722Z"
+      },
+      {
+        "feature_id": "M05-01",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. “自动判定与人工调整责任需确认”：先进行自动阶段判定，然后支持手动更改\n2. 手动改阶段要留痕（人/时间/原阶段/新阶段/理由），且与自动判定并存显示，不要覆盖。\n3. 阶段是「项目级」还是「成员级」？ 一个项目里不同成员可能在不同阶段的工作上，（我倾向项目级单一阶段 + 成员任务各自带阶段标签）。\n4. 允许回退与并行。备赛现实是 L4 打磨时经常要回 L2 补验证，线性不可逆的进度条会误导产品实现。",
+        "content_hash": "664c7db2baa104b3",
+        "updated_at": "2026-09-11T08:36:20.566Z"
+      },
+      {
+        "feature_id": "M05-02",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "approved",
+        "note": "",
+        "content_hash": "ada842f98e96d445",
+        "updated_at": "2026-09-11T08:59:45.922Z"
+      },
+      {
+        "feature_id": "M05-03",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 模板可以根据不同方向进行更改\n2. 编辑器给谁用？ 目标用户是学生团队，不是工程师。以「结构化章节编辑」为主（每章：引导问题 + 正文输入区 + 本章要点提示），Markdown 源码作为高级模式。 两个理由：①学生门槛；②AI 的\"章节级定位/应用/回滚\"需要稳定的块级结构，纯 Markdown 全文会让结构变脆\n3. 写死的\"章节提示（hint）\"是产品资产，不该以 UI 文案形式存在。 它其实就是「每章该写什么 + 评委关注点」的隐性标准，应为可维护的「章节标准库」（谁维护、国赛规则变了怎么更新），并成为 M05-04 章节深度诊断 的对照基准\n4. 多人在同一份 BP 上协作吗？ 应为 编辑锁 + 变更合并。",
+        "content_hash": "529e60ce8d301fd0",
+        "updated_at": "2026-09-11T08:43:57.529Z"
+      },
+      {
+        "feature_id": "M05-04",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "本条设计建议明确与其他诊断能力的边界，避免功能重叠：\n1. 三处诊断需分工写清：M03-04 为会话内即问即答、不落库、不绑版本；M05-04 为章节级、落库、绑定材料版本、可转待办；M05-06 为全书级聚合与决策。\n2. 更改保存之后立刻针对章节进行诊断\n3. 与动态待办的关系建议定为闭环：诊断发现问题 → 生成带章节归属的待办 → 由待办回到本章继续诊断，而非单向罗列。\n4. 输出要求建议在\"避免单纯给分\"之外，补充\"必须给出章节内定位（小题/段落）与可执行动作、佐证缺口\"，否则诊断无法落地为修改动作。",
+        "content_hash": "dc65a262217f17d9",
+        "updated_at": "2026-09-11T09:08:10.327Z"
+      },
+      {
+        "feature_id": "M05-05",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. \"生成→应用\"建议改为\"生成→待采纳区→用户确认→合入\"。备赛场景中 AI 改稿是参考而非终稿，直接改正文会让学生不敢使用。\n2. 应用层级需明确：建议默认禁止整章自动覆盖，只允许段落级替换或追加；应用前需展示修改范围并确认，应用后保留回退路径\n3. AI 生成段落建议可标记来源，且经学生确认后才生效。这既是信任设计，也是赛事\"学生主体贡献\"的合规设计。\n4. 本条实际承载了三件事：提分检查清单、草稿生成、历史论述检索。三者形态不同（结果卡/面板/检索）。\n5. \"查看历史论述\"与 M05-09 版本历史存在重叠，本条为\"本章纵向内容检索\"，版本管理归 M05-09，避免两处重复建设。",
+        "content_hash": "3e3ab116b715c5a3",
+        "updated_at": "2026-09-11T09:13:50.124Z"
+      },
+      {
+        "feature_id": "M05-06",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 与 M05-07 分工建议划清：M05-06 只承载\"问题与行动\"（定性），M05-07 只承载\"分数与趋势\"（定量），M05-06 内给出跳转。两处同时呈现分数会造成用户困惑。\n2. 定位为\"项目健康度体检单\"而非一次性报告：绑定材料版本与生成时间、历次体检可比、材料更新后旧报告标注为基于旧版本。\n3. 分诊结果建议闭环：除主导类型与置信度外，输出可执行结论（建议赛道方向 + 该赛道的评审侧重）。\n4. \"全维\"的价值应包含跨章节一致性检查（如第 4 章市场 × 第 6 章商业模式 × 第 10 章财务的口径矛盾）——单章诊断无法发现。",
+        "content_hash": "9d2b9acded8d8a03",
+        "updated_at": "2026-09-11T09:16:02.675Z"
+      },
+      {
+        "feature_id": "M05-07",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 评分目的：对标（与评审标准或金奖标杆的差距）\n2. 弱化总分、强化细项采分点与补强动作。\n3. 需明确分数的责任归属：AI 打分根据是否导师复核，若无则在界面明确标注参考性质。\n4. 明确总分口径：维度加权",
+        "content_hash": "eadbe753456b8925",
+        "updated_at": "2026-09-11T09:19:37.800Z"
+      },
+      {
+        "feature_id": "M05-08",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 里程碑定义为\"有确认人的阶段成果锁\"：需明确是学生自标、系统自动达成，还是导师确认。\n2. 明确快照/版本的语义分工：快照为用户显式存档点、版本为有意义的节点（发布或里程碑）。\n3. 需补充：里程碑可撤销、撤销后已产生的下游（诊断、评分）保留数据；快照不可变（生成后冻结）。",
+        "content_hash": "46af314d341c0747",
+        "updated_at": "2026-09-11T09:23:11.415Z"
+      },
+      {
+        "feature_id": "M05-09",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 回滚语义定为\"从旧版创建新版本、历史不可变\"（不删除历史、不作废后续）。备赛的刚需是\"改坏了找回上一版\"，几乎不需要\"作废后续版本\"。\n2. 版本数据为单一真源：项目文件夹的版本线与工作台版本历史应指向同一数据源，并支持从项目文件夹\"完整版本历史\"直开本抽屉。",
+        "content_hash": "3ccb6e5ea6f1e7ab",
+        "updated_at": "2026-09-11T09:25:22.969Z"
+      },
+      {
+        "feature_id": "M05-10",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "1. 建议补充任务状态机与权限：待办 → 执行中 → 已提交（待验收）→ 已完成 / 退回重做，明确各步由谁触发。学生点击\"完成\"应产生\"已提交\"而非直接\"已完成\"，导师验收/AI验收为独立环节。\n2. 回写载荷需定义\"产物\"粒度：挂接该任务产生的变更引用（任务 ↔ 变更 ↔ 版本），形成证据链，而非仅写任务编号与说明。\n3. 统一任务来源模型：AI 诊断生成、教练生成、导师工单进入同一待办池并标记不同来源。",
+        "content_hash": "90865f400d91f2a5",
+        "updated_at": "2026-09-11T09:28:04.585Z"
+      },
+      {
+        "feature_id": "M06-01",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "7813425c94c848a0",
+        "updated_at": "2026-09-11T08:21:25.507Z"
+      },
+      {
+        "feature_id": "M06-02",
+        "user_id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "status": "pending",
+        "note": "",
+        "content_hash": "cd0268058b6e3a4",
+        "updated_at": "2026-09-11T07:30:49.097Z"
+      },
+      {
+        "feature_id": "M06-02",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "cd0268058b6e3a4",
+        "updated_at": "2026-09-11T08:24:24.119Z"
+      },
+      {
+        "feature_id": "M06-03",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "663429d331ce75ab",
+        "updated_at": "2026-09-11T08:25:21.413Z"
+      },
+      {
+        "feature_id": "M06-04",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "f491aea19b271682",
+        "updated_at": "2026-09-11T08:26:02.465Z"
+      },
+      {
+        "feature_id": "M06-05",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "fc7b23a41290c0f8",
+        "updated_at": "2026-09-11T08:26:18.085Z"
+      },
+      {
+        "feature_id": "M06-06",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "fe5940ec01bb7a4b",
+        "updated_at": "2026-09-11T08:26:39.683Z"
+      },
+      {
+        "feature_id": "M06-07",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "2f720a657525efbc",
+        "updated_at": "2026-09-11T08:26:56.050Z"
+      },
+      {
+        "feature_id": "M06-08",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "fe4ec128086699d0",
+        "updated_at": "2026-09-11T08:28:15.794Z"
+      },
+      {
+        "feature_id": "M06-09",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "2781c0342c90e5d6",
+        "updated_at": "2026-09-11T08:28:33.051Z"
+      },
+      {
+        "feature_id": "M06-10",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "a7d1e507e18415c2",
+        "updated_at": "2026-09-11T08:29:49.405Z"
+      },
+      {
+        "feature_id": "M07-01",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "ce446075e33a7bc2",
+        "updated_at": "2026-09-11T08:17:57.796Z"
+      },
+      {
+        "feature_id": "M07-02",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "pending",
+        "note": "“复杂文档保真度需按样本验证。”这句话什么意思",
+        "content_hash": "639e83e27d71b912",
+        "updated_at": "2026-09-11T08:32:28.153Z"
+      },
+      {
+        "feature_id": "M07-06",
+        "user_id": "8e93c696-8441-4d09-bacb-4150ccb60575",
+        "status": "approved",
+        "note": "",
+        "content_hash": "cf3dfec82e159dcf",
+        "updated_at": "2026-09-12T01:51:00.892Z"
+      },
+      {
+        "feature_id": "M07-06",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "cf3dfec82e159dcf",
+        "updated_at": "2026-09-11T08:56:48.593Z"
+      },
+      {
+        "feature_id": "M07-08",
+        "user_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "status": "approved",
+        "note": "",
+        "content_hash": "352fe248c74c2c07",
+        "updated_at": "2026-09-11T09:19:18.448Z"
+      },
+      {
+        "feature_id": "M08-03",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "approved",
+        "note": "",
+        "content_hash": "25da6da62ddaa358",
+        "updated_at": "2026-09-11T09:54:33.816Z"
+      },
+      {
+        "feature_id": "M08-04",
+        "user_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "status": "approved",
+        "note": "",
+        "content_hash": "d8fe3802f5fa1f2f",
+        "updated_at": "2026-09-12T03:10:20.950Z"
+      },
+      {
+        "feature_id": "M08-05",
+        "user_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "status": "approved",
+        "note": "",
+        "content_hash": "72dfb9fdc5ecf485",
+        "updated_at": "2026-09-12T03:10:22.239Z"
+      },
+      {
+        "feature_id": "M13-02",
+        "user_id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "status": "pending",
+        "note": "",
+        "content_hash": "791ec028b585fb7",
+        "updated_at": "2026-09-11T07:58:33.800Z"
+      },
+      {
+        "feature_id": "M14-01",
+        "user_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "status": "issue",
+        "note": "目前只是实现知识库的功能，具体建设什么样的知识库，上传什么材料是以后运营阶段的工作",
+        "content_hash": "959731d625ef04b2",
+        "updated_at": "2026-09-12T01:53:45.909Z"
+      },
+      {
+        "feature_id": "M14-02",
+        "user_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "status": "approved",
+        "note": "",
+        "content_hash": "a7cea5d8497fc312",
+        "updated_at": "2026-09-12T01:54:59.165Z"
+      },
+      {
+        "feature_id": "M17-02",
+        "user_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "status": "issue",
+        "note": "功能细节中，应为 初筛、指导中评估、答辩分别呈现评分、雷达、置信度及历史对标。\n规则与待确认中。“区分正式指标分、材料质量分、答辩表现分”应删除，不同环节中的评分维度不一样。",
+        "content_hash": "6cba9ff3116ec547",
+        "updated_at": "2026-09-11T08:36:34.606Z"
+      }
+    ],
+    "revisions": [
+      {
+        "id": "15bb538a-57c7-4a48-bbe6-5b4d87bf121c",
+        "block_id": "M07-03-detail",
+        "author_id": "9ce99fc8-537d-443b-8f43-228601d95349",
+        "before_text": "表单包含文件名、目标目录、资产类型、说明，支持 Word、PPT、Excel、PDF、代码等类型。",
+        "after_text": "表单包含文件名、目标目录、资产标签（比如 BP，路演 PPT）、说明，支持 Word、PPT、Excel、PDF、代码等类型。",
+        "version": 1,
+        "created_at": "2026-09-11T08:40:17.077Z"
+      },
+      {
+        "id": "24054805-d05b-46b9-b724-4ffeb060e551",
+        "block_id": "M09-01-detail",
+        "author_id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "before_text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。",
+        "after_text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。把方便撒旦法萨迪克",
+        "version": 1,
+        "created_at": "2026-09-11T08:00:08.842Z"
+      },
+      {
+        "id": "4d689dc6-3a41-41ae-a1d6-9508f41aa9b8",
+        "block_id": "M05-02-rule",
+        "author_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "before_text": "当前主要为阶段导航与指导意图；输入表、引导问答及阶段完成标准需细化，不能按独立引擎已完成验收。",
+        "after_text": "产出物落项目文件夹并绑定版本；未达产出物标准不推进 L3（与阶段推进的衔接口径待确认）；引导问答可跳过、不可自定义、产出物模板按赛道（创意组/创业组/红旅）区分。",
+        "version": 1,
+        "created_at": "2026-09-11T08:59:37.284Z"
+      },
+      {
+        "id": "670553f7-8b20-4ec0-bd23-5b7f1a5c0ad5",
+        "block_id": "M09-01-detail",
+        "author_id": "6bac2270-81be-472e-8f4a-8f3dbc7313b5",
+        "before_text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。把方便撒旦法萨迪克",
+        "after_text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。",
+        "version": 2,
+        "created_at": "2026-09-11T08:00:17.404Z"
+      },
+      {
+        "id": "e17ecbeb-79d5-4833-b597-38a5234d1048",
+        "block_id": "M14-02-detail",
+        "author_id": "e79b244a-db91-473e-a6d1-4a12a4d0563f",
+        "before_text": "录入名称、分类、受众和职能简介，创建后进入库内文件管理；Demo 默认运行中。",
+        "after_text": "录入名称、分类、受众和职能简介，创建后进入库内文件管理；",
+        "version": 1,
+        "created_at": "2026-09-12T01:48:07.499Z"
+      },
+      {
+        "id": "fa96e958-a2a6-4f94-877f-8380f236b467",
+        "block_id": "M05-02-detail",
+        "author_id": "61939174-45a0-4990-90ef-f44fc04ed5bb",
+        "before_text": "阶段提示覆盖国家战略痛点、用户访谈、跨学科构思、POC、原型和首批客户意向。早期文档补充选题与技术商业可行性分析。",
+        "after_text": "提供引导问答（痛点来源、目标用户、解决方案、验证方式）、产出物模板（用户痛点访谈纪要、选题评估表、可行性自测）与产出物提交。早期文档的选题与技术商业可行性分析并入此处。",
+        "version": 1,
+        "created_at": "2026-09-11T08:58:39.515Z"
+      }
+    ]
+  }
+}

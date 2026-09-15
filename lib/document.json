@@ -1,0 +1,6679 @@
+{
+  "title": "高校双创平台产品架构与初步 PRD",
+  "version": "V0.2 团队评审稿",
+  "baseline": "2026-09-11",
+  "groups": [
+    {
+      "id": "project",
+      "code": "D01",
+      "name": "项目与资产",
+      "key": "project",
+      "summary": "管理项目、组织关系和可追溯的材料资产。",
+      "owns": "学校与账号范围、项目与团队、文件、材料版本、归档与提交记录",
+      "boundary": "项目工作台是聚合视图。工单状态由导师辅导维护，诊断结果由智能备赛维护，梯队与赛事阶段由赛事培育维护；工作台只引用，不重复维护。",
+      "interfaces": "输出项目授权、文件引用、版本快照及材料解析结果；接收导入建档与已确认产物的归档命令。",
+      "members": [
+        "M01",
+        "M02",
+        "M07",
+        "M13"
+      ],
+      "extra": [
+        "M17-01"
+      ],
+      "count": 27
+    },
+    {
+      "id": "coaching",
+      "code": "D02",
+      "name": "智能备赛",
+      "key": "coaching",
+      "summary": "把项目材料转化为诊断、改稿与训练成果。",
+      "owns": "AI 会话与任务、诊断报告、候选产物及审核、BP 编辑、训练会话、AI 使用与反馈",
+      "boundary": "引用固定材料版本和已发布规则。确认产物经项目与资产归档；不直接改写正式工单结论、学校选拔结果或已发布赛事规则。",
+      "interfaces": "消费项目材料、知识引用与规则版本；输出诊断、候选改稿、训练报告及待办建议，供团队与导师使用。",
+      "members": [
+        "M03",
+        "M04",
+        "M05",
+        "M06"
+      ],
+      "extra": [
+        "M17-02",
+        "M17-05",
+        "M17-06"
+      ],
+      "count": 38
+    },
+    {
+      "id": "mentoring",
+      "code": "D03",
+      "name": "导师辅导",
+      "key": "mentoring",
+      "summary": "组织导师服务并完成从指导到整改验收的闭环。",
+      "owns": "校内外与平台导师档案、聘任关系、容量排期、指导邀请、会议纪要、辅导工单、回执与验收",
+      "boundary": "校本和平台导师共用导师主档，通过学校聘任及服务范围区分。批量辅导使用赛事培育提供的项目名单快照；材料归档和 AI 分析分别委托对应业务域。",
+      "interfaces": "消费项目授权、材料版本及梯队名单；输出邀请响应、工单状态、验收结果与导师投入数据。",
+      "members": [
+        "M09",
+        "M10",
+        "M12",
+        "M15"
+      ],
+      "extra": [],
+      "count": 28
+    },
+    {
+      "id": "competition",
+      "code": "D04",
+      "name": "赛事培育",
+      "key": "competition",
+      "summary": "面向学校完成初筛分层、阶段培育与成效管理。",
+      "owns": "赛事批次、初筛与人工复核结果、梯队、重点项目池、赛事阶段、预警及统计快照",
+      "boundary": "导入负责批次与核验流程，项目主档委托项目与资产创建；正式规则来自知识与规则，辅导执行来自导师辅导。驾驶舱聚合各域事实，不形成第二套工单或评分主账。",
+      "interfaces": "消费项目、评分依据、辅导事件；输出梯队名单、培育阶段、预警与可复算的管理统计。",
+      "members": [
+        "M08",
+        "M11"
+      ],
+      "extra": [],
+      "count": 15
+    },
+    {
+      "id": "knowledge",
+      "code": "D05",
+      "name": "知识与规则",
+      "key": "knowledge",
+      "summary": "维护有来源、可授权、可发布的知识与赛事规则。",
+      "owns": "校本及公共知识库、知识文档与索引、规则版本、案例、专家经验与审核记录",
+      "boundary": "校本与公共资源按作用域和授权区分。发布知识不自动更改评分；规则发布需独立版本与责任人。项目私有材料不自动转入公共知识。",
+      "interfaces": "输出带来源和版本的检索结果、评分规则及案例经验；接收经授权脱敏的辅导经验候选。",
+      "members": [
+        "M14",
+        "M16"
+      ],
+      "extra": [
+        "M17-03",
+        "M17-04"
+      ],
+      "count": 14
+    }
+  ],
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "title": "1 产品定位与文档边界",
+      "items": [
+        {
+          "type": "paragraph",
+          "blockId": "text-0001",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0002",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0003",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0004",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0005",
+          "bullet": false,
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-1-title"
+    },
+    {
+      "id": "chapter-2",
+      "title": "2 用户角色与产品架构",
+      "items": [
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0006",
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0007",
+              "text-0008",
+              "text-0009",
+              "text-0010"
+            ],
+            [
+              "text-0011",
+              "text-0012",
+              "text-0013",
+              "text-0014"
+            ],
+            [
+              "text-0015",
+              "text-0016",
+              "text-0017",
+              "text-0018"
+            ],
+            [
+              "text-0019",
+              "text-0020",
+              "text-0021",
+              "text-0022"
+            ],
+            [
+              "text-0023",
+              "text-0024",
+              "text-0025",
+              "text-0026"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0027",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0028",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0029",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0030",
+              "text-0031",
+              "text-0032",
+              "text-0033"
+            ],
+            [
+              "text-0034",
+              "text-0035",
+              "text-0036",
+              "text-0037"
+            ],
+            [
+              "text-0038",
+              "text-0039",
+              "text-0040",
+              "text-0041"
+            ],
+            [
+              "text-0042",
+              "text-0043",
+              "text-0044",
+              "text-0045"
+            ],
+            [
+              "text-0046",
+              "text-0047",
+              "text-0048",
+              "text-0049"
+            ],
+            [
+              "text-0050",
+              "text-0051",
+              "text-0052",
+              "text-0053"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0054",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0055",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0056",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0057",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0058",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0059",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0060",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0061",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0062",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0063",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0064",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0065",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0066",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0067",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0068",
+          "bullet": false,
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-2-title"
+    },
+    {
+      "id": "chapter-3",
+      "title": "3 三级功能清单",
+      "items": [
+        {
+          "type": "paragraph",
+          "blockId": "text-0069",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0070",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0071",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0072",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0073",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0074",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M01-01",
+            "M01-02",
+            "M01-03",
+            "M01-04",
+            "M01-05"
+          ],
+          "domain": "project",
+          "subgroup": "M01 门户与身份上下文"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0090",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0091",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M02-01",
+            "M02-02",
+            "M02-03",
+            "M02-04",
+            "M02-05",
+            "M02-06",
+            "M02-07"
+          ],
+          "domain": "project",
+          "subgroup": "M02 项目工作台与团队整改"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0113",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0114",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M07-01",
+            "M07-02",
+            "M07-03",
+            "M07-04",
+            "M07-05",
+            "M07-06",
+            "M07-07",
+            "M07-08"
+          ],
+          "domain": "project",
+          "subgroup": "M07 项目资产与版本管理"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0139",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0140",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M13-01",
+            "M13-02",
+            "M13-03",
+            "M13-04",
+            "M13-05",
+            "M13-06"
+          ],
+          "domain": "project",
+          "subgroup": "M13 用户权限与团队架构管理"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0159",
+          "domain": "project"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0160",
+          "bullet": false,
+          "domain": "project"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M17-01"
+          ],
+          "domain": "project",
+          "subgroup": "D01-S 材料解析与上下文"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0164",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0165",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0166",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0167",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M03-01",
+            "M03-02",
+            "M03-03",
+            "M03-04",
+            "M03-05",
+            "M03-06",
+            "M03-07",
+            "M03-08",
+            "M03-09"
+          ],
+          "domain": "coaching",
+          "subgroup": "M03 统一 AI 备赛教练"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0195",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0196",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M04-01",
+            "M04-02",
+            "M04-03",
+            "M04-04",
+            "M04-05",
+            "M04-06"
+          ],
+          "domain": "coaching",
+          "subgroup": "M04 生成物检视与修改审核"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0215",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0216",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M05-01",
+            "M05-02",
+            "M05-03",
+            "M05-04",
+            "M05-05",
+            "M05-06",
+            "M05-07",
+            "M05-08",
+            "M05-09",
+            "M05-10"
+          ],
+          "domain": "coaching",
+          "subgroup": "M05 全链路智能指导"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0247",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0248",
+              "text-0249",
+              "text-0250"
+            ],
+            [
+              "text-0251",
+              "text-0252",
+              "text-0253"
+            ],
+            [
+              "text-0254",
+              "text-0255",
+              "text-0256"
+            ],
+            [
+              "text-0257",
+              "text-0258",
+              "text-0259"
+            ],
+            [
+              "text-0260",
+              "text-0261",
+              "text-0262"
+            ],
+            [
+              "text-0263",
+              "text-0264",
+              "text-0265"
+            ],
+            [
+              "text-0266",
+              "text-0267",
+              "text-0268"
+            ],
+            [
+              "text-0269",
+              "text-0270",
+              "text-0271"
+            ],
+            [
+              "text-0272",
+              "text-0273",
+              "text-0274"
+            ],
+            [
+              "text-0275",
+              "text-0276",
+              "text-0277"
+            ],
+            [
+              "text-0278",
+              "text-0279",
+              "text-0280"
+            ],
+            [
+              "text-0281",
+              "text-0282",
+              "text-0283"
+            ],
+            [
+              "text-0284",
+              "text-0285",
+              "text-0286"
+            ]
+          ],
+          "domain": "coaching"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0287",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0288",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M06-01",
+            "M06-02",
+            "M06-03",
+            "M06-04",
+            "M06-05",
+            "M06-06",
+            "M06-07",
+            "M06-08",
+            "M06-09",
+            "M06-10"
+          ],
+          "domain": "coaching",
+          "subgroup": "M06 模拟评审与答辩训练"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0319",
+          "domain": "coaching"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0320",
+          "bullet": false,
+          "domain": "coaching"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M17-02",
+            "M17-05",
+            "M17-06"
+          ],
+          "domain": "coaching",
+          "subgroup": "D02-S 诊断治理与反馈"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0330",
+          "domain": "mentoring"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0331",
+          "bullet": false,
+          "domain": "mentoring"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0332",
+          "domain": "mentoring"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0333",
+          "bullet": false,
+          "domain": "mentoring"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M09-01",
+            "M09-02",
+            "M09-03",
+            "M09-04",
+            "M09-05"
+          ],
+          "domain": "mentoring",
+          "subgroup": "M09 常态化辅导与资源调度"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0349",
+          "domain": "mentoring"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0350",
+          "bullet": false,
+          "domain": "mentoring"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M10-01",
+            "M10-02",
+            "M10-03",
+            "M10-04",
+            "M10-05",
+            "M10-06",
+            "M10-07",
+            "M10-08",
+            "M10-09",
+            "M10-10",
+            "M10-11"
+          ],
+          "domain": "mentoring",
+          "subgroup": "M10 导师辅导资产与督导闭环"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0384",
+          "domain": "mentoring"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0385",
+          "bullet": false,
+          "domain": "mentoring"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M12-01",
+            "M12-02",
+            "M12-03",
+            "M12-04",
+            "M12-05",
+            "M12-06"
+          ],
+          "domain": "mentoring",
+          "subgroup": "M12 学校导师智库管理"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0404",
+          "domain": "mentoring"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0405",
+          "bullet": false,
+          "domain": "mentoring"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M15-01",
+            "M15-02",
+            "M15-03",
+            "M15-04",
+            "M15-05",
+            "M15-06"
+          ],
+          "domain": "mentoring",
+          "subgroup": "M15 平台导师与跨校调度"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0424",
+          "domain": "competition"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0425",
+          "bullet": false,
+          "domain": "competition"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0426",
+          "domain": "competition"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0427",
+          "bullet": false,
+          "domain": "competition"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M08-01",
+            "M08-02",
+            "M08-03",
+            "M08-04",
+            "M08-05",
+            "M08-06",
+            "M08-07",
+            "M08-08"
+          ],
+          "domain": "competition",
+          "subgroup": "M08 项目导入与智能对标初筛"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0452",
+          "domain": "competition"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0453",
+          "bullet": false,
+          "domain": "competition"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M11-01",
+            "M11-02",
+            "M11-03",
+            "M11-04",
+            "M11-05",
+            "M11-06",
+            "M11-07"
+          ],
+          "domain": "competition",
+          "subgroup": "M11 学校驾驶舱与全流程追踪"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0475",
+          "domain": "knowledge"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0476",
+          "bullet": false,
+          "domain": "knowledge"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0477",
+          "domain": "knowledge"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0478",
+          "bullet": false,
+          "domain": "knowledge"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M14-01",
+            "M14-02",
+            "M14-03",
+            "M14-04",
+            "M14-05",
+            "M14-06"
+          ],
+          "domain": "knowledge",
+          "subgroup": "M14 校本知识库管理"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0497",
+          "domain": "knowledge"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0498",
+          "bullet": false,
+          "domain": "knowledge"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M16-01",
+            "M16-02",
+            "M16-03",
+            "M16-04",
+            "M16-05",
+            "M16-06"
+          ],
+          "domain": "knowledge",
+          "subgroup": "M16 平台赛事知识与规则管理"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "blockId": "text-0517",
+          "domain": "knowledge"
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0518",
+          "bullet": false,
+          "domain": "knowledge"
+        },
+        {
+          "type": "features",
+          "ids": [
+            "M17-03",
+            "M17-04"
+          ],
+          "domain": "knowledge",
+          "subgroup": "D05-S 案例与专家经验"
+        }
+      ],
+      "titleBlockId": "chapter-3-title"
+    },
+    {
+      "id": "chapter-4",
+      "title": "4 关键业务流程与状态",
+      "items": [
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0525",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0526",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0527",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0528",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0529",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0530",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0531",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0532",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0533",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0534",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0535",
+              "text-0536",
+              "text-0537",
+              "text-0538"
+            ],
+            [
+              "text-0539",
+              "text-0540",
+              "text-0541",
+              "text-0542"
+            ],
+            [
+              "text-0543",
+              "text-0544",
+              "text-0545",
+              "text-0546"
+            ],
+            [
+              "text-0547",
+              "text-0548",
+              "text-0549",
+              "text-0550"
+            ],
+            [
+              "text-0551",
+              "text-0552",
+              "text-0553",
+              "text-0554"
+            ],
+            [
+              "text-0555",
+              "text-0556",
+              "text-0557",
+              "text-0558"
+            ],
+            [
+              "text-0559",
+              "text-0560",
+              "text-0561",
+              "text-0562"
+            ],
+            [
+              "text-0563",
+              "text-0564",
+              "text-0565",
+              "text-0566"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0567",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0568",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0569",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0570",
+              "text-0571",
+              "text-0572"
+            ],
+            [
+              "text-0573",
+              "text-0574",
+              "text-0575"
+            ],
+            [
+              "text-0576",
+              "text-0577",
+              "text-0578"
+            ],
+            [
+              "text-0579",
+              "text-0580",
+              "text-0581"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0582",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0583",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0584",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0585",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0586",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0587",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0588",
+          "bullet": false,
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-4-title"
+    },
+    {
+      "id": "chapter-5",
+      "title": "5 核心数据对象与一致性规则",
+      "items": [
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0589",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0590",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0591",
+              "text-0592",
+              "text-0593"
+            ],
+            [
+              "text-0594",
+              "text-0595",
+              "text-0596"
+            ],
+            [
+              "text-0597",
+              "text-0598",
+              "text-0599"
+            ],
+            [
+              "text-0600",
+              "text-0601",
+              "text-0602"
+            ],
+            [
+              "text-0603",
+              "text-0604",
+              "text-0605"
+            ],
+            [
+              "text-0606",
+              "text-0607",
+              "text-0608"
+            ],
+            [
+              "text-0609",
+              "text-0610",
+              "text-0611"
+            ],
+            [
+              "text-0612",
+              "text-0613",
+              "text-0614"
+            ],
+            [
+              "text-0615",
+              "text-0616",
+              "text-0617"
+            ],
+            [
+              "text-0618",
+              "text-0619",
+              "text-0620"
+            ],
+            [
+              "text-0621",
+              "text-0622",
+              "text-0623"
+            ],
+            [
+              "text-0624",
+              "text-0625",
+              "text-0626"
+            ],
+            [
+              "text-0627",
+              "text-0628",
+              "text-0629"
+            ],
+            [
+              "text-0630",
+              "text-0631",
+              "text-0632"
+            ],
+            [
+              "text-0633",
+              "text-0634",
+              "text-0635"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0636",
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0637",
+              "text-0638",
+              "text-0639"
+            ],
+            [
+              "text-0640",
+              "text-0641",
+              "text-0642"
+            ],
+            [
+              "text-0643",
+              "text-0644",
+              "text-0645"
+            ],
+            [
+              "text-0646",
+              "text-0647",
+              "text-0648"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0649",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0650",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0651",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0652",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0653",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0654",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0655",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0656",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0657",
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0658",
+              "text-0659",
+              "text-0660"
+            ],
+            [
+              "text-0661",
+              "text-0662",
+              "text-0663"
+            ],
+            [
+              "text-0664",
+              "text-0665",
+              "text-0666"
+            ],
+            [
+              "text-0667",
+              "text-0668",
+              "text-0669"
+            ],
+            [
+              "text-0670",
+              "text-0671",
+              "text-0672"
+            ],
+            [
+              "text-0673",
+              "text-0674",
+              "text-0675"
+            ],
+            [
+              "text-0676",
+              "text-0677",
+              "text-0678"
+            ],
+            [
+              "text-0679",
+              "text-0680",
+              "text-0681"
+            ]
+          ],
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-5-title"
+    },
+    {
+      "id": "chapter-6",
+      "title": "6 早期客户定义与当前 Demo 对照",
+      "items": [
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0682",
+              "text-0683",
+              "text-0684"
+            ],
+            [
+              "text-0685",
+              "text-0686",
+              "text-0687"
+            ],
+            [
+              "text-0688",
+              "text-0689",
+              "text-0690"
+            ],
+            [
+              "text-0691",
+              "text-0692",
+              "text-0693"
+            ],
+            [
+              "text-0694",
+              "text-0695",
+              "text-0696"
+            ],
+            [
+              "text-0697",
+              "text-0698",
+              "text-0699"
+            ],
+            [
+              "text-0700",
+              "text-0701",
+              "text-0702"
+            ],
+            [
+              "text-0703",
+              "text-0704",
+              "text-0705"
+            ],
+            [
+              "text-0706",
+              "text-0707",
+              "text-0708"
+            ],
+            [
+              "text-0709",
+              "text-0710",
+              "text-0711"
+            ],
+            [
+              "text-0712",
+              "text-0713",
+              "text-0714"
+            ],
+            [
+              "text-0715",
+              "text-0716",
+              "text-0717"
+            ],
+            [
+              "text-0718",
+              "text-0719",
+              "text-0720"
+            ]
+          ],
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-6-title"
+    },
+    {
+      "id": "chapter-7",
+      "title": "7 初步验收与运行要求",
+      "items": [
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0721",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0722",
+          "bullet": false,
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0723",
+              "text-0724",
+              "text-0725"
+            ],
+            [
+              "text-0726",
+              "text-0727",
+              "text-0728"
+            ],
+            [
+              "text-0729",
+              "text-0730",
+              "text-0731"
+            ],
+            [
+              "text-0732",
+              "text-0733",
+              "text-0734"
+            ],
+            [
+              "text-0735",
+              "text-0736",
+              "text-0737"
+            ],
+            [
+              "text-0738",
+              "text-0739",
+              "text-0740"
+            ],
+            [
+              "text-0741",
+              "text-0742",
+              "text-0743"
+            ],
+            [
+              "text-0744",
+              "text-0745",
+              "text-0746"
+            ],
+            [
+              "text-0747",
+              "text-0748",
+              "text-0749"
+            ],
+            [
+              "text-0750",
+              "text-0751",
+              "text-0752"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0753",
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0754",
+              "text-0755",
+              "text-0756"
+            ],
+            [
+              "text-0757",
+              "text-0758",
+              "text-0759"
+            ],
+            [
+              "text-0760",
+              "text-0761",
+              "text-0762"
+            ],
+            [
+              "text-0763",
+              "text-0764",
+              "text-0765"
+            ],
+            [
+              "text-0766",
+              "text-0767",
+              "text-0768"
+            ],
+            [
+              "text-0769",
+              "text-0770",
+              "text-0771"
+            ],
+            [
+              "text-0772",
+              "text-0773",
+              "text-0774"
+            ],
+            [
+              "text-0775",
+              "text-0776",
+              "text-0777"
+            ]
+          ],
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-7-title"
+    },
+    {
+      "id": "chapter-8",
+      "title": "8 需要产品评审确认的事项",
+      "items": [
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0778",
+              "text-0779",
+              "text-0780",
+              "text-0781"
+            ],
+            [
+              "text-0782",
+              "text-0783",
+              "text-0784",
+              "text-0785"
+            ],
+            [
+              "text-0786",
+              "text-0787",
+              "text-0788",
+              "text-0789"
+            ],
+            [
+              "text-0790",
+              "text-0791",
+              "text-0792",
+              "text-0793"
+            ],
+            [
+              "text-0794",
+              "text-0795",
+              "text-0796",
+              "text-0797"
+            ],
+            [
+              "text-0798",
+              "text-0799",
+              "text-0800",
+              "text-0801"
+            ],
+            [
+              "text-0802",
+              "text-0803",
+              "text-0804",
+              "text-0805"
+            ],
+            [
+              "text-0806",
+              "text-0807",
+              "text-0808",
+              "text-0809"
+            ],
+            [
+              "text-0810",
+              "text-0811",
+              "text-0812",
+              "text-0813"
+            ],
+            [
+              "text-0814",
+              "text-0815",
+              "text-0816",
+              "text-0817"
+            ],
+            [
+              "text-0818",
+              "text-0819",
+              "text-0820",
+              "text-0821"
+            ],
+            [
+              "text-0822",
+              "text-0823",
+              "text-0824",
+              "text-0825"
+            ],
+            [
+              "text-0826",
+              "text-0827",
+              "text-0828",
+              "text-0829"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0830",
+          "bullet": false,
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-8-title"
+    },
+    {
+      "id": "chapter-9",
+      "title": "9 来源与核验记录",
+      "items": [
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0831",
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0832",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0833",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0834",
+          "bullet": true,
+          "domain": null
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "blockId": "text-0835",
+          "domain": null
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "text-0836",
+              "text-0837",
+              "text-0838",
+              "text-0839"
+            ],
+            [
+              "text-0840",
+              "text-0841",
+              "text-0842",
+              "text-0843"
+            ],
+            [
+              "text-0844",
+              "text-0845",
+              "text-0846",
+              "text-0847"
+            ],
+            [
+              "text-0848",
+              "text-0849",
+              "text-0850",
+              "text-0851"
+            ],
+            [
+              "text-0852",
+              "text-0853",
+              "text-0854",
+              "text-0855"
+            ],
+            [
+              "text-0856",
+              "text-0857",
+              "text-0858",
+              "text-0859"
+            ],
+            [
+              "text-0860",
+              "text-0861",
+              "text-0862",
+              "text-0863"
+            ],
+            [
+              "text-0864",
+              "text-0865",
+              "text-0866",
+              "text-0867"
+            ],
+            [
+              "text-0868",
+              "text-0869",
+              "text-0870",
+              "text-0871"
+            ],
+            [
+              "text-0872",
+              "text-0873",
+              "text-0874",
+              "text-0875"
+            ],
+            [
+              "text-0876",
+              "text-0877",
+              "text-0878",
+              "text-0879"
+            ],
+            [
+              "text-0880",
+              "text-0881",
+              "text-0882",
+              "text-0883"
+            ],
+            [
+              "text-0884",
+              "text-0885",
+              "text-0886",
+              "text-0887"
+            ],
+            [
+              "text-0888",
+              "text-0889",
+              "text-0890",
+              "text-0891"
+            ],
+            [
+              "text-0892",
+              "text-0893",
+              "text-0894",
+              "text-0895"
+            ],
+            [
+              "text-0896",
+              "text-0897",
+              "text-0898",
+              "text-0899"
+            ],
+            [
+              "text-0900",
+              "text-0901",
+              "text-0902",
+              "text-0903"
+            ],
+            [
+              "text-0904",
+              "text-0905",
+              "text-0906",
+              "text-0907"
+            ],
+            [
+              "text-0908",
+              "text-0909",
+              "text-0910",
+              "text-0911"
+            ],
+            [
+              "text-0912",
+              "text-0913",
+              "text-0914",
+              "text-0915"
+            ],
+            [
+              "text-0916",
+              "text-0917",
+              "text-0918",
+              "text-0919"
+            ],
+            [
+              "text-0920",
+              "text-0921",
+              "text-0922",
+              "text-0923"
+            ],
+            [
+              "text-0924",
+              "text-0925",
+              "text-0926",
+              "text-0927"
+            ],
+            [
+              "text-0928",
+              "text-0929",
+              "text-0930",
+              "text-0931"
+            ],
+            [
+              "text-0932",
+              "text-0933",
+              "text-0934",
+              "text-0935"
+            ]
+          ],
+          "domain": null
+        },
+        {
+          "type": "paragraph",
+          "blockId": "text-0936",
+          "bullet": false,
+          "domain": null
+        }
+      ],
+      "titleBlockId": "chapter-9-title"
+    }
+  ],
+  "blocks": {
+    "text-0001": {
+      "id": "text-0001",
+      "text": "高校双创平台面向参赛项目团队、高校双创管理者、辅导导师和平台运营者，围绕“项目建档与材料管理—AI 诊断与打磨—路演答辩训练—导师整改复核—学校分层培育”建立协作闭环。平台以同一项目的材料、版本、评分、待办和辅导工单为连接点，让团队完成备赛工作，让导师检验修改成果，让学校掌握项目进展和资源投入。"
+    },
+    "text-0002": {
+      "id": "text-0002",
+      "text": "本版将产品划分为 5 个一级业务模块、122 项产品功能。原 17 个页面模块下沉为能力分组，原“共享能力”按职责分拆。其中，项目团队侧覆盖统一 AI 教练、项目工作台、生成物审核、全链路指导、答辩训练和资产管理；学校侧覆盖初筛、调度、驾驶舱及组织管理；导师侧承担辅导工单闭环；平台侧提供全国导师与赛事知识资源。赛事规则、历史案例和专家经验作为共享能力统一定义。"
+    },
+    "text-0003": {
+      "id": "text-0003",
+      "text": "需求基线优先级：最新版 Demo ＞ 早期客户产品定义。 早期文档用于解释业务目标和分类；与 Demo 不同的功能归属、阶段名称、页面组织，以当前 Demo 为基线。早期提出而当前没有完整业务入口的内容，集中列入范围待确认表，不混入已呈现功能。"
+    },
+    "text-0004": {
+      "id": "text-0004",
+      "text": "证据口径： 已完成门户动态提取，并读取当前网站公开交付的前端资源，核对角色菜单、页面组件、表单、状态和事件定义。除门户外，本轮浏览器交互通道超时，未逐页点击验证。下文“Demo 功能细节”指原型中存在的定义，不代表后端、模型、持久化或外部服务已经可用。“PRD 规则与验收草案”是供评审的规范化要求，需在研发细化时确认。本版没有把 Demo 的示例项目、评分和报告内容作为真实业务数据。"
+    },
+    "text-0005": {
+      "id": "text-0005",
+      "text": "本版覆盖功能架构、三级功能清单、关键流程、数据对象、权限原则、验收基线和待确认事项；不承诺工期，不替代技术架构、接口设计和正式赛事规则核验。OPC 孵化、政策申报、投融资是客户期望的后续业务方向，当前以知识查询与资源信息承载为主。"
+    },
+    "text-0006": {
+      "id": "text-0006",
+      "text": "2.1 角色职责"
+    },
+    "text-0007": {
+      "id": "text-0007",
+      "text": "角色"
+    },
+    "text-0008": {
+      "id": "text-0008",
+      "text": "主要目标"
+    },
+    "text-0009": {
+      "id": "text-0009",
+      "text": "当前主要入口"
+    },
+    "text-0010": {
+      "id": "text-0010",
+      "text": "权限边界草案"
+    },
+    "text-0011": {
+      "id": "text-0011",
+      "text": "项目组成员"
+    },
+    "text-0012": {
+      "id": "text-0012",
+      "text": "形成和提升项目材料，完成整改与训练"
+    },
+    "text-0013": {
+      "id": "text-0013",
+      "text": "AI 教练、项目工作台、全链路指导、答辩训练、资产管理"
+    },
+    "text-0014": {
+      "id": "text-0014",
+      "text": "访问所属项目；队长和成员的提交、审核、归档权限需细分"
+    },
+    "text-0015": {
+      "id": "text-0015",
+      "text": "高校双创管理者"
+    },
+    "text-0016": {
+      "id": "text-0016",
+      "text": "挖掘项目、初筛分层、投入导师资源并追踪进度"
+    },
+    "text-0017": {
+      "id": "text-0017",
+      "text": "学校驾驶舱、初筛、辅导调度、督导、知识库、组织管理"
+    },
+    "text-0018": {
+      "id": "text-0018",
+      "text": "限本校；学院秘书按学院授权，跨学院项目需明确归属"
+    },
+    "text-0019": {
+      "id": "text-0019",
+      "text": "导师及评审专家"
+    },
+    "text-0020": {
+      "id": "text-0020",
+      "text": "接受指导邀请、审阅材料、形成可执行建议并复核"
+    },
+    "text-0021": {
+      "id": "text-0021",
+      "text": "导师端项目辅导与督导工单"
+    },
+    "text-0022": {
+      "id": "text-0022",
+      "text": "限已接受邀请或明确授权的项目；支持多导师协同"
+    },
+    "text-0023": {
+      "id": "text-0023",
+      "text": "平台管理员"
+    },
+    "text-0024": {
+      "id": "text-0024",
+      "text": "维护跨校导师资源和公共赛事知识"
+    },
+    "text-0025": {
+      "id": "text-0025",
+      "text": "平台导师智库、平台赛事知识库"
+    },
+    "text-0026": {
+      "id": "text-0026",
+      "text": "管理公共资源；访问学校私有材料需要独立授权"
+    },
+    "text-0027": {
+      "id": "text-0027",
+      "text": "指导教师是业务身份，Demo 在用户、团队和导师信息中有所呈现；是否拥有独立工作台或复用导师端，列为待确认。政府、投资机构和校友创业者是早期目标用户，当前未形成独立门户。"
+    },
+    "text-0028": {
+      "id": "text-0028",
+      "text": "2.2 五个一级业务模块"
+    },
+    "text-0029": {
+      "id": "text-0029",
+      "text": "一级模块按业务对象、生命周期与数据归属划分。项目组、学校、导师、平台是使用入口，同一业务模块可被多个入口调用。每项功能只指定一个主归属，其他模块通过接口或事件协同。"
+    },
+    "text-0030": {
+      "id": "text-0030",
+      "text": "一级模块"
+    },
+    "text-0031": {
+      "id": "text-0031",
+      "text": "建议代码目录"
+    },
+    "text-0032": {
+      "id": "text-0032",
+      "text": "负责的业务对象"
+    },
+    "text-0033": {
+      "id": "text-0033",
+      "text": "主要职责"
+    },
+    "text-0034": {
+      "id": "text-0034",
+      "text": "D01 项目与资产"
+    },
+    "text-0035": {
+      "id": "text-0035",
+      "text": "modules/project"
+    },
+    "text-0036": {
+      "id": "text-0036",
+      "text": "学校与账号范围、项目与团队、文件、材料版本、归档与提交记录"
+    },
+    "text-0037": {
+      "id": "text-0037",
+      "text": "管理项目、组织关系和可追溯的材料资产。"
+    },
+    "text-0038": {
+      "id": "text-0038",
+      "text": "D02 智能备赛"
+    },
+    "text-0039": {
+      "id": "text-0039",
+      "text": "modules/coaching"
+    },
+    "text-0040": {
+      "id": "text-0040",
+      "text": "AI 会话与任务、诊断报告、候选产物及审核、BP 编辑、训练会话、AI 使用与反馈"
+    },
+    "text-0041": {
+      "id": "text-0041",
+      "text": "把项目材料转化为诊断、改稿与训练成果。"
+    },
+    "text-0042": {
+      "id": "text-0042",
+      "text": "D03 导师辅导"
+    },
+    "text-0043": {
+      "id": "text-0043",
+      "text": "modules/mentoring"
+    },
+    "text-0044": {
+      "id": "text-0044",
+      "text": "校内外与平台导师档案、聘任关系、容量排期、指导邀请、会议纪要、辅导工单、回执与验收"
+    },
+    "text-0045": {
+      "id": "text-0045",
+      "text": "组织导师服务并完成从指导到整改验收的闭环。"
+    },
+    "text-0046": {
+      "id": "text-0046",
+      "text": "D04 赛事培育"
+    },
+    "text-0047": {
+      "id": "text-0047",
+      "text": "modules/competition"
+    },
+    "text-0048": {
+      "id": "text-0048",
+      "text": "赛事批次、初筛与人工复核结果、梯队、重点项目池、赛事阶段、预警及统计快照"
+    },
+    "text-0049": {
+      "id": "text-0049",
+      "text": "面向学校完成初筛分层、阶段培育与成效管理。"
+    },
+    "text-0050": {
+      "id": "text-0050",
+      "text": "D05 知识与规则"
+    },
+    "text-0051": {
+      "id": "text-0051",
+      "text": "modules/knowledge"
+    },
+    "text-0052": {
+      "id": "text-0052",
+      "text": "校本及公共知识库、知识文档与索引、规则版本、案例、专家经验与审核记录"
+    },
+    "text-0053": {
+      "id": "text-0053",
+      "text": "维护有来源、可授权、可发布的知识与赛事规则。"
+    },
+    "text-0054": {
+      "id": "text-0054",
+      "text": "2.3 模块边界与协作契约"
+    },
+    "text-0055": {
+      "id": "text-0055",
+      "text": "D01 项目与资产： 项目工作台是聚合视图。工单状态由导师辅导维护，诊断结果由智能备赛维护，梯队与赛事阶段由赛事培育维护；工作台只引用，不重复维护。 输出项目授权、文件引用、版本快照及材料解析结果；接收导入建档与已确认产物的归档命令。"
+    },
+    "text-0056": {
+      "id": "text-0056",
+      "text": "D02 智能备赛： 引用固定材料版本和已发布规则。确认产物经项目与资产归档；不直接改写正式工单结论、学校选拔结果或已发布赛事规则。 消费项目材料、知识引用与规则版本；输出诊断、候选改稿、训练报告及待办建议，供团队与导师使用。"
+    },
+    "text-0057": {
+      "id": "text-0057",
+      "text": "D03 导师辅导： 校本和平台导师共用导师主档，通过学校聘任及服务范围区分。批量辅导使用赛事培育提供的项目名单快照；材料归档和 AI 分析分别委托对应业务域。 消费项目授权、材料版本及梯队名单；输出邀请响应、工单状态、验收结果与导师投入数据。"
+    },
+    "text-0058": {
+      "id": "text-0058",
+      "text": "D04 赛事培育： 导入负责批次与核验流程，项目主档委托项目与资产创建；正式规则来自知识与规则，辅导执行来自导师辅导。驾驶舱聚合各域事实，不形成第二套工单或评分主账。 消费项目、评分依据、辅导事件；输出梯队名单、培育阶段、预警与可复算的管理统计。"
+    },
+    "text-0059": {
+      "id": "text-0059",
+      "text": "D05 知识与规则： 校本与公共资源按作用域和授权区分。发布知识不自动更改评分；规则发布需独立版本与责任人。项目私有材料不自动转入公共知识。 输出带来源和版本的检索结果、评分规则及案例经验；接收经授权脱敏的辅导经验候选。"
+    },
+    "text-0060": {
+      "id": "text-0060",
+      "text": "仓库与服务映射建议： 首期可在同一代码仓库中按 modules/project、modules/coaching、modules/mentoring、modules/competition、modules/knowledge 建立模块。每个模块封装自己的写入逻辑、业务状态和对外契约；禁止跨模块直接改写对方业务表。跨域查询可用只读聚合视图，跨域命令调用明确接口，状态更新通过带版本的事件同步。"
+    },
+    "text-0061": {
+      "id": "text-0061",
+      "text": "独立服务的拆分条件： 五个模块是可演进的业务边界，不意味着现在就部署五个服务。AI 长任务可按耗时和弹性需求先拆执行进程，文件存储、模型网关、消息投递、日志等作为技术公共设施；是否拆独立仓库或服务，由团队所有权、发布频率、负载和事务一致性决定，避免按页面拆服务。"
+    },
+    "text-0062": {
+      "id": "text-0062",
+      "text": "跨域关键契约： 项目授权与材料快照归项目与资产；诊断完成与候选改稿归智能备赛；工单下发、团队提交与导师验收归导师辅导；梯队及赛事阶段调整归赛事培育；规则及知识发布归知识与规则。契约至少携带对象标识、学校范围、版本、操作人与时间，消费者按事件编号去重。"
+    },
+    "text-0063": {
+      "id": "text-0063",
+      "text": "2.4 产品层次与协作关系"
+    },
+    "text-0064": {
+      "id": "text-0064",
+      "text": "用户入口层： 项目组端、学校端、导师端、平台端。"
+    },
+    "text-0065": {
+      "id": "text-0065",
+      "text": "业务工作层： 项目组完成咨询、材料打磨与训练；学校组织初筛和分层培育；导师对整改工单进行复核；平台维护公共资源。"
+    },
+    "text-0066": {
+      "id": "text-0066",
+      "text": "共享业务对象层： 学校、用户、项目、团队、文件资产、材料版本、诊断报告、训练记录、辅导工单、导师档案、知识库及规则版本。统一 AI 对话中的独立咨询可以没有项目，但进入项目诊断、归档或导师流程时应绑定项目。"
+    },
+    "text-0067": {
+      "id": "text-0067",
+      "text": "能力支撑层： 材料理解、知识检索、评分诊断、章节生成、问答追问、转写摘要、版本比较和统计汇报。这是产品能力分层，不预设微服务、多 Agent 或其他技术选型。"
+    },
+    "text-0068": {
+      "id": "text-0068",
+      "text": "三个主要闭环：① 团队材料 → AI 诊断 → 修改审核 → 版本归档 → 再诊断；② 学校指派 → 导师接受 → 辅导纪要 → 工单整改 → 导师验收；③ 项目状态与评分 → 学校短板洞察 → 导师及任务投入 → 培育成效复盘。"
+    },
+    "text-0069": {
+      "id": "text-0069",
+      "text": "层级为“一级业务模块 → 产品功能 → 功能细节”；保留能力分组便于阅读。M01—M17 是初稿沿用的追溯编号，不代表新版一级模块，更不直接对应独立服务。每个功能只出现一次；原 M17 六项功能分别进入项目与资产、智能备赛、知识与规则。"
+    },
+    "text-0070": {
+      "id": "text-0070",
+      "text": "左侧记录 Demo 定义，右侧记录 PRD 规则与验收草案；补充和待确认内容保持原有标识。团队勾选仅表示审阅人认可当前需求文本，不等同于研发实现或产品验收。"
+    },
+    "text-0071": {
+      "id": "text-0071",
+      "text": "D01 项目与资产"
+    },
+    "text-0072": {
+      "id": "text-0072",
+      "text": "管理项目、组织关系和可追溯的材料资产。"
+    },
+    "text-0073": {
+      "id": "text-0073",
+      "text": "M01 门户与身份上下文"
+    },
+    "text-0074": {
+      "id": "text-0074",
+      "text": "用户及入口：全部角色，统一门户及左侧账号区。目标：让用户进入正确学校、角色和项目的工作环境。来源 D01、D02。"
+    },
+    "M01-01-name": {
+      "id": "M01-01-name",
+      "text": "四端身份选择"
+    },
+    "M01-01-detail": {
+      "id": "M01-01-detail",
+      "text": "提供项目组成员、学校管理端、导师端、Admin 端四个身份入口；各端显示不同登录说明和推荐测试账号。"
+    },
+    "M01-01-rule": {
+      "id": "M01-01-rule",
+      "text": "登录后展示对应菜单和默认工作台；测试账号是演示机制，不作为生产注册流程。"
+    },
+    "M01-02-name": {
+      "id": "M01-02-name",
+      "text": "学校选择与登录"
+    },
+    "M01-02-detail": {
+      "id": "M01-02-detail",
+      "text": "项目组和学校端要求选择高校；支持高校快捷选择，账号提示学号、手机号或邮箱，并呈现密码、姓名、学院专业字段。"
+    },
+    "M01-02-rule": {
+      "id": "M01-02-rule",
+      "text": "学校必填；账号与学校身份匹配；错误时给出可恢复提示，不能因切换学校取得额外权限。"
+    },
+    "M01-03-name": {
+      "id": "M01-03-name",
+      "text": "统一认证入口"
+    },
+    "M01-03-detail": {
+      "id": "M01-03-detail",
+      "text": "门户说明支持 CAS、OAuth2.0、统一学工号；学校用户页也呈现同步说明。"
+    },
+    "M01-03-rule": {
+      "id": "M01-03-rule",
+      "text": "属能力文案，未验证接入。认证来源、首次绑定、离校停用和异常处理由学校接口条件确认。"
+    },
+    "M01-04-name": {
+      "id": "M01-04-name",
+      "text": "角色工作台与账号切换"
+    },
+    "M01-04-detail": {
+      "id": "M01-04-detail",
+      "text": "团队默认进入 AI 对话，学校进入驾驶舱，导师进入督导工单，Admin 进入平台导师库；支持切换登录端、账号和退出。"
+    },
+    "M01-04-rule": {
+      "id": "M01-04-rule",
+      "text": "切换时清理旧角色可见数据；未保存工作提示处理；权限校验不能只依赖前端菜单。"
+    },
+    "M01-05-name": {
+      "id": "M01-05-name",
+      "text": "当前项目全局选择"
+    },
+    "M01-05-detail": {
+      "id": "M01-05-detail",
+      "text": "团队侧可检索项目名称、编号、负责人，选择当前参赛项目；菜单说明项目工作台、指导、答辩、资产联动。"
+    },
+    "M01-05-rule": {
+      "id": "M01-05-rule",
+      "text": "项目切换后材料、任务、训练及资产指向同一项目；独立咨询与项目咨询的上下文须明确提示。"
+    },
+    "text-0090": {
+      "id": "text-0090",
+      "text": "M02 项目工作台与团队整改"
+    },
+    "text-0091": {
+      "id": "text-0091",
+      "text": "用户及入口：项目组成员，项目工作台。目标：把诊断发现、导师要求和待交付材料组织为日常执行入口。来源 D03。"
+    },
+    "M02-01-name": {
+      "id": "M02-01-name",
+      "text": "项目概览与对标画像"
+    },
+    "M02-01-detail": {
+      "id": "M02-01-detail",
+      "text": "呈现项目编号、负责人、指导教师、辅导专家、阶段、梯队、评分、金奖匹配度和 AI 置信度；可查看评分细则。"
+    },
+    "M02-01-rule": {
+      "id": "M02-01-rule",
+      "text": "输出当前项目画像；每个分数关联材料版本、评审口径和生成时间；匹配度不解释为获奖概率。"
+    },
+    "M02-02-name": {
+      "id": "M02-02-name",
+      "text": "动态待办聚合"
+    },
+    "M02-02-detail": {
+      "id": "M02-02-detail",
+      "text": "区分 AI 诊断生成的待办和专家下发工单；展示任务来源、责任人、限期、优先级及完成情况。"
+    },
+    "M02-02-rule": {
+      "id": "M02-02-rule",
+      "text": "同一任务保留唯一来源；AI 建议需明确是否已转正式任务；列表可区分未开始、进行中、已提交、已完成。"
+    },
+    "M02-03-name": {
+      "id": "M02-03-name",
+      "text": "携带任务进入指导"
+    },
+    "M02-03-detail": {
+      "id": "M02-03-detail",
+      "text": "点击“去执行”进入全链路指导，带入任务上下文与相关章节；指导工作台提供“完成并回写待办”。"
+    },
+    "M02-03-rule": {
+      "id": "M02-03-rule",
+      "text": "进入后可定位章节，返回后能查到对应材料版本；只有声明完成不等于导师验收通过。"
+    },
+    "M02-04-name": {
+      "id": "M02-04-name",
+      "text": "专家工单查看"
+    },
+    "M02-04-detail": {
+      "id": "M02-04-detail",
+      "text": "查看辅导时间、方式、录音时长、诊断意见、整改清单、任务进度和导师复核结论。"
+    },
+    "M02-04-rule": {
+      "id": "M02-04-rule",
+      "text": "每项整改展示要求、责任人、截止时间与回执；相关人看到同一工单及最新状态。"
+    },
+    "M02-05-name": {
+      "id": "M02-05-name",
+      "text": "整改成果提交"
+    },
+    "M02-05-detail": {
+      "id": "M02-05-detail",
+      "text": "团队勾选整改项，填写修改说明，关联更新后的 BP、PPT，提交并申请导师复核；页面存在模拟选文件提示。"
+    },
+    "M02-05-rule": {
+      "id": "M02-05-rule",
+      "text": "修改说明必填；提交时锁定文件版本和任务回执；上传、实际通知和跨端持久化需要另行验证。"
+    },
+    "M02-06-name": {
+      "id": "M02-06-name",
+      "text": "团队架构与合规摘要"
+    },
+    "M02-06-detail": {
+      "id": "M02-06-detail",
+      "text": "展示成员学号、学院专业、学历、队内分工、专利权属、联系方式以及学校审核意见。"
+    },
+    "M02-06-rule": {
+      "id": "M02-06-rule",
+      "text": "复用 M13 团队档案；团队成员只看授权范围内信息；修改档案的发起、审核权限待确认。"
+    },
+    "M02-07-name": {
+      "id": "M02-07-name",
+      "text": "项目文件夹与更改记录"
+    },
+    "M02-07-detail": {
+      "id": "M02-07-detail",
+      "text": "区分团队上传、系统生成和会话产物；会话文件先进入待归档区，经确认存入项目文件夹；更改记录显示谁、何时、动作、来源和版本。"
+    },
+    "M02-07-rule": {
+      "id": "M02-07-rule",
+      "text": "文件记录与 M07 同源；大事记在此定义为文件更改记录，业务辅导事件由工单记录承载。"
+    },
+    "text-0113": {
+      "id": "text-0113",
+      "text": "M07 项目资产与版本管理"
+    },
+    "text-0114": {
+      "id": "text-0114",
+      "text": "用户及入口：项目资产管理系统。目标：为申报材料、生成物与佐证材料建立统一目录和版本追溯。来源 D08。"
+    },
+    "M07-01-name": {
+      "id": "M07-01-name",
+      "text": "项目文件目录"
+    },
+    "M07-01-detail": {
+      "id": "M07-01-detail",
+      "text": "支持目录树、根目录、返回上级、文件表格和多模态卡片；展示名称、类型、大小、提交说明和时间。"
+    },
+    "M07-01-rule": {
+      "id": "M07-01-rule",
+      "text": "目录属于当前项目；文件有稳定标识；移动或重命名不破坏历史引用。"
+    },
+    "M07-02-name": {
+      "id": "M07-02-name",
+      "text": "多格式预览"
+    },
+    "M07-02-detail": {
+      "id": "M07-02-detail",
+      "text": "呈现 Markdown 与文本、PPT 缩略页、PDF、Excel 财务表、视频及源码视图；可切换渲染与纯文本。"
+    },
+    "M07-02-rule": {
+      "id": "M07-02-rule",
+      "text": "预览为实际文件内容；不支持的格式仍可登记下载；复杂文档保真度需按样本验证。"
+    },
+    "M07-03-name": {
+      "id": "M07-03-name",
+      "text": "资产新增与归档"
+    },
+    "M07-03-detail": {
+      "id": "M07-03-detail",
+      "text": "表单包含文件名、目标目录、资产类型、说明，支持 Word、PPT、Excel、PDF、代码等类型。"
+    },
+    "M07-03-rule": {
+      "id": "M07-03-rule",
+      "text": "实际文件上传与仅登记信息须区分；新资产关联来源和提交人；不得只有文件名而显示上传成功。"
+    },
+    "M07-04-name": {
+      "id": "M07-04-name",
+      "text": "复制与导出"
+    },
+    "M07-04-detail": {
+      "id": "M07-04-detail",
+      "text": "可复制路径、内容或摘要，下载单文件及导出清单；部分下载由前端生成内容。"
+    },
+    "M07-04-rule": {
+      "id": "M07-04-rule",
+      "text": "下载保留正确格式、编码及扩展名；清单能还原当前资产范围，导出前按权限过滤。"
+    },
+    "M07-05-name": {
+      "id": "M07-05-name",
+      "text": "版本时间线"
+    },
+    "M07-05-detail": {
+      "id": "M07-05-detail",
+      "text": "采用单主线的 Git 式演进视图，展示提交人、摘要、时间、版本标签、提交标识和作者筛选。"
+    },
+    "M07-05-rule": {
+      "id": "M07-05-rule",
+      "text": "“Git 模式”是交互表达，不预设采用 Git 服务；每次提交记录资产集合及变更。"
+    },
+    "M07-06-name": {
+      "id": "M07-06-name",
+      "text": "历史资产快照"
+    },
+    "M07-06-detail": {
+      "id": "M07-06-detail",
+      "text": "可进入历史版本查看当时的完整资产，返回最新版本；目录和中间预览随版本变化。"
+    },
+    "M07-06-rule": {
+      "id": "M07-06-rule",
+      "text": "历史文件集合及内容均可还原；明确当前处于历史只读状态，防止误把旧版当最新提交。"
+    },
+    "M07-07-name": {
+      "id": "M07-07-name",
+      "text": "文件级差异对比"
+    },
+    "M07-07-detail": {
+      "id": "M07-07-detail",
+      "text": "通过“查看 diff”展示变更文件、新增删除数量、变化说明和逐行差异。"
+    },
+    "M07-07-rule": {
+      "id": "M07-07-rule",
+      "text": "文本可逐行对比；二进制材料采用页级、摘要或元数据差异，不能虚构逐行差异。"
+    },
+    "M07-08-name": {
+      "id": "M07-08-name",
+      "text": "跨入口统一归档"
+    },
+    "M07-08-detail": {
+      "id": "M07-08-detail",
+      "text": "项目工作台、AI 生成物和 BP 快照均涉及资产来源和版本；Demo 有多个相关入口。"
+    },
+    "M07-08-rule": {
+      "id": "M07-08-rule",
+      "text": "建立一个文件与版本主账，M02、M04、M05 为不同视图；引用关系与回滚边界见第5章。"
+    },
+    "text-0139": {
+      "id": "text-0139",
+      "text": "M13 用户权限与团队架构管理"
+    },
+    "text-0140": {
+      "id": "text-0140",
+      "text": "用户及入口：学校端用户与权限管理、项目团队架构管理。目标：建立学校、学院、人员与项目之间的可信关系。来源 D18、D19。"
+    },
+    "M13-01-name": {
+      "id": "M13-01-name",
+      "text": "用户检索与账号状态"
+    },
+    "M13-01-detail": {
+      "id": "M13-01-detail",
+      "text": "按姓名、工学号、邮箱、角色、单位及状态筛选，查看关联项目或指导数量；可启停账号。"
+    },
+    "M13-01-rule": {
+      "id": "M13-01-rule",
+      "text": "停用后停止登录及访问，历史操作保留；学院用户不能扩大到全校范围。"
+    },
+    "M13-02-name": {
+      "id": "M13-02-name",
+      "text": "注册用户与角色分配"
+    },
+    "M13-02-detail": {
+      "id": "M13-02-detail",
+      "text": "录入姓名、工学号、单位、邮箱和手机号，分配校级管理员、学院秘书、专家、指导教师、学生负责人。"
+    },
+    "M13-02-rule": {
+      "id": "M13-02-rule",
+      "text": "角色与数据范围分别配置；同一人多身份、跨院归属和导入账号去重待确认。"
+    },
+    "M13-03-name": {
+      "id": "M13-03-name",
+      "text": "激活与密码管理"
+    },
+    "M13-03-detail": {
+      "id": "M13-03-detail",
+      "text": "展示重置密码、短信和邮件激活、首次登录验证及修改初始密码的产品说明。"
+    },
+    "M13-03-rule": {
+      "id": "M13-03-rule",
+      "text": "实际消息投递和密码流程尚未验证；账号安全机制依据学校认证方式设计。"
+    },
+    "M13-04-name": {
+      "id": "M13-04-name",
+      "text": "团队结构总览"
+    },
+    "M13-04-detail": {
+      "id": "M13-04-detail",
+      "text": "统计团队数、跨学科团队、财务商业专人配置、核心发明人入队，按核验状态和跨学院条件筛选。"
+    },
+    "M13-04-rule": {
+      "id": "M13-04-rule",
+      "text": "统计来自团队档案；“建议配置”与“参赛硬性资格”分开，不能用示例偏好替代正式规则。"
+    },
+    "M13-05-name": {
+      "id": "M13-05-name",
+      "text": "成员与分工档案"
+    },
+    "M13-05-detail": {
+      "id": "M13-05-detail",
+      "text": "查看队长、指导教师、成员姓名、工学号、学段专业、学院、实质分工、发明人标记及联络信息。"
+    },
+    "M13-05-rule": {
+      "id": "M13-05-rule",
+      "text": "维护入口、成员邀请及真实性核验待确认；只采集必要字段，历史团队版本可追溯。"
+    },
+    "M13-06-name": {
+      "id": "M13-06-name",
+      "text": "团队核验与整改"
+    },
+    "M13-06-detail": {
+      "id": "M13-06-detail",
+      "text": "展示通过、待补充、高风险状态及诊断意见，提供全校合规扫描、整改催办和项目档案下钻。"
+    },
+    "M13-06-rule": {
+      "id": "M13-06-rule",
+      "text": "自动检查给证据和依据；由授权学校人员复核；整改进入任务闭环而非仅提示成功。"
+    },
+    "text-0159": {
+      "id": "text-0159",
+      "text": "D01-S 材料解析与上下文"
+    },
+    "text-0160": {
+      "id": "text-0160",
+      "text": "由初稿共享能力按业务归属归并。来源 D24，保留原功能编号。"
+    },
+    "M17-01-name": {
+      "id": "M17-01-name",
+      "text": "材料解析与上下文组织"
+    },
+    "M17-01-detail": {
+      "id": "M17-01-detail",
+      "text": "多个页面调用项目材料、原文佐证、知识要点和跨文件信息。"
+    },
+    "M17-01-rule": {
+      "id": "M17-01-rule",
+      "text": "统一文件、版本、章节页码、解析状态；问答、诊断、训练及复核基于同一材料快照。"
+    },
+    "text-0164": {
+      "id": "text-0164",
+      "text": "D02 智能备赛"
+    },
+    "text-0165": {
+      "id": "text-0165",
+      "text": "把项目材料转化为诊断、改稿与训练成果。"
+    },
+    "text-0166": {
+      "id": "text-0166",
+      "text": "M03 统一 AI 备赛教练"
+    },
+    "text-0167": {
+      "id": "text-0167",
+      "text": "用户及入口：团队端为主要使用者，学校端也有新建对话入口。目标：在统一会话中查询知识、分析材料和调用诊断、答辩能力。来源 D04；早期文档 4.1。"
+    },
+    "M03-01-name": {
+      "id": "M03-01-name",
+      "text": "新建对话与历史管理"
+    },
+    "M03-01-detail": {
+      "id": "M03-01-detail",
+      "text": "提供新建对话、快捷提示词、会话历史与标题管理；保留独立咨询及项目工作空间的产品概念。"
+    },
+    "M03-01-rule": {
+      "id": "M03-01-rule",
+      "text": "保存用户输入、输出和上下文归属；检索、重命名、删除的权限与恢复策略待细化。"
+    },
+    "M03-02-name": {
+      "id": "M03-02-name",
+      "text": "项目材料引用"
+    },
+    "M03-02-detail": {
+      "id": "M03-02-detail",
+      "text": "对话可关联 BP、PPT、VCR、佐证附件；显示引用状态及关联诊断、答辩记录。"
+    },
+    "M03-02-rule": {
+      "id": "M03-02-rule",
+      "text": "引用具体文件版本；回答中区分材料事实、知识引用和 AI 建议；未绑定项目时不默认访问其他项目。"
+    },
+    "M03-03-name": {
+      "id": "M03-03-name",
+      "text": "赛事政策与规则问答"
+    },
+    "M03-03-detail": {
+      "id": "M03-03-detail",
+      "text": "围绕赛道组别、资格门槛、评分重点、申报边界等回答，输出规则对比及依据来源。"
+    },
+    "M03-03-rule": {
+      "id": "M03-03-rule",
+      "text": "依据绑定届次、赛道、版本、条款与文件；来源缺失或冲突时明确提示，由学校维护正式口径。"
+    },
+    "M03-04-name": {
+      "id": "M03-04-name",
+      "text": "BP 与 PPT 备赛诊断"
+    },
+    "M03-04-detail": {
+      "id": "M03-04-detail",
+      "text": "分析商业模式、市场逻辑、创新点、壁垒、PPT 前三页和开场白，呈现问题、雷达短板及修改建议。"
+    },
+    "M03-04-rule": {
+      "id": "M03-04-rule",
+      "text": "问题定位到材料或章节；建议说明补什么、改哪里；用户可继续追问或转 M05 深度处理。"
+    },
+    "M03-05-name": {
+      "id": "M03-05-name",
+      "text": "历史标杆与竞品调研"
+    },
+    "M03-05-detail": {
+      "id": "M03-05-detail",
+      "text": "展示历史优秀项目摘要、亮点、可借鉴做法，提供竞品矩阵、市场痛点和差异化思路。"
+    },
+    "M03-05-rule": {
+      "id": "M03-05-rule",
+      "text": "标杆数据有授权及来源；案例经验与事实分开；外部市场信息注明时点，不复制示例数据作为结论。"
+    },
+    "M03-06-name": {
+      "id": "M03-06-name",
+      "text": "校内智库与资源查询"
+    },
+    "M03-06-detail": {
+      "id": "M03-06-detail",
+      "text": "查询校本扶持、实验室、导师、资金与报销流程，呈现学校专属资源信息。"
+    },
+    "M03-06-rule": {
+      "id": "M03-06-rule",
+      "text": "依据当前学校限定检索范围；政策有效期和办理入口可追溯；此功能不等同于完成申报或报销审批。"
+    },
+    "M03-07-name": {
+      "id": "M03-07-name",
+      "text": "轻量专项调用"
+    },
+    "M03-07-detail": {
+      "id": "M03-07-detail",
+      "text": "会话内呈现章节速诊、创新壁垒自测、一次生成五道质询题等结果；可切换考官、复制问题并升级完整流程。"
+    },
+    "M03-07-rule": {
+      "id": "M03-07-rule",
+      "text": "保留当前材料和项目上下文；输出结构化结果卡；调用失败应保留对话，不把失败写成成功。"
+    },
+    "M03-08-name": {
+      "id": "M03-08-name",
+      "text": "深度诊断与答辩调用"
+    },
+    "M03-08-detail": {
+      "id": "M03-08-detail",
+      "text": "识别完整诊断或答辩意图后，选择物料、诊断重点或考官风格、计算深度，确认执行，展示进度及结果回传。"
+    },
+    "M03-08-rule": {
+      "id": "M03-08-rule",
+      "text": "形成任务记录及配置快照；支持取消和失败恢复。当前资源含“2秒模拟调用”，真实耗时与执行机制待落地。"
+    },
+    "M03-09-name": {
+      "id": "M03-09-name",
+      "text": "下一步建议与反馈"
+    },
+    "M03-09-detail": {
+      "id": "M03-09-detail",
+      "text": "结果卡给出可点击的后续问题，填入会话继续推进；支持点赞、点踩和查看运营指标。"
+    },
+    "M03-09-rule": {
+      "id": "M03-09-rule",
+      "text": "建议可转任务或生成物；记录反馈原因与对应结果；反馈进入审核队列，不直接改变正式规则。"
+    },
+    "text-0195": {
+      "id": "text-0195",
+      "text": "M04 生成物检视与修改审核"
+    },
+    "text-0196": {
+      "id": "text-0196",
+      "text": "用户及入口：AI 对话右侧独立区域。目标：把 AI 输出转为可检查、可修改、可确认的交付物。来源 D05。"
+    },
+    "M04-01-name": {
+      "id": "M04-01-name",
+      "text": "产物目录与多文件切换"
+    },
+    "M04-01-detail": {
+      "id": "M04-01-detail",
+      "text": "展示会话生成的文件卡片和产物清单，可在右侧打开多个文件标签；支持切换、关闭和查看全部产物。"
+    },
+    "M04-01-rule": {
+      "id": "M04-01-rule",
+      "text": "每项记录文件类型、名称、生成会话、时间和状态；同名不同版本不能误覆盖。"
+    },
+    "M04-02-name": {
+      "id": "M04-02-name",
+      "text": "多格式内容预览"
+    },
+    "M04-02-detail": {
+      "id": "M04-02-detail",
+      "text": "右侧呈现文稿、PPT 页面、表格及其他产物预览，可切换全屏、调整左右区域比例。"
+    },
+    "M04-02-rule": {
+      "id": "M04-02-rule",
+      "text": "预览内容对应真实产物；复杂格式不支持时提供说明和原文件下载；不能用固定示例冒充解析结果。"
+    },
+    "M04-03-name": {
+      "id": "M04-03-name",
+      "text": "新增与修改对比"
+    },
+    "M04-03-detail": {
+      "id": "M04-03-detail",
+      "text": "区分新增文件与对现有文件的修改；支持旧版本、AI 新版本以及差异检视。"
+    },
+    "M04-03-rule": {
+      "id": "M04-03-rule",
+      "text": "新增展示完整内容；修改展示基准和候选版本；审核前保留原版本，差异应可定位。"
+    },
+    "M04-04-name": {
+      "id": "M04-04-name",
+      "text": "文本批注"
+    },
+    "M04-04-detail": {
+      "id": "M04-04-detail",
+      "text": "预览组件定义了选择文本、添加批注和移除批注；记录选中文本、意见、作者、时间和版本侧。"
+    },
+    "M04-04-rule": {
+      "id": "M04-04-rule",
+      "text": "批注跟随版本，不因后续改写漂移到无关内容；用户能够定位被评论位置。"
+    },
+    "M04-05-name": {
+      "id": "M04-05-name",
+      "text": "同意 否决与改进"
+    },
+    "M04-05-detail": {
+      "id": "M04-05-detail",
+      "text": "提供同意并合并、否决保留基线、填写改进要求；处理后在对话中回显决定，并继续生成改进版本。"
+    },
+    "M04-05-rule": {
+      "id": "M04-05-rule",
+      "text": "审核状态可追踪；重复点击不重复合并；改进版本需再次确认；有权审核的人群待确认。"
+    },
+    "M04-06-name": {
+      "id": "M04-06-name",
+      "text": "导出与项目归档"
+    },
+    "M04-06-detail": {
+      "id": "M04-06-detail",
+      "text": "提供导出源文件、全部 ZIP 导出；与会话产物入项目文件夹的流程衔接。"
+    },
+    "M04-06-rule": {
+      "id": "M04-06-rule",
+      "text": "导出真实可打开文件；审批通过、进入交付物库与存入项目资产的关系应统一，避免三处各存一份。"
+    },
+    "text-0215": {
+      "id": "text-0215",
+      "text": "M05 全链路智能指导"
+    },
+    "text-0216": {
+      "id": "text-0216",
+      "text": "用户及入口：全链路指导工作台，或从待办、AI 对话进入。目标：按项目阶段打磨材料并保留每轮成果。来源 D06；早期文档 4.2。"
+    },
+    "M05-01-name": {
+      "id": "M05-01-name",
+      "text": "成长阶段导航"
+    },
+    "M05-01-detail": {
+      "id": "M05-01-detail",
+      "text": "阶段定义为 L1 创意激发、L2 可行性验证、L3 材料成型、L4 打磨优化、L5 路演成型、L6 赛前冲刺；每阶段有任务提示和进度。"
+    },
+    "M05-01-rule": {
+      "id": "M05-01-rule",
+      "text": "阶段由项目状态和成果驱动；自动判定与人工调整责任需确认；不与学校赛事阶段共用一套枚举。"
+    },
+    "M05-02-name": {
+      "id": "M05-02-name",
+      "text": "创意与可行性指导"
+    },
+    "M05-02-detail": {
+      "id": "M05-02-detail",
+      "text": "阶段提示覆盖国家战略痛点、用户访谈、跨学科构思、POC、原型和首批客户意向。早期文档补充选题与技术商业可行性分析。"
+    },
+    "M05-02-rule": {
+      "id": "M05-02-rule",
+      "text": "当前主要为阶段导航与指导意图；输入表、引导问答及阶段完成标准需细化，不能按独立引擎已完成验收。"
+    },
+    "M05-03-name": {
+      "id": "M05-03-name",
+      "text": "十二章 BP 工作区"
+    },
+    "M05-03-detail": {
+      "id": "M05-03-detail",
+      "text": "提供标准十二章目录、章节速达、Markdown 源码编辑、排版预览、实时字数和计划书导出入口。"
+    },
+    "M05-03-rule": {
+      "id": "M05-03-rule",
+      "text": "章节内容可编辑保存；目录与正文同步；模板可否按公益、科研、商业项目切换为待确认。"
+    },
+    "M05-04-name": {
+      "id": "M05-04-name",
+      "text": "章节深度诊断"
+    },
+    "M05-04-detail": {
+      "id": "M05-04-detail",
+      "text": "针对当前章调用 AI，展示评委关注点、问题及补强建议；可带入待办关联章节。"
+    },
+    "M05-04-rule": {
+      "id": "M05-04-rule",
+      "text": "输入为当前章节及必要上下文；输出问题位置、原因、建议、佐证缺口，避免单纯给分。"
+    },
+    "M05-05-name": {
+      "id": "M05-05-name",
+      "text": "草稿生成与应用"
+    },
+    "M05-05-detail": {
+      "id": "M05-05-detail",
+      "text": "右侧教练提供提分检查清单、基于当前版本生成修改草稿、查看历史论述，并支持应用至对应章节。"
+    },
+    "M05-05-rule": {
+      "id": "M05-05-rule",
+      "text": "应用前能确认修改范围；应用后生成待保存修改，不覆盖无关章节；保留回退路径。"
+    },
+    "M05-06-name": {
+      "id": "M05-06-name",
+      "text": "全维诊断报告"
+    },
+    "M05-06-detail": {
+      "id": "M05-06-detail",
+      "text": "展示主导创新类型、分诊置信度、原文佐证、待补强项及专家建议的下一步路径。"
+    },
+    "M05-06-rule": {
+      "id": "M05-06-rule",
+      "text": "每个诊断项与章节、依据、整改任务关联；诊断结果与所用材料版本绑定。"
+    },
+    "M05-07-name": {
+      "id": "M05-07-name",
+      "text": "六维评分与趋势"
+    },
+    "M05-07-detail": {
+      "id": "M05-07-detail",
+      "text": "查看创新、技术、商业、团队、表达、社会价值等维度、细项采分点、当前分与历史增量。"
+    },
+    "M05-07-rule": {
+      "id": "M05-07-rule",
+      "text": "能力诊断分与正式评审指标分分开命名；比较同规则同量纲结果，规则变化时标明不可直接比较。"
+    },
+    "M05-08-name": {
+      "id": "M05-08-name",
+      "text": "快照与里程碑"
+    },
+    "M05-08-detail": {
+      "id": "M05-08-detail",
+      "text": "保存当前 BP 内容和相关评分快照，设置里程碑；版本记录带标签、时间、说明和版本类型。"
+    },
+    "M05-08-rule": {
+      "id": "M05-08-rule",
+      "text": "快照不可被后续编辑改写；里程碑记录对应材料集合及确认人；标记里程碑不等于完成正式报名。"
+    },
+    "M05-09-name": {
+      "id": "M05-09-name",
+      "text": "历史预览 差异与回滚"
+    },
+    "M05-09-detail": {
+      "id": "M05-09-detail",
+      "text": "在抽屉查看历史版本，进入只读预览，选择两版或与当前版本对比，并回滚至历史版。"
+    },
+    "M05-09-rule": {
+      "id": "M05-09-rule",
+      "text": "历史只读；回滚形成新的当前版本并保留记录；文本差异与评分差异使用同一对版本。"
+    },
+    "M05-10-name": {
+      "id": "M05-10-name",
+      "text": "任务完成回写"
+    },
+    "M05-10-detail": {
+      "id": "M05-10-detail",
+      "text": "顶部任务条携带来源任务，完成后回写项目待办。"
+    },
+    "M05-10-rule": {
+      "id": "M05-10-rule",
+      "text": "回写任务编号、修改说明和产物版本；存在导师验收环节的任务回写为已提交，不能直接闭环。"
+    },
+    "text-0247": {
+      "id": "text-0247",
+      "text": "当前 BP 十二章结构及指导重点： 以下为 Demo 模板，科研型、公益型等项目的适配模板另行确认。"
+    },
+    "text-0248": {
+      "id": "text-0248",
+      "text": "章节"
+    },
+    "text-0249": {
+      "id": "text-0249",
+      "text": "名称"
+    },
+    "text-0250": {
+      "id": "text-0250",
+      "text": "指导重点"
+    },
+    "text-0251": {
+      "id": "text-0251",
+      "text": "1"
+    },
+    "text-0252": {
+      "id": "text-0252",
+      "text": "执行摘要"
+    },
+    "text-0253": {
+      "id": "text-0253",
+      "text": "痛点、首创突破、核心成果与短时间价值表达"
+    },
+    "text-0254": {
+      "id": "text-0254",
+      "text": "2"
+    },
+    "text-0255": {
+      "id": "text-0255",
+      "text": "项目背景与痛点"
+    },
+    "text-0256": {
+      "id": "text-0256",
+      "text": "需求背景、真实用户痛点、调研与真伪验证"
+    },
+    "text-0257": {
+      "id": "text-0257",
+      "text": "3"
+    },
+    "text-0258": {
+      "id": "text-0258",
+      "text": "产品服务与技术"
+    },
+    "text-0259": {
+      "id": "text-0259",
+      "text": "产品形态、技术原理、专利软著、关键指标"
+    },
+    "text-0260": {
+      "id": "text-0260",
+      "text": "4"
+    },
+    "text-0261": {
+      "id": "text-0261",
+      "text": "市场分析与规模"
+    },
+    "text-0262": {
+      "id": "text-0262",
+      "text": "TAM/SAM/SOM、客户细分与市场规模依据"
+    },
+    "text-0263": {
+      "id": "text-0263",
+      "text": "5"
+    },
+    "text-0264": {
+      "id": "text-0264",
+      "text": "竞争分析与护城河"
+    },
+    "text-0265": {
+      "id": "text-0265",
+      "text": "竞品矩阵、差异化、替代风险与迁移成本"
+    },
+    "text-0266": {
+      "id": "text-0266",
+      "text": "6"
+    },
+    "text-0267": {
+      "id": "text-0267",
+      "text": "商业模式与盈利路径"
+    },
+    "text-0268": {
+      "id": "text-0268",
+      "text": "付费主体、定价、收入来源与持续经营闭环"
+    },
+    "text-0269": {
+      "id": "text-0269",
+      "text": "7"
+    },
+    "text-0270": {
+      "id": "text-0270",
+      "text": "营销推广与获客策略"
+    },
+    "text-0271": {
+      "id": "text-0271",
+      "text": "种子客户、渠道、POC与付费转化路径"
+    },
+    "text-0272": {
+      "id": "text-0272",
+      "text": "8"
+    },
+    "text-0273": {
+      "id": "text-0273",
+      "text": "生产交付与运营体系"
+    },
+    "text-0274": {
+      "id": "text-0274",
+      "text": "供应链、中试、产能、质检与交付保障"
+    },
+    "text-0275": {
+      "id": "text-0275",
+      "text": "9"
+    },
+    "text-0276": {
+      "id": "text-0276",
+      "text": "团队结构与组织协同"
+    },
+    "text-0277": {
+      "id": "text-0277",
+      "text": "成员分工、导师机制、跨学科协作与股权"
+    },
+    "text-0278": {
+      "id": "text-0278",
+      "text": "10"
+    },
+    "text-0279": {
+      "id": "text-0279",
+      "text": "财务预测与融资计划"
+    },
+    "text-0280": {
+      "id": "text-0280",
+      "text": "三张表、单位经济模型、资金用途与敏感性"
+    },
+    "text-0281": {
+      "id": "text-0281",
+      "text": "11"
+    },
+    "text-0282": {
+      "id": "text-0282",
+      "text": "风险防控与应急预案"
+    },
+    "text-0283": {
+      "id": "text-0283",
+      "text": "技术替代、知识产权、成果转化及其他风险"
+    },
+    "text-0284": {
+      "id": "text-0284",
+      "text": "12"
+    },
+    "text-0285": {
+      "id": "text-0285",
+      "text": "社会价值与产业效益"
+    },
+    "text-0286": {
+      "id": "text-0286",
+      "text": "就业、产业贡献、绿色低碳及社会价值"
+    },
+    "text-0287": {
+      "id": "text-0287",
+      "text": "M06 模拟评审与答辩训练"
+    },
+    "text-0288": {
+      "id": "text-0288",
+      "text": "用户及入口：模拟评审与答辩训练，或从 AI 教练调用。目标：从准备、演练到复盘，形成可持续改进的训练记录。来源 D07；早期文档 4.3。"
+    },
+    "M06-01-name": {
+      "id": "M06-01-name",
+      "text": "训练模式选择"
+    },
+    "M06-01-detail": {
+      "id": "M06-01-detail",
+      "text": "六种模式：全真实战路演、标准答辩、电梯演讲、高压追问、弱项突击、对抗性演练；关联当前项目和历史实训记录。"
+    },
+    "M06-01-rule": {
+      "id": "M06-01-rule",
+      "text": "不同模式有独立目标和配置；历史记录注明项目、材料版本、模式和时间。"
+    },
+    "M06-02-name": {
+      "id": "M06-02-name",
+      "text": "评委与难度配置"
+    },
+    "M06-02-detail": {
+      "id": "M06-02-detail",
+      "text": "标准配置含单主审或三人联合席，温和、标准、高压风格；追问、弱项和对抗模式按策略预置评委。"
+    },
+    "M06-02-rule": {
+      "id": "M06-02-rule",
+      "text": "配置生成一次训练任务；训练中更换配置需明确重新开始或保留记录的规则。"
+    },
+    "M06-03-name": {
+      "id": "M06-03-name",
+      "text": "时长与轮次配置"
+    },
+    "M06-03-detail": {
+      "id": "M06-03-detail",
+      "text": "路演提供 3、5、8、10 分钟选项；电梯演讲 1 或 3 分钟；问答自然控场或 3、5、8 题，并配置单题限时。"
+    },
+    "M06-03-rule": {
+      "id": "M06-03-rule",
+      "text": "数值作为 Demo 参数保留，不宣称是通用官方标准；实际按赛事要求配置，超时处理需可解释。"
+    },
+    "M06-04-name": {
+      "id": "M06-04-name",
+      "text": "材料预分析与问题池"
+    },
+    "M06-04-detail": {
+      "id": "M06-04-detail",
+      "text": "进入训练前呈现项目亮点、核心疑点和高频问题池，按材料、赛道及评委关注方向准备问题。"
+    },
+    "M06-04-rule": {
+      "id": "M06-04-rule",
+      "text": "分析使用本次材料版本；区分高频题、针对性题和拓展题；无材料时引导补充。"
+    },
+    "M06-05-name": {
+      "id": "M06-05-name",
+      "text": "路演讲台与提词"
+    },
+    "M06-05-detail": {
+      "id": "M06-05-detail",
+      "text": "提供 16:9 幻灯片区、逐页切换、缩略导航、逐字稿或脱稿要点、记忆锚点、推荐语速和激光指示效果。"
+    },
+    "M06-05-rule": {
+      "id": "M06-05-rule",
+      "text": "幻灯片与讲稿逐页绑定；支持前后页与暂停恢复；模板页数及生成格式待确认。"
+    },
+    "M06-06-name": {
+      "id": "M06-06-name",
+      "text": "路演计时与答辩转场"
+    },
+    "M06-06-detail": {
+      "id": "M06-06-detail",
+      "text": "展示总时限、每页建议与已用时，支持暂停、继续、完成路演后进入现场质询或直接查看报告。"
+    },
+    "M06-06-rule": {
+      "id": "M06-06-rule",
+      "text": "计时使用实际事件；转场保留路演上下文及评委问题；不能在转场时丢失训练记录。"
+    },
+    "M06-07-name": {
+      "id": "M06-07-name",
+      "text": "多轮回答与追问"
+    },
+    "M06-07-detail": {
+      "id": "M06-07-detail",
+      "text": "展示评委问题、用户回答、轮次和倒计时；支持文字提交、快速论据提示和麦克风入口。"
+    },
+    "M06-07-rule": {
+      "id": "M06-07-rule",
+      "text": "每轮保留问题、回答、耗时、依据和点评；动态追问需要验证是否基于回答，不能仅按固定序列替代。"
+    },
+    "M06-08-name": {
+      "id": "M06-08-name",
+      "text": "视讯与语音演练"
+    },
+    "M06-08-detail": {
+      "id": "M06-08-detail",
+      "text": "呈现选手出镜区、评委视讯、画中画、范例音频、仪态提示和语音转写入口。"
+    },
+    "M06-08-rule": {
+      "id": "M06-08-rule",
+      "text": "当前有明确模拟语音文案；真实采集、ASR、语速和行为分析均待验证，不能将动画反馈当识别结果。"
+    },
+    "M06-09-name": {
+      "id": "M06-09-name",
+      "text": "综合报告与逐题复盘"
+    },
+    "M06-09-detail": {
+      "id": "M06-09-detail",
+      "text": "输出六维雷达、各维得分、逐轮问题与回答、失分原因、优化话术和补充材料建议；路演增加逐页控时。"
+    },
+    "M06-09-rule": {
+      "id": "M06-09-rule",
+      "text": "复盘应来自本次记录；区分观察事实与辅导建议；评分、题目和回答保持一致。"
+    },
+    "M06-10-name": {
+      "id": "M06-10-name",
+      "text": "薄弱项再训练"
+    },
+    "M06-10-detail": {
+      "id": "M06-10-detail",
+      "text": "从复盘进入针对薄弱点再练，或换项目和模式；展示历史训练报告。"
+    },
+    "M06-10-rule": {
+      "id": "M06-10-rule",
+      "text": "再训练保留上次短板及优化目标；可比较相同维度，不要求每轮得分必然上升。"
+    },
+    "text-0319": {
+      "id": "text-0319",
+      "text": "D02-S 诊断治理与反馈"
+    },
+    "text-0320": {
+      "id": "text-0320",
+      "text": "由初稿共享能力按业务归属归并。来源 D24，保留原功能编号。"
+    },
+    "M17-02-name": {
+      "id": "M17-02-name",
+      "text": "多维诊断与对标依据"
+    },
+    "M17-02-detail": {
+      "id": "M17-02-detail",
+      "text": "项目、初筛、指导、答辩分别呈现评分、雷达、置信度及历史对标。"
+    },
+    "M17-02-rule": {
+      "id": "M17-02-rule",
+      "text": "区分正式指标分、材料质量分、答辩表现分；定义置信度含义，保留依据与人审结论。"
+    },
+    "M17-05-name": {
+      "id": "M17-05-name",
+      "text": "使用 质量与业务指标"
+    },
+    "M17-05-detail": {
+      "id": "M17-05-detail",
+      "text": "对话内运营视图展示活跃、问答轮次、场景分布、好评、引用、建议采纳和赛事成绩等。"
+    },
+    "M17-05-rule": {
+      "id": "M17-05-rule",
+      "text": "使用量、回答质量与业务成效独立定义；获奖结果与 AI 使用之间不直接推导因果。"
+    },
+    "M17-06-name": {
+      "id": "M17-06-name",
+      "text": "模型结果与人工裁定"
+    },
+    "M17-06-detail": {
+      "id": "M17-06-detail",
+      "text": "原型支持生成物审核、导师终审等人机协作节点；早期还有评委人工调分设想。"
+    },
+    "M17-06-rule": {
+      "id": "M17-06-rule",
+      "text": "模型输出保留版本和依据；正式发布、规则变更、资格处理、验收与选拔由授权人员确认。"
+    },
+    "text-0330": {
+      "id": "text-0330",
+      "text": "D03 导师辅导"
+    },
+    "text-0331": {
+      "id": "text-0331",
+      "text": "组织导师服务并完成从指导到整改验收的闭环。"
+    },
+    "text-0332": {
+      "id": "text-0332",
+      "text": "M09 常态化辅导与资源调度"
+    },
+    "text-0333": {
+      "id": "text-0333",
+      "text": "用户及入口：学校端常态化辅导与调度。目标：把项目短板转为导师资源和周期培育任务。来源 D12。"
+    },
+    "M09-01-name": {
+      "id": "M09-01-name",
+      "text": "短板定向匹配导师"
+    },
+    "M09-01-detail": {
+      "id": "M09-01-detail",
+      "text": "选择项目后显示短板标签，推荐前三位专家并呈现匹配度、领域、战绩等信息。"
+    },
+    "M09-01-rule": {
+      "id": "M09-01-rule",
+      "text": "展示推荐理由及适用短板；兼顾赛道、专业和容量；真实匹配算法及评分依据待确认。"
+    },
+    "M09-02-name": {
+      "id": "M09-02-name",
+      "text": "导师资源检索"
+    },
+    "M09-02-detail": {
+      "id": "M09-02-detail",
+      "text": "查看全校及校外导师，可按姓名、擅长领域搜索，显示当前带教、可预约或满载状态。"
+    },
+    "M09-02-rule": {
+      "id": "M09-02-rule",
+      "text": "与 M12 使用同一档案和容量；筛选结果可直接进入调度。"
+    },
+    "M09-03-name": {
+      "id": "M09-03-name",
+      "text": "预约排期与邀请"
+    },
+    "M09-03-detail": {
+      "id": "M09-03-detail",
+      "text": "提供一键预约排期入口；导师端定义接收学校邀请、接受或婉拒，多导师共同参与项目。"
+    },
+    "M09-03-rule": {
+      "id": "M09-03-rule",
+      "text": "需要贯通邀请、响应、排期及取消；时间冲突和容量满额给出提示；入口与导师端投递尚未端到端验证。"
+    },
+    "M09-04-name": {
+      "id": "M09-04-name",
+      "text": "梯队批量打磨任务"
+    },
+    "M09-04-detail": {
+      "id": "M09-04-detail",
+      "text": "新建标题、目标梯队、截止时间、具体要求与交付物，面向 A、B 或全校项目批量下发。"
+    },
+    "M09-04-rule": {
+      "id": "M09-04-rule",
+      "text": "下发时锁定项目名单，后续梯队变化不改变历史收件范围；每个项目形成可追踪子任务。"
+    },
+    "M09-05-name": {
+      "id": "M09-05-name",
+      "text": "任务提交与监督"
+    },
+    "M09-05-detail": {
+      "id": "M09-05-detail",
+      "text": "列表显示任务对象、截止时间、已提交进度和专家已审数量，可查看关联项目。"
+    },
+    "M09-05-rule": {
+      "id": "M09-05-rule",
+      "text": "明确项目数、工单数、任务项数三种统计粒度；逾期和退回进入追踪，见 M11。"
+    },
+    "text-0349": {
+      "id": "text-0349",
+      "text": "M10 导师辅导资产与督导闭环"
+    },
+    "text-0350": {
+      "id": "text-0350",
+      "text": "用户及入口：导师端项目辅导与督导工单，学校端辅导资产沉淀与督导。目标：将辅导意见转为有责任人、有证据、有复核结果的修改任务。来源 D13；早期文档 6.3。"
+    },
+    "M10-01-name": {
+      "id": "M10-01-name",
+      "text": "接受或婉拒指导邀请"
+    },
+    "M10-01-detail": {
+      "id": "M10-01-detail",
+      "text": "导师查看学校指派时间、项目摘要、材料、AI 诊断和导师组；接受入驻或填写婉拒理由。"
+    },
+    "M10-01-rule": {
+      "id": "M10-01-rule",
+      "text": "接受后获得项目授权，婉拒回传学校；多导师应明确主审和协同责任，避免多人互相覆盖结论。"
+    },
+    "M10-02-name": {
+      "id": "M10-02-name",
+      "text": "辅导项目与工单列表"
+    },
+    "M10-02-detail": {
+      "id": "M10-02-detail",
+      "text": "展示本人指导项目、AI 草稿、整改中、待验收、已归档等筛选；搜索项目、学院、成员。"
+    },
+    "M10-02-rule": {
+      "id": "M10-02-rule",
+      "text": "导师仅看分配范围；学校看本校授权范围。两端复用对象，操作权限分别控制。"
+    },
+    "M10-03-name": {
+      "id": "M10-03-name",
+      "text": "导入会议录音或录像"
+    },
+    "M10-03-detail": {
+      "id": "M10-03-detail",
+      "text": "选择项目、会议类型、名称和文件；页面提示 MP4/MOV、MP3/M4A，单文件最大2GB。"
+    },
+    "M10-03-rule": {
+      "id": "M10-03-rule",
+      "text": "文件限额为待确认参数；记录授权、来源与上传结果；不将会议号填写等同于已经接入第三方会议。"
+    },
+    "M10-04-name": {
+      "id": "M10-04-name",
+      "text": "转写与结构化诊断"
+    },
+    "M10-04-detail": {
+      "id": "M10-04-detail",
+      "text": "展示逐句转写、时间点、核心交谈要点、问答摘录和按维度整理的诊断。"
+    },
+    "M10-04-rule": {
+      "id": "M10-04-rule",
+      "text": "保留原文定位和说话人；识别不清可修正；ASR 与摘要结果可追溯到媒体片段。"
+    },
+    "M10-05-name": {
+      "id": "M10-05-name",
+      "text": "AI 建议工单草稿"
+    },
+    "M10-05-detail": {
+      "id": "M10-05-detail",
+      "text": "根据辅导纪要提炼修改项，分类为创新、商业、材料、财务、团队等。"
+    },
+    "M10-05-rule": {
+      "id": "M10-05-rule",
+      "text": "草稿先由导师审阅；不可自动把模糊口头讨论作为已下发要求；保留来源片段。"
+    },
+    "M10-06-name": {
+      "id": "M10-06-name",
+      "text": "导师编辑与推送"
+    },
+    "M10-06-detail": {
+      "id": "M10-06-detail",
+      "text": "导师新增、编辑或删除条目，填写标题、具体要求、优先级、限时天数，确认后推送团队。"
+    },
+    "M10-06-rule": {
+      "id": "M10-06-rule",
+      "text": "明确修改位置、交付物和期限；推送版本锁定，后续调整留痕；通知投递结果应可查看。"
+    },
+    "M10-07-name": {
+      "id": "M10-07-name",
+      "text": "团队接单或反馈驳回"
+    },
+    "M10-07-detail": {
+      "id": "M10-07-detail",
+      "text": "定义待团队接单、接单整改、团队驳回及原因反馈；部分操作以模拟团队行为呈现。"
+    },
+    "M10-07-rule": {
+      "id": "M10-07-rule",
+      "text": "团队真实操作应在团队端完成；驳回转回导师调整；保留理由和协商后的新期限。"
+    },
+    "M10-08-name": {
+      "id": "M10-08-name",
+      "text": "整改进度与版本回执"
+    },
+    "M10-08-detail": {
+      "id": "M10-08-detail",
+      "text": "逐条查看完成状态、团队回执、修改说明及提交后的 BP/PPT；未交新版时不展示版本比较结果。"
+    },
+    "M10-08-rule": {
+      "id": "M10-08-rule",
+      "text": "每条任务关联修改证据与版本；按 M02 提交后进入待复核；提交后再次编辑须形成新轮次。"
+    },
+    "M10-09-name": {
+      "id": "M10-09-name",
+      "text": "双版本 AI 比较"
+    },
+    "M10-09-detail": {
+      "id": "M10-09-detail",
+      "text": "展示整改前后材料、关键变化证据、各维度评分差异和综合提分幅度。"
+    },
+    "M10-09-rule": {
+      "id": "M10-09-rule",
+      "text": "比较同一对基准和提交版；评分规则一致时才计算增量；AI 对比辅助导师检查，不替代终审。"
+    },
+    "M10-10-name": {
+      "id": "M10-10-name",
+      "text": "导师验收或退回"
+    },
+    "M10-10-detail": {
+      "id": "M10-10-detail",
+      "text": "导师填写终审意见和认定提分，选择合格归档或填写退回意见继续修改。"
+    },
+    "M10-10-rule": {
+      "id": "M10-10-rule",
+      "text": "不通过说明未达标项；归档保留导师、时间、任务、文件版本与结论；归档后修改走新工单或新轮次。"
+    },
+    "M10-11-name": {
+      "id": "M10-11-name",
+      "text": "辅导资产沉淀"
+    },
+    "M10-11-detail": {
+      "id": "M10-11-detail",
+      "text": "工单保存会议、诊断、任务、前后版本及复核，形成可复用辅导档案。早期文档要求沉淀脱敏点评与修改案例。"
+    },
+    "M10-11-rule": {
+      "id": "M10-11-rule",
+      "text": "原始工单只在授权范围使用；跨项目复用经脱敏、授权和质量审核，进入 M17 经验运营。"
+    },
+    "text-0384": {
+      "id": "text-0384",
+      "text": "M12 学校导师智库管理"
+    },
+    "text-0385": {
+      "id": "text-0385",
+      "text": "用户及入口：学校端双创导师智库管理。目标：维护可用于本校常态化辅导的校内外导师资源。来源 D17。"
+    },
+    "M12-01-name": {
+      "id": "M12-01-name",
+      "text": "名册检索与视图"
+    },
+    "M12-01-detail": {
+      "id": "M12-01-detail",
+      "text": "卡片和表格展示导师，支持姓名、职称、单位、联系方式、领域关键词检索及来源、角色、预约状态筛选。"
+    },
+    "M12-01-rule": {
+      "id": "M12-01-rule",
+      "text": "学校名册与平台资源范围明确；检索结果可查看档案，导出遵循字段权限。"
+    },
+    "M12-02-name": {
+      "id": "M12-02-name",
+      "text": "导师聘任与档案"
+    },
+    "M12-02-detail": {
+      "id": "M12-02-detail",
+      "text": "新增编辑姓名、来源、角色、头衔、单位、资质、聘期、头像、联系方式、办公地点及详细履历。"
+    },
+    "M12-02-rule": {
+      "id": "M12-02-rule",
+      "text": "姓名、头衔、单位为 Demo 必填；资质审核、聘期到期提醒与账号绑定另行细化。"
+    },
+    "M12-03-name": {
+      "id": "M12-03-name",
+      "text": "专长标签与赛道"
+    },
+    "M12-03-detail": {
+      "id": "M12-03-detail",
+      "text": "选择预设或自定义辅导领域标签，配置适配赛道及常规开放时段。"
+    },
+    "M12-03-rule": {
+      "id": "M12-03-rule",
+      "text": "标签供 M09 匹配使用；自动生成标签需导师或管理者确认；标签字典可治理。"
+    },
+    "M12-04-name": {
+      "id": "M12-04-name",
+      "text": "容量与预约状态"
+    },
+    "M12-04-detail": {
+      "id": "M12-04-detail",
+      "text": "记录当前带教、最大容量、开放时段，呈现空闲可约、档期较紧、负荷已满状态。"
+    },
+    "M12-04-rule": {
+      "id": "M12-04-rule",
+      "text": "接受新指导后更新实际负荷；手工状态与系统计算的关系待确认；冲突不能静默超额。"
+    },
+    "M12-05-name": {
+      "id": "M12-05-name",
+      "text": "辅导履历与评价"
+    },
+    "M12-05-detail": {
+      "id": "M12-05-detail",
+      "text": "展示累计辅导、金奖项目、学员评分及详情；可复制联络信息并进入指派。"
+    },
+    "M12-05-rule": {
+      "id": "M12-05-rule",
+      "text": "统计对应历史工单及评价来源；“匿名打分”当前有说明，独立评价提交流程待确认。"
+    },
+    "M12-06-name": {
+      "id": "M12-06-name",
+      "text": "解聘与名册导出"
+    },
+    "M12-06-detail": {
+      "id": "M12-06-detail",
+      "text": "支持解除聘任、编辑资料、导出 CSV 及跳转排期。"
+    },
+    "M12-06-rule": {
+      "id": "M12-06-rule",
+      "text": "解聘停止新预约但保留历史工单及评价；在途任务转交；导出内容与筛选范围一致。"
+    },
+    "text-0404": {
+      "id": "text-0404",
+      "text": "M15 平台导师与跨校调度"
+    },
+    "text-0405": {
+      "id": "text-0405",
+      "text": "用户及入口：Admin 端平台导师智库管理。目标：管理平台公共专家供给与跨校指导任务。来源 D21。"
+    },
+    "M15-01-name": {
+      "id": "M15-01-name",
+      "text": "平台专家名册"
+    },
+    "M15-01-detail": {
+      "id": "M15-01-detail",
+      "text": "按姓名、编号、单位、技术专长、资质层级和调度状态筛选；卡片或列表展示。"
+    },
+    "M15-01-rule": {
+      "id": "M15-01-rule",
+      "text": "与学校自建导师名册分别管理，可建立关联，不能复制后失去更新来源。"
+    },
+    "M15-02-name": {
+      "id": "M15-02-name",
+      "text": "专家准入与资料维护"
+    },
+    "M15-02-detail": {
+      "id": "M15-02-detail",
+      "text": "录入平台编号、姓名、资质层级、机构、职务、荣誉、聘期、联络、专业标签、履历与特色辅导方法。"
+    },
+    "M15-02-rule": {
+      "id": "M15-02-rule",
+      "text": "编号唯一；“认证”需有审核人和证据，登记信息不等同于已核验资质。"
+    },
+    "M15-03-name": {
+      "id": "M15-03-name",
+      "text": "调度状态与容量"
+    },
+    "M15-03-detail": {
+      "id": "M15-03-detail",
+      "text": "呈现全平台开放、定向指派、暂停调度；记录在服任务、月度容量、赋能高校数及评分。"
+    },
+    "M15-03-rule": {
+      "id": "M15-03-rule",
+      "text": "调度占用实际容量；状态与任务同步；暂停不抹除历史履职。"
+    },
+    "M15-04-name": {
+      "id": "M15-04-name",
+      "text": "专家履历与绩效"
+    },
+    "M15-04-detail": {
+      "id": "M15-04-detail",
+      "text": "查看近期跨校巡诊、指导形式、金奖战绩、服务学校和综合评价，可导出专家名册。"
+    },
+    "M15-04-rule": {
+      "id": "M15-04-rule",
+      "text": "每个指标关联可核验记录；评价、成果认定和有效周期需定义。"
+    },
+    "M15-05-name": {
+      "id": "M15-05-name",
+      "text": "发起跨校指导"
+    },
+    "M15-05-detail": {
+      "id": "M15-05-detail",
+      "text": "选择受援学校、线下入校或线上联审、日期、专项任务和备注，页面说明通知学校及专家。"
+    },
+    "M15-05-rule": {
+      "id": "M15-05-rule",
+      "text": "调度生成独立任务并进入响应流程；实际通知、学校确认和专家接受需贯通验证。"
+    },
+    "M15-06-name": {
+      "id": "M15-06-name",
+      "text": "资源下架与历史保留"
+    },
+    "M15-06-detail": {
+      "id": "M15-06-detail",
+      "text": "支持移出平台智库、编辑与导出 CSV。"
+    },
+    "M15-06-rule": {
+      "id": "M15-06-rule",
+      "text": "下架阻止新增调度；在途任务处理、学校引用和历史履历保留规则需确定。"
+    },
+    "text-0424": {
+      "id": "text-0424",
+      "text": "D04 赛事培育"
+    },
+    "text-0425": {
+      "id": "text-0425",
+      "text": "面向学校完成初筛分层、阶段培育与成效管理。"
+    },
+    "text-0426": {
+      "id": "text-0426",
+      "text": "M08 项目导入与智能对标初筛"
+    },
+    "text-0427": {
+      "id": "text-0427",
+      "text": "用户及入口：学校端初筛和海量项目导入。目标：形成可复核的项目分层与培育依据。来源 D09、D10、D11。"
+    },
+    "M08-01-name": {
+      "id": "M08-01-name",
+      "text": "多来源批量导入"
+    },
+    "M08-01-detail": {
+      "id": "M08-01-detail",
+      "text": "提供报名表 Excel 或 ZIP、教务双创系统直连、历届项目池三种来源；上传区提示 XLSX、ZIP、PDF。"
+    },
+    "M08-01-rule": {
+      "id": "M08-01-rule",
+      "text": "三种接入方式分别验收；导入批次保留来源、操作者、成功失败数和失败原因。"
+    },
+    "M08-02-name": {
+      "id": "M08-02-name",
+      "text": "材料解析与入库确认"
+    },
+    "M08-02-detail": {
+      "id": "M08-02-detail",
+      "text": "流程呈现材料解析、资格/IP 审查、查重/AI 检测、评分分层及结果汇总，确认后进入初筛工作台。"
+    },
+    "M08-02-rule": {
+      "id": "M08-02-rule",
+      "text": "建议先校验字段和附件对应，再确认入库；重复项目采用明确合并策略。Demo 秒级和固定项目数不作性能承诺。"
+    },
+    "M08-03-name": {
+      "id": "M08-03-name",
+      "text": "赛道与筛选条件"
+    },
+    "M08-03-detail": {
+      "id": "M08-03-detail",
+      "text": "按赛道组别、A/B/C/D 梯队、合规状态、名称学院负责人过滤。"
+    },
+    "M08-03-rule": {
+      "id": "M08-03-rule",
+      "text": "条件组合有效；保留筛选状态；不同规则的项目不可在没有解释的情况下混排。"
+    },
+    "M08-04-name": {
+      "id": "M08-04-name",
+      "text": "一级与二级指标评分矩阵"
+    },
+    "M08-04-detail": {
+      "id": "M08-04-detail",
+      "text": "呈现细项分数和优势/待补强标识；Demo 主赛道创意组矩阵为四个一级、十七个二级指标，并提供细则导出。"
+    },
+    "M08-04-rule": {
+      "id": "M08-04-rule",
+      "text": "数据按规则版本渲染；总分与细项可核算；此处记录 Demo 展示口径，正式指标须由业务方核准。"
+    },
+    "M08-05-name": {
+      "id": "M08-05-name",
+      "text": "梯队排名与金奖对标"
+    },
+    "M08-05-detail": {
+      "id": "M08-05-detail",
+      "text": "展示综合评分、排名、A/B/C/D、金奖特征匹配、置信度和导师安排；Demo 分界为90、80、70分。"
+    },
+    "M08-05-rule": {
+      "id": "M08-05-rule",
+      "text": "分层阈值可配置；保留 AI 建议与人工认定；排名仅在指定批次、赛道和规则内有明确含义。"
+    },
+    "M08-06-name": {
+      "id": "M08-06-name",
+      "text": "合规风险与异常检查"
+    },
+    "M08-06-detail": {
+      "id": "M08-06-detail",
+      "text": "呈现资格、IP 权属、查重率、AI 生成痕迹、重复申报与逻辑疑点，支持批量扫描入口。"
+    },
+    "M08-06-rule": {
+      "id": "M08-06-rule",
+      "text": "检测来源与证据可查看；风险提示进入人工复核；AI 痕迹、查重结果不能单独作为自动淘汰结论。"
+    },
+    "M08-07-name": {
+      "id": "M08-07-name",
+      "text": "项目全景下钻"
+    },
+    "M08-07-detail": {
+      "id": "M08-07-detail",
+      "text": "查看细项评分、对标亮点短板、逻辑断点、建议问题、工单与评分演进、合规详情及材料清单。"
+    },
+    "M08-07-rule": {
+      "id": "M08-07-rule",
+      "text": "下钻与列表使用同一项目版本和规则；从疑点可定位材料，从工单可看到修改与复核。"
+    },
+    "M08-08-name": {
+      "id": "M08-08-name",
+      "text": "初筛结果转培育"
+    },
+    "M08-08-detail": {
+      "id": "M08-08-detail",
+      "text": "项目可进入导师指派、预约排期或后续阶段管理。早期文档另有人工采纳/调整参考分。"
+    },
+    "M08-08-rule": {
+      "id": "M08-08-rule",
+      "text": "正式人工改分、复核签名和最终选拔结论尚需明确入口；AI 分级不直接替代学校评审决定。"
+    },
+    "text-0452": {
+      "id": "text-0452",
+      "text": "M11 学校驾驶舱与全流程追踪"
+    },
+    "text-0453": {
+      "id": "text-0453",
+      "text": "用户及入口：学校端驾驶舱、重点项目全流程看板、阶段复盘汇报。目标：从项目进展与辅导结果发现需要管理介入的事项。来源 D14、D15、D16。"
+    },
+    "M11-01-name": {
+      "id": "M11-01-name",
+      "text": "培育核心指标"
+    },
+    "M11-01-detail": {
+      "id": "M11-01-detail",
+      "text": "展示总项目数、A/B/C/D 梯队、重点池、督导闭环率、平均提分、导师投入和经验沉淀。"
+    },
+    "M11-01-rule": {
+      "id": "M11-01-rule",
+      "text": "每项注明统计范围、周期、分母、更新时间；点击可定位构成项目或工单。"
+    },
+    "M11-02-name": {
+      "id": "M11-02-name",
+      "text": "共性短板与赛道分布"
+    },
+    "M11-02-detail": {
+      "id": "M11-02-detail",
+      "text": "以一级二级指标得分率热力视图、赛道分布和 AI 文字分析展示全校短板。"
+    },
+    "M11-02-rule": {
+      "id": "M11-02-rule",
+      "text": "区分不同赛道规则，避免直接平均不同比重指标；文字分析与图表来自同一统计结果。"
+    },
+    "M11-03-name": {
+      "id": "M11-03-name",
+      "text": "重点项目池"
+    },
+    "M11-03-detail": {
+      "id": "M11-03-detail",
+      "text": "展示高潜项目、评分、匹配度、排名，支持查看全部排名及批量调度导师。"
+    },
+    "M11-03-rule": {
+      "id": "M11-03-rule",
+      "text": "重点池可由 AI 建议和人工入池决定；实际获奖结果单独记录，不与潜力评级混用。"
+    },
+    "M11-04-name": {
+      "id": "M11-04-name",
+      "text": "学校赛事阶段看板"
+    },
+    "M11-04-detail": {
+      "id": "M11-04-detail",
+      "text": "五阶段为申报与初筛、校赛与导师打磨、省赛集中封闭营、国赛精英训练营、金奖答辩冲刺；展示项目分布和健康状态。"
+    },
+    "M11-04-rule": {
+      "id": "M11-04-rule",
+      "text": "与团队成长阶段分别存储；阶段迁移依据和操作人待确认；一项目可以在某赛事阶段内经历多次材料打磨。"
+    },
+    "M11-05-name": {
+      "id": "M11-05-name",
+      "text": "停滞 逾期与合规预警"
+    },
+    "M11-05-detail": {
+      "id": "M11-05-detail",
+      "text": "呈现项目停滞、工单逾期、合规疑点和全校短板提醒，可进入项目查看。"
+    },
+    "M11-05-rule": {
+      "id": "M11-05-rule",
+      "text": "预警规则、频率、责任人、通知渠道待确认；记录处理状态，不把“查看”当处理完成。"
+    },
+    "M11-06-name": {
+      "id": "M11-06-name",
+      "text": "培育效果与阶段趋势"
+    },
+    "M11-06-detail": {
+      "id": "M11-06-detail",
+      "text": "展示各阶段均分变化、工单完成、专家复核及优秀案例沉淀，支持全流程复盘。"
+    },
+    "M11-06-rule": {
+      "id": "M11-06-rule",
+      "text": "同批项目同口径比较；补充参与范围、缺失数据和评分规则变化说明。"
+    },
+    "M11-07-name": {
+      "id": "M11-07-name",
+      "text": "阶段汇报生成"
+    },
+    "M11-07-detail": {
+      "id": "M11-07-detail",
+      "text": "生成核心结论、梯队结构、共性短板、督导成效及下一步建议，提供 Word 文本和 PPT 大纲、复制下载入口。"
+    },
+    "M11-07-rule": {
+      "id": "M11-07-rule",
+      "text": "汇报引用统计快照，可编辑并导出真实文件；PPT 大纲不等同于排版后的 PPTX。"
+    },
+    "text-0475": {
+      "id": "text-0475",
+      "text": "D05 知识与规则"
+    },
+    "text-0476": {
+      "id": "text-0476",
+      "text": "维护有来源、可授权、可发布的知识与赛事规则。"
+    },
+    "text-0477": {
+      "id": "text-0477",
+      "text": "M14 校本知识库管理"
+    },
+    "text-0478": {
+      "id": "text-0478",
+      "text": "用户及入口：学校知识库管理。目标：让学校维护本校适用、可引用的赛事与双创知识。来源 D20。"
+    },
+    "M14-01-name": {
+      "id": "M14-01-name",
+      "text": "知识库分类与检索"
+    },
+    "M14-01-detail": {
+      "id": "M14-01-detail",
+      "text": "五类为校内专属智库、赛事规程、历史金奖案例、专家经验、OPC 孵化转化；按名称、编码、描述、分类和状态检索。"
+    },
+    "M14-01-rule": {
+      "id": "M14-01-rule",
+      "text": "分类与访问权限分开；同一文档可被业务标签引用，避免重复上传造成规则冲突。"
+    },
+    "M14-02-name": {
+      "id": "M14-02-name",
+      "text": "创建知识库"
+    },
+    "M14-02-detail": {
+      "id": "M14-02-detail",
+      "text": "录入名称、分类、受众和职能简介，创建后进入库内文件管理；Demo 默认运行中。"
+    },
+    "M14-02-rule": {
+      "id": "M14-02-rule",
+      "text": "受众须转为实际权限配置；只有文件解析和审核完成后才可供检索，空库不显示知识已就绪。"
+    },
+    "M14-03-name": {
+      "id": "M14-03-name",
+      "text": "文档上传与管理"
+    },
+    "M14-03-detail": {
+      "id": "M14-03-detail",
+      "text": "支持 PDF、Word、PPTX、Excel、Markdown、TXT；记录文件名、格式、大小、摘要，Demo 提示单文件50MB。"
+    },
+    "M14-03-rule": {
+      "id": "M14-03-rule",
+      "text": "实际识别格式与文件大小；记录上传、解析、失败重试和审核状态；限额经实施确认。"
+    },
+    "M14-04-name": {
+      "id": "M14-04-name",
+      "text": "摘要与知识要点预览"
+    },
+    "M14-04-detail": {
+      "id": "M14-04-detail",
+      "text": "展示 AI 摘要、结构化要点、切片数、原文片段、录入人和时间，供管理员查看解析质量。"
+    },
+    "M14-04-rule": {
+      "id": "M14-04-rule",
+      "text": "引文可定位真实原文；表格和图片无法提取时提示；管理员可修正或剔除错误内容。"
+    },
+    "M14-05-name": {
+      "id": "M14-05-name",
+      "text": "启停与索引维护"
+    },
+    "M14-05-detail": {
+      "id": "M14-05-detail",
+      "text": "可启停整库、删除文件或库、刷新索引；页面说明停止后暂停 AI 调用。"
+    },
+    "M14-05-rule": {
+      "id": "M14-05-rule",
+      "text": "撤下后检索不再召回，历史答案仍保留原引用版本；删除及恢复策略待确定。"
+    },
+    "M14-06-name": {
+      "id": "M14-06-name",
+      "text": "使用统计与业务调用"
+    },
+    "M14-06-detail": {
+      "id": "M14-06-detail",
+      "text": "展示文档量、要点数、容量、调用次数及文件命中；为教练问答、初筛和训练提供知识。"
+    },
+    "M14-06-rule": {
+      "id": "M14-06-rule",
+      "text": "命中、引用和采纳分别统计；本校私有知识不进入其他学校检索结果。"
+    },
+    "text-0497": {
+      "id": "text-0497",
+      "text": "M16 平台赛事知识与规则管理"
+    },
+    "text-0498": {
+      "id": "text-0498",
+      "text": "用户及入口：Admin 平台赛事知识库，以及各端官方评审细则入口。目标：提供跨校共享的规则与知识基线。来源 D22、D23。"
+    },
+    "M16-01-name": {
+      "id": "M16-01-name",
+      "text": "公共知识分类"
+    },
+    "M16-01-detail": {
+      "id": "M16-01-detail",
+      "text": "五类为官方规程、国赛金奖全案、评委洞察与题库、国家部委法规、全国产业资本。"
+    },
+    "M16-01-rule": {
+      "id": "M16-01-rule",
+      "text": "资源需核验来源、权限、时点与适用对象；政策和资本名录提供信息，不直接承诺交易或申报服务。"
+    },
+    "M16-02-name": {
+      "id": "M16-02-name",
+      "text": "创建与发布公共库"
+    },
+    "M16-02-detail": {
+      "id": "M16-02-detail",
+      "text": "录入名称、分类、受众、描述，支持新建、列表检索和启停全网分发。"
+    },
+    "M16-02-rule": {
+      "id": "M16-02-rule",
+      "text": "发布与草稿分离，指定发布责任人；明确高校接收更新、缓存失效及回退机制。"
+    },
+    "M16-03-name": {
+      "id": "M16-03-name",
+      "text": "公共文件入库"
+    },
+    "M16-03-detail": {
+      "id": "M16-03-detail",
+      "text": "支持 PDF、Word、PPT、Excel、Markdown、TXT，记录摘要、来源机构、格式、大小；提示单文件100MB。"
+    },
+    "M16-03-rule": {
+      "id": "M16-03-rule",
+      "text": "解析和索引状态真实反映处理结果；公共发布前核查授权和敏感信息；限额待确认。"
+    },
+    "M16-04-name": {
+      "id": "M16-04-name",
+      "text": "解析快照与使用统计"
+    },
+    "M16-04-detail": {
+      "id": "M16-04-detail",
+      "text": "查看知识要点、结构化片段、切片数、引用量、容量和发布机构。"
+    },
+    "M16-04-rule": {
+      "id": "M16-04-rule",
+      "text": "与 M14 复用文件解析模型，但访问范围独立；引用统计能追到调用场景。"
+    },
+    "M16-05-name": {
+      "id": "M16-05-name",
+      "text": "官方评分细则展示"
+    },
+    "M16-05-detail": {
+      "id": "M16-05-detail",
+      "text": "按赛道展示一级二级指标、满分、评审要点和必要条件，作为诊断、初筛的规则说明入口。"
+    },
+    "M16-05-rule": {
+      "id": "M16-05-rule",
+      "text": "每次评分引用明确版本；页面“官方”文字需对应真实文件；本版不确认 Demo 数值具有官方效力。"
+    },
+    "M16-06-name": {
+      "id": "M16-06-name",
+      "text": "规则版本与发布治理"
+    },
+    "M16-06-detail": {
+      "id": "M16-06-detail",
+      "text": "Demo 有规则查看和知识库管理，但未看到完整的指标编辑、审核、生效日期和版本迁移流程。"
+    },
+    "M16-06-rule": {
+      "id": "M16-06-rule",
+      "text": "待补齐：届次、赛道组别、权重、来源条款、校验、审核发布、历史保留；不能把知识库文件更新视作评分自动更新。"
+    },
+    "text-0517": {
+      "id": "text-0517",
+      "text": "D05-S 案例与专家经验"
+    },
+    "text-0518": {
+      "id": "text-0518",
+      "text": "由初稿共享能力按业务归属归并。来源 D24，保留原功能编号。"
+    },
+    "M17-03-name": {
+      "id": "M17-03-name",
+      "text": "历史案例复用"
+    },
+    "M17-03-detail": {
+      "id": "M17-03-detail",
+      "text": "Demo 在问答、对标及两级知识库中使用案例；早期补充按年份、赛道、奖项筛选和语义检索。"
+    },
+    "M17-03-rule": {
+      "id": "M17-03-rule",
+      "text": "建立案例结构化档案及引用范围；标记脱敏、授权、时效和适用条件；独立案例搜索页待确认。"
+    },
+    "M17-04-name": {
+      "id": "M17-04-name",
+      "text": "专家经验沉淀与审核"
+    },
+    "M17-04-detail": {
+      "id": "M17-04-detail",
+      "text": "Demo 有专家经验类别和反馈运营看板；早期要求访谈、评审修正、模拟训练形成经验，并强调正确性确认。"
+    },
+    "M17-04-rule": {
+      "id": "M17-04-rule",
+      "text": "原始记录 → 候选经验 → 专家审核 → 发布使用 → 版本迭代；点赞或单次采纳不直接改正式评分规则。"
+    },
+    "text-0525": {
+      "id": "text-0525",
+      "text": "4.1 团队材料打磨闭环"
+    },
+    "text-0526": {
+      "id": "text-0526",
+      "text": "1. 用户进入所属项目，上传或关联材料；系统记录文件和版本。"
+    },
+    "text-0527": {
+      "id": "text-0527",
+      "text": "2. 在项目工作台、AI 教练或指导工作台发起诊断，选择材料与适用规则。"
+    },
+    "text-0528": {
+      "id": "text-0528",
+      "text": "3. 系统生成定位到章节的问题、短板与下一步建议，用户确认需要执行的任务。"
+    },
+    "text-0529": {
+      "id": "text-0529",
+      "text": "4. 用户进入相关章节进行编辑或让 AI 生成候选改稿，检视差异、批注并决定同意或继续改进。"
+    },
+    "text-0530": {
+      "id": "text-0530",
+      "text": "5. 保存新快照或归档产物，记录任务来源、修改说明和成果版本。"
+    },
+    "text-0531": {
+      "id": "text-0531",
+      "text": "6. 对新版本重新诊断；需要导师复核的整改进入待验收，其余待办按明确完成条件更新。"
+    },
+    "text-0532": {
+      "id": "text-0532",
+      "text": "交付物：原始材料、诊断报告、整改任务、候选修改、已确认新版本及前后差异。跨入口操作必须沿用同一项目和版本引用。"
+    },
+    "text-0533": {
+      "id": "text-0533",
+      "text": "4.2 学校与导师督导闭环"
+    },
+    "text-0534": {
+      "id": "text-0534",
+      "text": "学校初筛分层 → 按短板选择导师组 → 发出指导邀请 → 导师接受或说明婉拒 → 辅导会议 → 录音录像转写 → AI 建议工单草稿 → 导师编辑确认 → 团队接单或反馈 → 团队逐项整改并提交版本 → AI 对比辅助 → 导师验收归档或退回。"
+    },
+    "text-0535": {
+      "id": "text-0535",
+      "text": "工单状态"
+    },
+    "text-0536": {
+      "id": "text-0536",
+      "text": "进入条件"
+    },
+    "text-0537": {
+      "id": "text-0537",
+      "text": "可执行动作"
+    },
+    "text-0538": {
+      "id": "text-0538",
+      "text": "下一状态"
+    },
+    "text-0539": {
+      "id": "text-0539",
+      "text": "AI 草稿"
+    },
+    "text-0540": {
+      "id": "text-0540",
+      "text": "纪要提炼或手动创建"
+    },
+    "text-0541": {
+      "id": "text-0541",
+      "text": "导师增删改条目并确认"
+    },
+    "text-0542": {
+      "id": "text-0542",
+      "text": "待团队接单"
+    },
+    "text-0543": {
+      "id": "text-0543",
+      "text": "待团队接单"
+    },
+    "text-0544": {
+      "id": "text-0544",
+      "text": "导师已确认推送"
+    },
+    "text-0545": {
+      "id": "text-0545",
+      "text": "团队接单或填写反馈"
+    },
+    "text-0546": {
+      "id": "text-0546",
+      "text": "整改中或团队驳回"
+    },
+    "text-0547": {
+      "id": "text-0547",
+      "text": "团队驳回"
+    },
+    "text-0548": {
+      "id": "text-0548",
+      "text": "团队说明条件或异议"
+    },
+    "text-0549": {
+      "id": "text-0549",
+      "text": "导师调整要求并重发"
+    },
+    "text-0550": {
+      "id": "text-0550",
+      "text": "待团队接单"
+    },
+    "text-0551": {
+      "id": "text-0551",
+      "text": "整改中"
+    },
+    "text-0552": {
+      "id": "text-0552",
+      "text": "团队接单"
+    },
+    "text-0553": {
+      "id": "text-0553",
+      "text": "更新条目进度、说明和材料"
+    },
+    "text-0554": {
+      "id": "text-0554",
+      "text": "已提交待复核"
+    },
+    "text-0555": {
+      "id": "text-0555",
+      "text": "已提交待复核"
+    },
+    "text-0556": {
+      "id": "text-0556",
+      "text": "提交必填说明及对应材料"
+    },
+    "text-0557": {
+      "id": "text-0557",
+      "text": "导师比较、填写结论"
+    },
+    "text-0558": {
+      "id": "text-0558",
+      "text": "已验收归档或退回修改"
+    },
+    "text-0559": {
+      "id": "text-0559",
+      "text": "退回修改"
+    },
+    "text-0560": {
+      "id": "text-0560",
+      "text": "导师说明未达标项"
+    },
+    "text-0561": {
+      "id": "text-0561",
+      "text": "团队按意见提交新轮次"
+    },
+    "text-0562": {
+      "id": "text-0562",
+      "text": "已提交待复核"
+    },
+    "text-0563": {
+      "id": "text-0563",
+      "text": "已验收归档"
+    },
+    "text-0564": {
+      "id": "text-0564",
+      "text": "导师通过并填写结论"
+    },
+    "text-0565": {
+      "id": "text-0565",
+      "text": "查阅档案、申请后续辅导"
+    },
+    "text-0566": {
+      "id": "text-0566",
+      "text": "后续使用新工单或新轮次"
+    },
+    "text-0567": {
+      "id": "text-0567",
+      "text": "以上状态依据 Demo 工单定义整理。团队工作台目前主要呈现修改与提交，接单/驳回在导师页存在模拟操作，需要补成真正的跨角色流程。多导师最终签署方式、重新打开已归档工单和截止时间变更规则待确认。"
+    },
+    "text-0568": {
+      "id": "text-0568",
+      "text": "4.3 生成物审核与归档"
+    },
+    "text-0569": {
+      "id": "text-0569",
+      "text": "AI 生成候选文件 → 检视内容或修改前后差异 → 添加批注 → 同意、否决或要求改进。"
+    },
+    "text-0570": {
+      "id": "text-0570",
+      "text": "决定"
+    },
+    "text-0571": {
+      "id": "text-0571",
+      "text": "候选版本处理"
+    },
+    "text-0572": {
+      "id": "text-0572",
+      "text": "项目基线处理"
+    },
+    "text-0573": {
+      "id": "text-0573",
+      "text": "同意"
+    },
+    "text-0574": {
+      "id": "text-0574",
+      "text": "记录审核人与意见，成为确认产物"
+    },
+    "text-0575": {
+      "id": "text-0575",
+      "text": "按归档规则登记为新版本"
+    },
+    "text-0576": {
+      "id": "text-0576",
+      "text": "否决"
+    },
+    "text-0577": {
+      "id": "text-0577",
+      "text": "保留否决记录和原因"
+    },
+    "text-0578": {
+      "id": "text-0578",
+      "text": "保留原基线"
+    },
+    "text-0579": {
+      "id": "text-0579",
+      "text": "改进"
+    },
+    "text-0580": {
+      "id": "text-0580",
+      "text": "将意见送回生成任务，形成下一候选"
+    },
+    "text-0581": {
+      "id": "text-0581",
+      "text": "原基线保持到后续同意"
+    },
+    "text-0582": {
+      "id": "text-0582",
+      "text": "普通交付物可以无需审核，但需明确其来源和已确认状态。Demo 同时存在“同意合并至交付物库”和“存入项目文件夹”，建议统一为确认与归档两个清晰动作；是否自动连做由产品评审决定。"
+    },
+    "text-0583": {
+      "id": "text-0583",
+      "text": "4.4 答辩训练闭环"
+    },
+    "text-0584": {
+      "id": "text-0584",
+      "text": "选择项目与材料 → 选择训练模式 → 配置时长、难度和评委 → 预分析亮点及疑点 → 路演或问答 → 提交训练 → 生成复盘 → 转为材料修改或薄弱项再练。"
+    },
+    "text-0585": {
+      "id": "text-0585",
+      "text": "训练状态建议为配置中、预分析中、可开始、进行中、暂停、已结束、报告生成中、已完成、失败和取消。自然控场与固定轮次分别验收；语音中断时能够继续文字回答；已完成答题不因报告失败丢失。"
+    },
+    "text-0586": {
+      "id": "text-0586",
+      "text": "4.5 知识与规则发布闭环"
+    },
+    "text-0587": {
+      "id": "text-0587",
+      "text": "文件入库 → 格式与权限校验 → 解析与要点检查 → 内容审核 → 发布至指定学校或全平台 → 问答/诊断引用 → 反馈与修订 → 新版本生效或撤下。"
+    },
+    "text-0588": {
+      "id": "text-0588",
+      "text": "Demo 当前主要呈现上传解析、启停和知识预览。审核、版本和生效范围为 PRD 待补规则。知识库发布与评分规则发布分开管理：更新一份政策文档，不自动更改既有评分的权重或结果。"
+    },
+    "text-0589": {
+      "id": "text-0589",
+      "text": "5.1 主要业务对象"
+    },
+    "text-0590": {
+      "id": "text-0590",
+      "text": "以下为产品级字段草案，用于设计界面、确认接口和定义验收，不是数据库表设计。"
+    },
+    "text-0591": {
+      "id": "text-0591",
+      "text": "对象"
+    },
+    "text-0592": {
+      "id": "text-0592",
+      "text": "关键字段"
+    },
+    "text-0593": {
+      "id": "text-0593",
+      "text": "关联与用途"
+    },
+    "text-0594": {
+      "id": "text-0594",
+      "text": "学校与用户"
+    },
+    "text-0595": {
+      "id": "text-0595",
+      "text": "学校、学院、人员标识、姓名、角色、状态、数据范围"
+    },
+    "text-0596": {
+      "id": "text-0596",
+      "text": "确定租户与访问范围，关联团队或导师"
+    },
+    "text-0597": {
+      "id": "text-0597",
+      "text": "参赛项目"
+    },
+    "text-0598": {
+      "id": "text-0598",
+      "text": "项目标识、标题、学校学院、届次、赛道组别、负责人、阶段、梯队"
+    },
+    "text-0599": {
+      "id": "text-0599",
+      "text": "串联材料、任务、评分、训练和培育"
+    },
+    "text-0600": {
+      "id": "text-0600",
+      "text": "项目团队"
+    },
+    "text-0601": {
+      "id": "text-0601",
+      "text": "项目、成员、身份学段、学院专业、分工、指导教师、IP 关系、核验状态"
+    },
+    "text-0602": {
+      "id": "text-0602",
+      "text": "支撑资格检查与协作授权"
+    },
+    "text-0603": {
+      "id": "text-0603",
+      "text": "文件资产"
+    },
+    "text-0604": {
+      "id": "text-0604",
+      "text": "文件标识、项目、目录、名称、格式、大小、来源、解析状态、当前版本"
+    },
+    "text-0605": {
+      "id": "text-0605",
+      "text": "供多个工作台引用同一资产"
+    },
+    "text-0606": {
+      "id": "text-0606",
+      "text": "材料版本与提交"
+    },
+    "text-0607": {
+      "id": "text-0607",
+      "text": "版本标识、文件清单、父版本、操作者、时间、说明、标签、里程碑"
+    },
+    "text-0608": {
+      "id": "text-0608",
+      "text": "保存快照及项目资产变化"
+    },
+    "text-0609": {
+      "id": "text-0609",
+      "text": "AI 会话与任务"
+    },
+    "text-0610": {
+      "id": "text-0610",
+      "text": "会话、项目可为空、用户输入、引用材料版本、任务类型、配置、状态、结果"
+    },
+    "text-0611": {
+      "id": "text-0611",
+      "text": "支持独立咨询及项目专项调用"
+    },
+    "text-0612": {
+      "id": "text-0612",
+      "text": "生成物审核"
+    },
+    "text-0613": {
+      "id": "text-0613",
+      "text": "候选产物、基准版本、差异、批注、审核人、决定、时间、归档版本"
+    },
+    "text-0614": {
+      "id": "text-0614",
+      "text": "连接 AI 生成和项目基线"
+    },
+    "text-0615": {
+      "id": "text-0615",
+      "text": "诊断与评分"
+    },
+    "text-0616": {
+      "id": "text-0616",
+      "text": "项目、材料版本、规则版本、分数类型、维度细项、证据、建议、时间"
+    },
+    "text-0617": {
+      "id": "text-0617",
+      "text": "解释评分并支持可比的版本趋势"
+    },
+    "text-0618": {
+      "id": "text-0618",
+      "text": "待办与梯队任务"
+    },
+    "text-0619": {
+      "id": "text-0619",
+      "text": "任务来源、目标项目、条目、责任人、期限、状态、提交和验收关系"
+    },
+    "text-0620": {
+      "id": "text-0620",
+      "text": "区分项目待办、批量任务与工单项"
+    },
+    "text-0621": {
+      "id": "text-0621",
+      "text": "导师与指导邀请"
+    },
+    "text-0622": {
+      "id": "text-0622",
+      "text": "专家档案、专长、赛道、学校范围、容量、项目、响应和时间"
+    },
+    "text-0623": {
+      "id": "text-0623",
+      "text": "支撑推荐、邀请及排期"
+    },
+    "text-0624": {
+      "id": "text-0624",
+      "text": "辅导会议与工单"
+    },
+    "text-0625": {
+      "id": "text-0625",
+      "text": "媒体、纪要、导师组、任务项、前后版本、回执、复核意见、状态"
+    },
+    "text-0626": {
+      "id": "text-0626",
+      "text": "保存完整辅导过程与成果"
+    },
+    "text-0627": {
+      "id": "text-0627",
+      "text": "实训记录"
+    },
+    "text-0628": {
+      "id": "text-0628",
+      "text": "项目、材料版本、模式配置、问题回答、计时、评分、报告及前次短板"
+    },
+    "text-0629": {
+      "id": "text-0629",
+      "text": "支撑逐题复盘与再次训练"
+    },
+    "text-0630": {
+      "id": "text-0630",
+      "text": "知识与规则版本"
+    },
+    "text-0631": {
+      "id": "text-0631",
+      "text": "库、文档、来源、授权范围、要点、审核状态、适用届次、版本和生效日期"
+    },
+    "text-0632": {
+      "id": "text-0632",
+      "text": "控制引用、发布和历史追溯"
+    },
+    "text-0633": {
+      "id": "text-0633",
+      "text": "预警与统计快照"
+    },
+    "text-0634": {
+      "id": "text-0634",
+      "text": "类型、对象、触发依据、时间、责任人、处理状态、统计周期和口径"
+    },
+    "text-0635": {
+      "id": "text-0635",
+      "text": "支撑看板下钻及汇报复现"
+    },
+    "text-0636": {
+      "id": "text-0636",
+      "text": "5.2 三种阶段需要分别管理"
+    },
+    "text-0637": {
+      "id": "text-0637",
+      "text": "体系"
+    },
+    "text-0638": {
+      "id": "text-0638",
+      "text": "当前表达"
+    },
+    "text-0639": {
+      "id": "text-0639",
+      "text": "产品定义"
+    },
+    "text-0640": {
+      "id": "text-0640",
+      "text": "学生指导成长阶段"
+    },
+    "text-0641": {
+      "id": "text-0641",
+      "text": "L1 创意激发至 L6 赛前冲刺"
+    },
+    "text-0642": {
+      "id": "text-0642",
+      "text": "描述项目当前需要完成的工作与辅导目标"
+    },
+    "text-0643": {
+      "id": "text-0643",
+      "text": "学校赛事培育阶段"
+    },
+    "text-0644": {
+      "id": "text-0644",
+      "text": "L1 申报初筛至 L5 金奖答辩冲刺"
+    },
+    "text-0645": {
+      "id": "text-0645",
+      "text": "描述项目在学校组织的赛事流程中的位置"
+    },
+    "text-0646": {
+      "id": "text-0646",
+      "text": "AI 对话中的项目成熟度"
+    },
+    "text-0647": {
+      "id": "text-0647",
+      "text": "部分视图呈现 L1 创意、L2 验证、L3 成型、L4 冲刺"
+    },
+    "text-0648": {
+      "id": "text-0648",
+      "text": "与学生指导阶段相近但数量不同，需统一映射"
+    },
+    "text-0649": {
+      "id": "text-0649",
+      "text": "建议数据层分别使用成长阶段、赛事阶段及成熟度评价字段。确需保留成熟度时，使用独立名称和映射表，不把三个 L4 自动视为相同状态。映射不是一一对应，例如省赛集训中的项目仍可能处于材料成型或打磨优化阶段。"
+    },
+    "text-0650": {
+      "id": "text-0650",
+      "text": "5.3 材料 版本 评分与任务的一致性"
+    },
+    "text-0651": {
+      "id": "text-0651",
+      "text": "一份资产一个主标识。 会话产物、BP 工作台、项目文件夹和资产系统共享主账，各自保留来源视图。"
+    },
+    "text-0652": {
+      "id": "text-0652",
+      "text": "一次诊断绑定一组材料版本和一个规则版本。 材料更新不自动覆盖旧诊断；查看旧结果时能恢复其依据。"
+    },
+    "text-0653": {
+      "id": "text-0653",
+      "text": "一次工单提交绑定明确版本。 导师看到的是团队提交时的内容；团队后续修改不会静默改变待验收版本。"
+    },
+    "text-0654": {
+      "id": "text-0654",
+      "text": "回滚只改变当前工作基线。 已提交、已评分、已归档的历史记录保留；重新评分或提交形成新记录。"
+    },
+    "text-0655": {
+      "id": "text-0655",
+      "text": "正式评审分、材料诊断分、答辩表现分分开。 趋势比较应说明同一口径、样本、时间和版本。"
+    },
+    "text-0656": {
+      "id": "text-0656",
+      "text": "任务完成与工单闭环分开。 团队勾选完成、团队提交、导师通过是不同事件，管理看板分别统计。"
+    },
+    "text-0657": {
+      "id": "text-0657",
+      "text": "5.4 关键指标建议口径"
+    },
+    "text-0658": {
+      "id": "text-0658",
+      "text": "指标"
+    },
+    "text-0659": {
+      "id": "text-0659",
+      "text": "建议计算方式"
+    },
+    "text-0660": {
+      "id": "text-0660",
+      "text": "必须说明的边界"
+    },
+    "text-0661": {
+      "id": "text-0661",
+      "text": "工单闭环率"
+    },
+    "text-0662": {
+      "id": "text-0662",
+      "text": "指定周期内已验收归档工单数 ÷ 同口径有效已下发工单数"
+    },
+    "text-0663": {
+      "id": "text-0663",
+      "text": "未到期是否纳入、取消与撤回的排除条件"
+    },
+    "text-0664": {
+      "id": "text-0664",
+      "text": "按期整改提交率"
+    },
+    "text-0665": {
+      "id": "text-0665",
+      "text": "截止日前已提交项目工单数 ÷ 周期内到期有效工单数"
+    },
+    "text-0666": {
+      "id": "text-0666",
+      "text": "退回后的再次提交另计轮次"
+    },
+    "text-0667": {
+      "id": "text-0667",
+      "text": "待办完成率"
+    },
+    "text-0668": {
+      "id": "text-0668",
+      "text": "已完成条目数 ÷ 有效条目总数"
+    },
+    "text-0669": {
+      "id": "text-0669",
+      "text": "不等同于导师验收率"
+    },
+    "text-0670": {
+      "id": "text-0670",
+      "text": "评分提升"
+    },
+    "text-0671": {
+      "id": "text-0671",
+      "text": "相同规则下提交后分数减整改前分数"
+    },
+    "text-0672": {
+      "id": "text-0672",
+      "text": "项目样本与缺失评分处理，允许负向变化"
+    },
+    "text-0673": {
+      "id": "text-0673",
+      "text": "导师负荷率"
+    },
+    "text-0674": {
+      "id": "text-0674",
+      "text": "已接受且进行中的指导项目数 ÷ 配置容量"
+    },
+    "text-0675": {
+      "id": "text-0675",
+      "text": "多导师项目分别计入各导师负荷"
+    },
+    "text-0676": {
+      "id": "text-0676",
+      "text": "建议采纳率"
+    },
+    "text-0677": {
+      "id": "text-0677",
+      "text": "被用户明确采纳的有效建议数 ÷ 可采纳建议总数"
+    },
+    "text-0678": {
+      "id": "text-0678",
+      "text": "与点赞、查看和实际落地效果分别统计"
+    },
+    "text-0679": {
+      "id": "text-0679",
+      "text": "知识引用可追溯率"
+    },
+    "text-0680": {
+      "id": "text-0680",
+      "text": "有可访问来源定位的引用答案数 ÷ 含知识引用的答案数"
+    },
+    "text-0681": {
+      "id": "text-0681",
+      "text": "来源可访问不等于内容必然正确"
+    },
+    "text-0682": {
+      "id": "text-0682",
+      "text": "早期定义或客户意图"
+    },
+    "text-0683": {
+      "id": "text-0683",
+      "text": "当前 Demo 的承载"
+    },
+    "text-0684": {
+      "id": "text-0684",
+      "text": "本版处理"
+    },
+    "text-0685": {
+      "id": "text-0685",
+      "text": "参赛者 评委 管理者三类用户"
+    },
+    "text-0686": {
+      "id": "text-0686",
+      "text": "四端门户，导师独立；平台管理员管理公共资源"
+    },
+    "text-0687": {
+      "id": "text-0687",
+      "text": "以四端组织，评委辅导归导师，正式赛事评审职责待确认"
+    },
+    "text-0688": {
+      "id": "text-0688",
+      "text": "智能问答四大场景"
+    },
+    "text-0689": {
+      "id": "text-0689",
+      "text": "统一 AI 教练承载政策、备赛诊断、标杆竞品、校本资源"
+    },
+    "text-0690": {
+      "id": "text-0690",
+      "text": "保留四场景；新增生成物审核作为独立模块"
+    },
+    "text-0691": {
+      "id": "text-0691",
+      "text": "全链路指导 L1至L6"
+    },
+    "text-0692": {
+      "id": "text-0692",
+      "text": "当前 L5 为路演成型、L6 为赛前冲刺；早期 L5 是档案追踪、L6 是下一步建议"
+    },
+    "text-0693": {
+      "id": "text-0693",
+      "text": "采用 Demo 阶段；档案追踪转 M02/M07，下一步建议进入 M03/M05"
+    },
+    "text-0694": {
+      "id": "text-0694",
+      "text": "模拟评审与专项训练"
+    },
+    "text-0695": {
+      "id": "text-0695",
+      "text": "标准、电梯、高压、弱项、对抗及全真路演六模式"
+    },
+    "text-0696": {
+      "id": "text-0696",
+      "text": "展开为配置、演练、复盘和再次训练"
+    },
+    "text-0697": {
+      "id": "text-0697",
+      "text": "赛事工具箱"
+    },
+    "text-0698": {
+      "id": "text-0698",
+      "text": "PPT/BP 生成预览、路演物料、资产查看分散在多个工作台"
+    },
+    "text-0699": {
+      "id": "text-0699",
+      "text": "不新增独立菜单；在实际承载模块定义，独立工具箱待确认"
+    },
+    "text-0700": {
+      "id": "text-0700",
+      "text": "BP 美化与90秒视频生成"
+    },
+    "text-0701": {
+      "id": "text-0701",
+      "text": "有生成物展示、PPT预览、视频资产和路演界面，未形成完整视频生成任务链"
+    },
+    "text-0702": {
+      "id": "text-0702",
+      "text": "保留需求方向，生成、编辑、导出的真实边界待确认"
+    },
+    "text-0703": {
+      "id": "text-0703",
+      "text": "商业画布 财务预测 融资规划"
+    },
+    "text-0704": {
+      "id": "text-0704",
+      "text": "BP 章节、表格产物和资产预览承载相关内容"
+    },
+    "text-0705": {
+      "id": "text-0705",
+      "text": "可先作为内容工具；独立画布和可计算模型尚待定义"
+    },
+    "text-0706": {
+      "id": "text-0706",
+      "text": "智能初筛与评委人工调分"
+    },
+    "text-0707": {
+      "id": "text-0707",
+      "text": "学校初筛矩阵与下钻较完整；未见完整人工改分与正式评审流程"
+    },
+    "text-0708": {
+      "id": "text-0708",
+      "text": "初筛列为主模块，人工裁定入口列待补事项"
+    },
+    "text-0709": {
+      "id": "text-0709",
+      "text": "导师辅导闭环"
+    },
+    "text-0710": {
+      "id": "text-0710",
+      "text": "接邀、多导师、会议转写、草稿确认、团队反馈、双版本验收"
+    },
+    "text-0711": {
+      "id": "text-0711",
+      "text": "按新版细化，优先贯通三端状态"
+    },
+    "text-0712": {
+      "id": "text-0712",
+      "text": "专家经验与案例复用"
+    },
+    "text-0713": {
+      "id": "text-0713",
+      "text": "平台和校本知识库分类、教练问答、运营反馈看板"
+    },
+    "text-0714": {
+      "id": "text-0714",
+      "text": "归共享能力；保留客户对经验正确性审核的要求"
+    },
+    "text-0715": {
+      "id": "text-0715",
+      "text": "政府 投资机构与 OPC 生态"
+    },
+    "text-0716": {
+      "id": "text-0716",
+      "text": "有政策、资本名录、孵化知识，尚无独立机构门户及业务流程"
+    },
+    "text-0717": {
+      "id": "text-0717",
+      "text": "暂不定义项目交易、融资撮合和政策审批系统"
+    },
+    "text-0718": {
+      "id": "text-0718",
+      "text": "跨届趋势 AI运行与校准"
+    },
+    "text-0719": {
+      "id": "text-0719",
+      "text": "有趋势、使用和反馈展示；实际评委评分数据可得性在旧文档中已提出疑问"
+    },
+    "text-0720": {
+      "id": "text-0720",
+      "text": "指标作为目标；不假设能够拿到省赛国赛保密评分"
+    },
+    "text-0721": {
+      "id": "text-0721",
+      "text": "7.1 端到端验收场景"
+    },
+    "text-0722": {
+      "id": "text-0722",
+      "text": "下列是产品进入真实试用前的验收基线，不是本轮已通过的测试结果。"
+    },
+    "text-0723": {
+      "id": "text-0723",
+      "text": "场景"
+    },
+    "text-0724": {
+      "id": "text-0724",
+      "text": "验证路径"
+    },
+    "text-0725": {
+      "id": "text-0725",
+      "text": "通过标准"
+    },
+    "text-0726": {
+      "id": "text-0726",
+      "text": "A 项目上下文"
+    },
+    "text-0727": {
+      "id": "text-0727",
+      "text": "两个项目分别有不同材料，在教练、指导、资产和答辩间切换"
+    },
+    "text-0728": {
+      "id": "text-0728",
+      "text": "不串项目、不引用无权材料，各入口显示正确项目与版本"
+    },
+    "text-0729": {
+      "id": "text-0729",
+      "text": "B 诊断到修改"
+    },
+    "text-0730": {
+      "id": "text-0730",
+      "text": "导入一份真实 BP → 诊断 → 定位章节 → 生成改稿 → 审核 → 保存快照"
+    },
+    "text-0731": {
+      "id": "text-0731",
+      "text": "问题有原文依据，修改范围正确，新旧版本可比较"
+    },
+    "text-0732": {
+      "id": "text-0732",
+      "text": "C 生成物审核"
+    },
+    "text-0733": {
+      "id": "text-0733",
+      "text": "对同一文件分别走同意、否决、改进"
+    },
+    "text-0734": {
+      "id": "text-0734",
+      "text": "三种决定产生不同且可追溯的状态，原基线不会被未批准内容覆盖"
+    },
+    "text-0735": {
+      "id": "text-0735",
+      "text": "D 三端辅导闭环"
+    },
+    "text-0736": {
+      "id": "text-0736",
+      "text": "学校发邀请 → 导师接受 → 纪要工单 → 团队接单提交 → 导师退回再验收"
+    },
+    "text-0737": {
+      "id": "text-0737",
+      "text": "各端状态一致；通知真实投递；归档材料与提交版一致"
+    },
+    "text-0738": {
+      "id": "text-0738",
+      "text": "E 实训与复盘"
+    },
+    "text-0739": {
+      "id": "text-0739",
+      "text": "选择材料与模式 → 完成若干轮回答 → 生成报告 → 薄弱项再练"
+    },
+    "text-0740": {
+      "id": "text-0740",
+      "text": "报告使用本次回答和计时；再次训练保留短板；中断后记录可恢复"
+    },
+    "text-0741": {
+      "id": "text-0741",
+      "text": "F 初筛可解释"
+    },
+    "text-0742": {
+      "id": "text-0742",
+      "text": "导入含正常、缺附件、疑似重复的项目批次 → 评分 → 人工复核"
+    },
+    "text-0743": {
+      "id": "text-0743",
+      "text": "成功失败明细准确，评分可核算，风险有证据，复核结论可追踪"
+    },
+    "text-0744": {
+      "id": "text-0744",
+      "text": "G 知识隔离与更新"
+    },
+    "text-0745": {
+      "id": "text-0745",
+      "text": "两校上传不同政策 → 发布 → 查询 → 停用其中一份"
+    },
+    "text-0746": {
+      "id": "text-0746",
+      "text": "本校私有知识不跨校召回；新查询不引用停用版本，历史引用保留"
+    },
+    "text-0747": {
+      "id": "text-0747",
+      "text": "H 看板与汇报"
+    },
+    "text-0748": {
+      "id": "text-0748",
+      "text": "对同一统计周期查看看板、下钻记录和导出汇报"
+    },
+    "text-0749": {
+      "id": "text-0749",
+      "text": "计数、评分口径及时间范围一致，导出文件可打开并可编辑"
+    },
+    "text-0750": {
+      "id": "text-0750",
+      "text": "I 版本还原"
+    },
+    "text-0751": {
+      "id": "text-0751",
+      "text": "从当前资产进入旧提交 → 查看文件 → 对比 → 回当前 → 回滚 BP"
+    },
+    "text-0752": {
+      "id": "text-0752",
+      "text": "历史集合可还原，原报告与工单引用不被改写"
+    },
+    "text-0753": {
+      "id": "text-0753",
+      "text": "7.2 关键异常与非功能要求"
+    },
+    "text-0754": {
+      "id": "text-0754",
+      "text": "类别"
+    },
+    "text-0755": {
+      "id": "text-0755",
+      "text": "初步要求"
+    },
+    "text-0756": {
+      "id": "text-0756",
+      "text": "量化参数待定"
+    },
+    "text-0757": {
+      "id": "text-0757",
+      "text": "文件处理"
+    },
+    "text-0758": {
+      "id": "text-0758",
+      "text": "对空文件、损坏、加密、不支持格式、附件缺失和重复导入给出具体原因；允许重试或人工补齐"
+    },
+    "text-0759": {
+      "id": "text-0759",
+      "text": "格式清单、文件大小、批次规模、解析成功率"
+    },
+    "text-0760": {
+      "id": "text-0760",
+      "text": "AI 长任务"
+    },
+    "text-0761": {
+      "id": "text-0761",
+      "text": "显示真实排队与执行状态；支持取消、超时、重试；保留已完成结果及用户输入"
+    },
+    "text-0762": {
+      "id": "text-0762",
+      "text": "并发量、超时、成本上限、各任务时延目标"
+    },
+    "text-0763": {
+      "id": "text-0763",
+      "text": "数据权限"
+    },
+    "text-0764": {
+      "id": "text-0764",
+      "text": "学校、学院、项目及导师授权在服务端校验；下载、引用、通知和导出同样受控"
+    },
+    "text-0765": {
+      "id": "text-0765",
+      "text": "角色矩阵、跨校授权有效期、数据保存周期"
+    },
+    "text-0766": {
+      "id": "text-0766",
+      "text": "版本可靠性"
+    },
+    "text-0767": {
+      "id": "text-0767",
+      "text": "文件、评分、审核与工单关联持久化；重复提交避免重复执行；关键操作可审计"
+    },
+    "text-0768": {
+      "id": "text-0768",
+      "text": "保存策略、恢复目标、版本保留数量"
+    },
+    "text-0769": {
+      "id": "text-0769",
+      "text": "内容可信度"
+    },
+    "text-0770": {
+      "id": "text-0770",
+      "text": "规则与政策引用可追溯；AI 输出与用户事实分开；无来源时明确表达不确定性"
+    },
+    "text-0771": {
+      "id": "text-0771",
+      "text": "标准样本集、人工复核尺度、最低质量指标"
+    },
+    "text-0772": {
+      "id": "text-0772",
+      "text": "音视频与隐私"
+    },
+    "text-0773": {
+      "id": "text-0773",
+      "text": "明确录制授权、保存与删除范围；识别失败可切换文字；跨项目复用先脱敏审核"
+    },
+    "text-0774": {
+      "id": "text-0774",
+      "text": "支持媒体格式、时长、识别质量、保存时限"
+    },
+    "text-0775": {
+      "id": "text-0775",
+      "text": "导出与体验"
+    },
+    "text-0776": {
+      "id": "text-0776",
+      "text": "文件真实可下载并可打开；页面在常用分辨率下表格可读；长列表支持检索筛选"
+    },
+    "text-0777": {
+      "id": "text-0777",
+      "text": "支持浏览器、分辨率、导出保真度与最大记录数"
+    },
+    "text-0778": {
+      "id": "text-0778",
+      "text": "编号"
+    },
+    "text-0779": {
+      "id": "text-0779",
+      "text": "需确认的问题"
+    },
+    "text-0780": {
+      "id": "text-0780",
+      "text": "建议处理"
+    },
+    "text-0781": {
+      "id": "text-0781",
+      "text": "影响模块"
+    },
+    "text-0782": {
+      "id": "text-0782",
+      "text": "Q01"
+    },
+    "text-0783": {
+      "id": "text-0783",
+      "text": "当前版本是否只覆盖备赛培育，还是同时交付正式赛事评审"
+    },
+    "text-0784": {
+      "id": "text-0784",
+      "text": "先明确是否包括人工评分、名额分配、结果发布等正式流程"
+    },
+    "text-0785": {
+      "id": "text-0785",
+      "text": "M08、M11、M17"
+    },
+    "text-0786": {
+      "id": "text-0786",
+      "text": "Q02"
+    },
+    "text-0787": {
+      "id": "text-0787",
+      "text": "四端内部角色与权限如何细分"
+    },
+    "text-0788": {
+      "id": "text-0788",
+      "text": "确认队长/成员、指导教师/专家、校级/学院级范围和审核权"
+    },
+    "text-0789": {
+      "id": "text-0789",
+      "text": "M01、M04、M10、M13"
+    },
+    "text-0790": {
+      "id": "text-0790",
+      "text": "Q03"
+    },
+    "text-0791": {
+      "id": "text-0791",
+      "text": "三套阶段如何统一表达"
+    },
+    "text-0792": {
+      "id": "text-0792",
+      "text": "成长与赛事阶段分开；成熟度视图通过映射统一文案"
+    },
+    "text-0793": {
+      "id": "text-0793",
+      "text": "M03、M05、M11"
+    },
+    "text-0794": {
+      "id": "text-0794",
+      "text": "Q04"
+    },
+    "text-0795": {
+      "id": "text-0795",
+      "text": "当届规则及评分由谁确认并发布"
+    },
+    "text-0796": {
+      "id": "text-0796",
+      "text": "指定权威来源和责任人；正式评审分、诊断分、训练分分别定义"
+    },
+    "text-0797": {
+      "id": "text-0797",
+      "text": "M05、M06、M08、M16"
+    },
+    "text-0798": {
+      "id": "text-0798",
+      "text": "Q05"
+    },
+    "text-0799": {
+      "id": "text-0799",
+      "text": "生成物确认后是否自动进入项目资产"
+    },
+    "text-0800": {
+      "id": "text-0800",
+      "text": "确定审核、归档和提交三种动作关系，采用同一版本主账"
+    },
+    "text-0801": {
+      "id": "text-0801",
+      "text": "M02、M04、M05、M07"
+    },
+    "text-0802": {
+      "id": "text-0802",
+      "text": "Q06"
+    },
+    "text-0803": {
+      "id": "text-0803",
+      "text": "多导师如何验收及处理意见冲突"
+    },
+    "text-0804": {
+      "id": "text-0804",
+      "text": "指定主审或会签；保留协同意见与最终裁定"
+    },
+    "text-0805": {
+      "id": "text-0805",
+      "text": "M09、M10"
+    },
+    "text-0806": {
+      "id": "text-0806",
+      "text": "Q07"
+    },
+    "text-0807": {
+      "id": "text-0807",
+      "text": "自动检查能力的真实范围"
+    },
+    "text-0808": {
+      "id": "text-0808",
+      "text": "分别确认查重、IP、重复申报、AI痕迹的服务来源和人工复核流程"
+    },
+    "text-0809": {
+      "id": "text-0809",
+      "text": "M08、M13"
+    },
+    "text-0810": {
+      "id": "text-0810",
+      "text": "Q08"
+    },
+    "text-0811": {
+      "id": "text-0811",
+      "text": "多模态交付到何种程度"
+    },
+    "text-0812": {
+      "id": "text-0812",
+      "text": "明确真实语音、实时视频、仪态分析、PPTX和90秒视频生成范围"
+    },
+    "text-0813": {
+      "id": "text-0813",
+      "text": "M04、M06、M07、M10"
+    },
+    "text-0814": {
+      "id": "text-0814",
+      "text": "Q09"
+    },
+    "text-0815": {
+      "id": "text-0815",
+      "text": "两级资源如何同步与覆盖"
+    },
+    "text-0816": {
+      "id": "text-0816",
+      "text": "公共规则与校本补充的优先级、专家引用方式、跨校访问边界"
+    },
+    "text-0817": {
+      "id": "text-0817",
+      "text": "M12、M14、M15、M16"
+    },
+    "text-0818": {
+      "id": "text-0818",
+      "text": "Q10"
+    },
+    "text-0819": {
+      "id": "text-0819",
+      "text": "外部系统及消息渠道的接入清单"
+    },
+    "text-0820": {
+      "id": "text-0820",
+      "text": "区分 CAS、教务导入、短信、邮件、会议录音和其他对接，逐项验收"
+    },
+    "text-0821": {
+      "id": "text-0821",
+      "text": "M01、M08、M09、M10、M13"
+    },
+    "text-0822": {
+      "id": "text-0822",
+      "text": "Q11"
+    },
+    "text-0823": {
+      "id": "text-0823",
+      "text": "经验可以从哪些数据沉淀"
+    },
+    "text-0824": {
+      "id": "text-0824",
+      "text": "确认专家评分可得性、数据授权与审核流程，不承诺实时自动改规则"
+    },
+    "text-0825": {
+      "id": "text-0825",
+      "text": "M17"
+    },
+    "text-0826": {
+      "id": "text-0826",
+      "text": "Q12"
+    },
+    "text-0827": {
+      "id": "text-0827",
+      "text": "OPC 政策申报与融资业务边界"
+    },
+    "text-0828": {
+      "id": "text-0828",
+      "text": "当前按知识资源定义；是否扩展独立业务链条另立范围"
+    },
+    "text-0829": {
+      "id": "text-0829",
+      "text": "M14、M16"
+    },
+    "text-0830": {
+      "id": "text-0830",
+      "text": "建议首轮评审先确认 Q01 至 Q06，以便固定角色、对象、状态和规则；再据此拆分页面稿、接口及研发任务。本版保留最新版 Demo 的完整功能面，五个业务模块作为本轮评审与后续代码组织的建议边界。"
+    },
+    "text-0831": {
+      "id": "text-0831",
+      "text": "9.1 基线材料"
+    },
+    "text-0832": {
+      "id": "text-0832",
+      "text": "当前 Demo：https://shuangchuang-all.ai.studio/ 。本轮读取日期为2026年9月11日，门户标题为“赛事打磨平台 - 2026大赛培育决策平台”。"
+    },
+    "text-0833": {
+      "id": "text-0833",
+      "text": "页面公开资源：https://shuangchuang-all.ai.studio/assets/index-DPDNHoLx.js 。用于核对原型组件、文案、字段、菜单及事件定义；仅记录本次快照，不认为该地址永久稳定。"
+    },
+    "text-0834": {
+      "id": "text-0834",
+      "text": "早期参考：《高校双创赛事智能体-产品定义0815（XIE）.docx》。原文件包含修订，本轮读取了插入修订的正文，排除删除修订文本；客户意图以原文定位章节为参考，遗留问号及待确认内容没有提升为已定需求。"
+    },
+    "text-0835": {
+      "id": "text-0835",
+      "text": "9.2 页面与功能来源索引"
+    },
+    "text-0836": {
+      "id": "text-0836",
+      "text": "来源编号"
+    },
+    "text-0837": {
+      "id": "text-0837",
+      "text": "Demo 定位"
+    },
+    "text-0838": {
+      "id": "text-0838",
+      "text": "对应模块"
+    },
+    "text-0839": {
+      "id": "text-0839",
+      "text": "本轮核验方式"
+    },
+    "text-0840": {
+      "id": "text-0840",
+      "text": "D01"
+    },
+    "text-0841": {
+      "id": "text-0841",
+      "text": "门户 四种身份及登录表单"
+    },
+    "text-0842": {
+      "id": "text-0842",
+      "text": "M01"
+    },
+    "text-0843": {
+      "id": "text-0843",
+      "text": "动态页面提取并核对公开资源"
+    },
+    "text-0844": {
+      "id": "text-0844",
+      "text": "D02"
+    },
+    "text-0845": {
+      "id": "text-0845",
+      "text": "左侧菜单 当前项目 账号区"
+    },
+    "text-0846": {
+      "id": "text-0846",
+      "text": "M01"
+    },
+    "text-0847": {
+      "id": "text-0847",
+      "text": "前端结构核对"
+    },
+    "text-0848": {
+      "id": "text-0848",
+      "text": "D03"
+    },
+    "text-0849": {
+      "id": "text-0849",
+      "text": "项目工作台 待办 工单 文件夹"
+    },
+    "text-0850": {
+      "id": "text-0850",
+      "text": "M02"
+    },
+    "text-0851": {
+      "id": "text-0851",
+      "text": "前端结构及事件定义核对"
+    },
+    "text-0852": {
+      "id": "text-0852",
+      "text": "D04"
+    },
+    "text-0853": {
+      "id": "text-0853",
+      "text": "新建对话 AI教练 场景卡片 专项调用"
+    },
+    "text-0854": {
+      "id": "text-0854",
+      "text": "M03"
+    },
+    "text-0855": {
+      "id": "text-0855",
+      "text": "前端结构及演示状态核对"
+    },
+    "text-0856": {
+      "id": "text-0856",
+      "text": "D05"
+    },
+    "text-0857": {
+      "id": "text-0857",
+      "text": "对话右侧产物区 修改对比 批注审核"
+    },
+    "text-0858": {
+      "id": "text-0858",
+      "text": "M04"
+    },
+    "text-0859": {
+      "id": "text-0859",
+      "text": "前端结构及事件定义核对"
+    },
+    "text-0860": {
+      "id": "text-0860",
+      "text": "D06"
+    },
+    "text-0861": {
+      "id": "text-0861",
+      "text": "全链路指导 BP 诊断 评分 版本历史"
+    },
+    "text-0862": {
+      "id": "text-0862",
+      "text": "M05"
+    },
+    "text-0863": {
+      "id": "text-0863",
+      "text": "前端结构 阶段数据及事件定义核对"
+    },
+    "text-0864": {
+      "id": "text-0864",
+      "text": "D07"
+    },
+    "text-0865": {
+      "id": "text-0865",
+      "text": "答辩模式 配置 预分析 路演 问答 复盘"
+    },
+    "text-0866": {
+      "id": "text-0866",
+      "text": "M06"
+    },
+    "text-0867": {
+      "id": "text-0867",
+      "text": "前端结构及演示状态核对"
+    },
+    "text-0868": {
+      "id": "text-0868",
+      "text": "D08"
+    },
+    "text-0869": {
+      "id": "text-0869",
+      "text": "项目资产管理 目录 预览 时间线 Diff"
+    },
+    "text-0870": {
+      "id": "text-0870",
+      "text": "M07"
+    },
+    "text-0871": {
+      "id": "text-0871",
+      "text": "前端结构及事件定义核对"
+    },
+    "text-0872": {
+      "id": "text-0872",
+      "text": "D09"
+    },
+    "text-0873": {
+      "id": "text-0873",
+      "text": "海量项目导入弹窗"
+    },
+    "text-0874": {
+      "id": "text-0874",
+      "text": "M08"
+    },
+    "text-0875": {
+      "id": "text-0875",
+      "text": "表单及模拟流程核对"
+    },
+    "text-0876": {
+      "id": "text-0876",
+      "text": "D10"
+    },
+    "text-0877": {
+      "id": "text-0877",
+      "text": "智能初筛 指标矩阵 排名 合规标签"
+    },
+    "text-0878": {
+      "id": "text-0878",
+      "text": "M08"
+    },
+    "text-0879": {
+      "id": "text-0879",
+      "text": "前端结构及规则展示核对"
+    },
+    "text-0880": {
+      "id": "text-0880",
+      "text": "D11"
+    },
+    "text-0881": {
+      "id": "text-0881",
+      "text": "项目下钻弹窗"
+    },
+    "text-0882": {
+      "id": "text-0882",
+      "text": "M08"
+    },
+    "text-0883": {
+      "id": "text-0883",
+      "text": "前端结构核对"
+    },
+    "text-0884": {
+      "id": "text-0884",
+      "text": "D12"
+    },
+    "text-0885": {
+      "id": "text-0885",
+      "text": "常态化辅导与调度 梯队任务"
+    },
+    "text-0886": {
+      "id": "text-0886",
+      "text": "M09"
+    },
+    "text-0887": {
+      "id": "text-0887",
+      "text": "前端结构及事件定义核对"
+    },
+    "text-0888": {
+      "id": "text-0888",
+      "text": "D13"
+    },
+    "text-0889": {
+      "id": "text-0889",
+      "text": "辅导工单 邀请 会议 条目 团队回执 终审"
+    },
+    "text-0890": {
+      "id": "text-0890",
+      "text": "M10"
+    },
+    "text-0891": {
+      "id": "text-0891",
+      "text": "前端状态及角色操作定义核对"
+    },
+    "text-0892": {
+      "id": "text-0892",
+      "text": "D14"
+    },
+    "text-0893": {
+      "id": "text-0893",
+      "text": "学校备赛数据驾驶舱"
+    },
+    "text-0894": {
+      "id": "text-0894",
+      "text": "M11"
+    },
+    "text-0895": {
+      "id": "text-0895",
+      "text": "指标及页面定义核对"
+    },
+    "text-0896": {
+      "id": "text-0896",
+      "text": "D15"
+    },
+    "text-0897": {
+      "id": "text-0897",
+      "text": "重点项目五阶段看板"
+    },
+    "text-0898": {
+      "id": "text-0898",
+      "text": "M11"
+    },
+    "text-0899": {
+      "id": "text-0899",
+      "text": "阶段与页面定义核对"
+    },
+    "text-0900": {
+      "id": "text-0900",
+      "text": "D16"
+    },
+    "text-0901": {
+      "id": "text-0901",
+      "text": "阶段复盘汇报弹窗"
+    },
+    "text-0902": {
+      "id": "text-0902",
+      "text": "M11"
+    },
+    "text-0903": {
+      "id": "text-0903",
+      "text": "报告结构及导出入口核对"
+    },
+    "text-0904": {
+      "id": "text-0904",
+      "text": "D17"
+    },
+    "text-0905": {
+      "id": "text-0905",
+      "text": "学校导师智库 卡片 表格 档案 编辑"
+    },
+    "text-0906": {
+      "id": "text-0906",
+      "text": "M12"
+    },
+    "text-0907": {
+      "id": "text-0907",
+      "text": "前端结构及表单核对"
+    },
+    "text-0908": {
+      "id": "text-0908",
+      "text": "D18"
+    },
+    "text-0909": {
+      "id": "text-0909",
+      "text": "学校用户与权限管理"
+    },
+    "text-0910": {
+      "id": "text-0910",
+      "text": "M13"
+    },
+    "text-0911": {
+      "id": "text-0911",
+      "text": "前端结构及表单核对"
+    },
+    "text-0912": {
+      "id": "text-0912",
+      "text": "D19"
+    },
+    "text-0913": {
+      "id": "text-0913",
+      "text": "项目团队架构管理"
+    },
+    "text-0914": {
+      "id": "text-0914",
+      "text": "M13"
+    },
+    "text-0915": {
+      "id": "text-0915",
+      "text": "前端结构及检查项核对"
+    },
+    "text-0916": {
+      "id": "text-0916",
+      "text": "D20"
+    },
+    "text-0917": {
+      "id": "text-0917",
+      "text": "校本知识库及库内文件"
+    },
+    "text-0918": {
+      "id": "text-0918",
+      "text": "M14"
+    },
+    "text-0919": {
+      "id": "text-0919",
+      "text": "分类 表单 解析预览及状态核对"
+    },
+    "text-0920": {
+      "id": "text-0920",
+      "text": "D21"
+    },
+    "text-0921": {
+      "id": "text-0921",
+      "text": "平台导师智库与跨校调度"
+    },
+    "text-0922": {
+      "id": "text-0922",
+      "text": "M15"
+    },
+    "text-0923": {
+      "id": "text-0923",
+      "text": "前端结构及表单核对"
+    },
+    "text-0924": {
+      "id": "text-0924",
+      "text": "D22"
+    },
+    "text-0925": {
+      "id": "text-0925",
+      "text": "平台赛事知识库及公共文件"
+    },
+    "text-0926": {
+      "id": "text-0926",
+      "text": "M16"
+    },
+    "text-0927": {
+      "id": "text-0927",
+      "text": "前端结构及状态核对"
+    },
+    "text-0928": {
+      "id": "text-0928",
+      "text": "D23"
+    },
+    "text-0929": {
+      "id": "text-0929",
+      "text": "官方评审细则弹窗"
+    },
+    "text-0930": {
+      "id": "text-0930",
+      "text": "M16"
+    },
+    "text-0931": {
+      "id": "text-0931",
+      "text": "赛道 指标及说明核对"
+    },
+    "text-0932": {
+      "id": "text-0932",
+      "text": "D24"
+    },
+    "text-0933": {
+      "id": "text-0933",
+      "text": "对话运营指标与反馈 经验和案例调用"
+    },
+    "text-0934": {
+      "id": "text-0934",
+      "text": "M17"
+    },
+    "text-0935": {
+      "id": "text-0935",
+      "text": "页面定义加早期文档7.1和7.2"
+    },
+    "text-0936": {
+      "id": "text-0936",
+      "text": "本轮未执行实际上传、外部通知、权限修改或生产数据写入。当前资源中部分动作使用前端状态、定时器、提示弹窗或预置内容，因此本版只据此还原需求，不据此证明模型调用、文件保真、跨端持久化或真实集成。网站展示的机构名称、政策条款、案例成绩、预测分值均不构成本版对外部事实的确认。"
+    },
+    "chapter-1-title": {
+      "id": "chapter-1-title",
+      "text": "1 产品定位与文档边界"
+    },
+    "chapter-2-title": {
+      "id": "chapter-2-title",
+      "text": "2 用户角色与产品架构"
+    },
+    "chapter-3-title": {
+      "id": "chapter-3-title",
+      "text": "3 三级功能清单"
+    },
+    "chapter-4-title": {
+      "id": "chapter-4-title",
+      "text": "4 关键业务流程与状态"
+    },
+    "chapter-5-title": {
+      "id": "chapter-5-title",
+      "text": "5 核心数据对象与一致性规则"
+    },
+    "chapter-6-title": {
+      "id": "chapter-6-title",
+      "text": "6 早期客户定义与当前 Demo 对照"
+    },
+    "chapter-7-title": {
+      "id": "chapter-7-title",
+      "text": "7 初步验收与运行要求"
+    },
+    "chapter-8-title": {
+      "id": "chapter-8-title",
+      "text": "8 需要产品评审确认的事项"
+    },
+    "chapter-9-title": {
+      "id": "chapter-9-title",
+      "text": "9 来源与核验记录"
+    }
+  },
+  "features": [
+    {
+      "id": "M01-01",
+      "domain": "project",
+      "subgroup": "M01 门户与身份上下文",
+      "name": "M01-01-name",
+      "detail": "M01-01-detail",
+      "rule": "M01-01-rule"
+    },
+    {
+      "id": "M01-02",
+      "domain": "project",
+      "subgroup": "M01 门户与身份上下文",
+      "name": "M01-02-name",
+      "detail": "M01-02-detail",
+      "rule": "M01-02-rule"
+    },
+    {
+      "id": "M01-03",
+      "domain": "project",
+      "subgroup": "M01 门户与身份上下文",
+      "name": "M01-03-name",
+      "detail": "M01-03-detail",
+      "rule": "M01-03-rule"
+    },
+    {
+      "id": "M01-04",
+      "domain": "project",
+      "subgroup": "M01 门户与身份上下文",
+      "name": "M01-04-name",
+      "detail": "M01-04-detail",
+      "rule": "M01-04-rule"
+    },
+    {
+      "id": "M01-05",
+      "domain": "project",
+      "subgroup": "M01 门户与身份上下文",
+      "name": "M01-05-name",
+      "detail": "M01-05-detail",
+      "rule": "M01-05-rule"
+    },
+    {
+      "id": "M02-01",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-01-name",
+      "detail": "M02-01-detail",
+      "rule": "M02-01-rule"
+    },
+    {
+      "id": "M02-02",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-02-name",
+      "detail": "M02-02-detail",
+      "rule": "M02-02-rule"
+    },
+    {
+      "id": "M02-03",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-03-name",
+      "detail": "M02-03-detail",
+      "rule": "M02-03-rule"
+    },
+    {
+      "id": "M02-04",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-04-name",
+      "detail": "M02-04-detail",
+      "rule": "M02-04-rule"
+    },
+    {
+      "id": "M02-05",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-05-name",
+      "detail": "M02-05-detail",
+      "rule": "M02-05-rule"
+    },
+    {
+      "id": "M02-06",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-06-name",
+      "detail": "M02-06-detail",
+      "rule": "M02-06-rule"
+    },
+    {
+      "id": "M02-07",
+      "domain": "project",
+      "subgroup": "M02 项目工作台与团队整改",
+      "name": "M02-07-name",
+      "detail": "M02-07-detail",
+      "rule": "M02-07-rule"
+    },
+    {
+      "id": "M07-01",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-01-name",
+      "detail": "M07-01-detail",
+      "rule": "M07-01-rule"
+    },
+    {
+      "id": "M07-02",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-02-name",
+      "detail": "M07-02-detail",
+      "rule": "M07-02-rule"
+    },
+    {
+      "id": "M07-03",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-03-name",
+      "detail": "M07-03-detail",
+      "rule": "M07-03-rule"
+    },
+    {
+      "id": "M07-04",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-04-name",
+      "detail": "M07-04-detail",
+      "rule": "M07-04-rule"
+    },
+    {
+      "id": "M07-05",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-05-name",
+      "detail": "M07-05-detail",
+      "rule": "M07-05-rule"
+    },
+    {
+      "id": "M07-06",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-06-name",
+      "detail": "M07-06-detail",
+      "rule": "M07-06-rule"
+    },
+    {
+      "id": "M07-07",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-07-name",
+      "detail": "M07-07-detail",
+      "rule": "M07-07-rule"
+    },
+    {
+      "id": "M07-08",
+      "domain": "project",
+      "subgroup": "M07 项目资产与版本管理",
+      "name": "M07-08-name",
+      "detail": "M07-08-detail",
+      "rule": "M07-08-rule"
+    },
+    {
+      "id": "M13-01",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-01-name",
+      "detail": "M13-01-detail",
+      "rule": "M13-01-rule"
+    },
+    {
+      "id": "M13-02",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-02-name",
+      "detail": "M13-02-detail",
+      "rule": "M13-02-rule"
+    },
+    {
+      "id": "M13-03",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-03-name",
+      "detail": "M13-03-detail",
+      "rule": "M13-03-rule"
+    },
+    {
+      "id": "M13-04",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-04-name",
+      "detail": "M13-04-detail",
+      "rule": "M13-04-rule"
+    },
+    {
+      "id": "M13-05",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-05-name",
+      "detail": "M13-05-detail",
+      "rule": "M13-05-rule"
+    },
+    {
+      "id": "M13-06",
+      "domain": "project",
+      "subgroup": "M13 用户权限与团队架构管理",
+      "name": "M13-06-name",
+      "detail": "M13-06-detail",
+      "rule": "M13-06-rule"
+    },
+    {
+      "id": "M17-01",
+      "domain": "project",
+      "subgroup": "D01-S 材料解析与上下文",
+      "name": "M17-01-name",
+      "detail": "M17-01-detail",
+      "rule": "M17-01-rule"
+    },
+    {
+      "id": "M03-01",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-01-name",
+      "detail": "M03-01-detail",
+      "rule": "M03-01-rule"
+    },
+    {
+      "id": "M03-02",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-02-name",
+      "detail": "M03-02-detail",
+      "rule": "M03-02-rule"
+    },
+    {
+      "id": "M03-03",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-03-name",
+      "detail": "M03-03-detail",
+      "rule": "M03-03-rule"
+    },
+    {
+      "id": "M03-04",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-04-name",
+      "detail": "M03-04-detail",
+      "rule": "M03-04-rule"
+    },
+    {
+      "id": "M03-05",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-05-name",
+      "detail": "M03-05-detail",
+      "rule": "M03-05-rule"
+    },
+    {
+      "id": "M03-06",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-06-name",
+      "detail": "M03-06-detail",
+      "rule": "M03-06-rule"
+    },
+    {
+      "id": "M03-07",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-07-name",
+      "detail": "M03-07-detail",
+      "rule": "M03-07-rule"
+    },
+    {
+      "id": "M03-08",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-08-name",
+      "detail": "M03-08-detail",
+      "rule": "M03-08-rule"
+    },
+    {
+      "id": "M03-09",
+      "domain": "coaching",
+      "subgroup": "M03 统一 AI 备赛教练",
+      "name": "M03-09-name",
+      "detail": "M03-09-detail",
+      "rule": "M03-09-rule"
+    },
+    {
+      "id": "M04-01",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-01-name",
+      "detail": "M04-01-detail",
+      "rule": "M04-01-rule"
+    },
+    {
+      "id": "M04-02",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-02-name",
+      "detail": "M04-02-detail",
+      "rule": "M04-02-rule"
+    },
+    {
+      "id": "M04-03",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-03-name",
+      "detail": "M04-03-detail",
+      "rule": "M04-03-rule"
+    },
+    {
+      "id": "M04-04",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-04-name",
+      "detail": "M04-04-detail",
+      "rule": "M04-04-rule"
+    },
+    {
+      "id": "M04-05",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-05-name",
+      "detail": "M04-05-detail",
+      "rule": "M04-05-rule"
+    },
+    {
+      "id": "M04-06",
+      "domain": "coaching",
+      "subgroup": "M04 生成物检视与修改审核",
+      "name": "M04-06-name",
+      "detail": "M04-06-detail",
+      "rule": "M04-06-rule"
+    },
+    {
+      "id": "M05-01",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-01-name",
+      "detail": "M05-01-detail",
+      "rule": "M05-01-rule"
+    },
+    {
+      "id": "M05-02",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-02-name",
+      "detail": "M05-02-detail",
+      "rule": "M05-02-rule"
+    },
+    {
+      "id": "M05-03",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-03-name",
+      "detail": "M05-03-detail",
+      "rule": "M05-03-rule"
+    },
+    {
+      "id": "M05-04",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-04-name",
+      "detail": "M05-04-detail",
+      "rule": "M05-04-rule"
+    },
+    {
+      "id": "M05-05",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-05-name",
+      "detail": "M05-05-detail",
+      "rule": "M05-05-rule"
+    },
+    {
+      "id": "M05-06",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-06-name",
+      "detail": "M05-06-detail",
+      "rule": "M05-06-rule"
+    },
+    {
+      "id": "M05-07",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-07-name",
+      "detail": "M05-07-detail",
+      "rule": "M05-07-rule"
+    },
+    {
+      "id": "M05-08",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-08-name",
+      "detail": "M05-08-detail",
+      "rule": "M05-08-rule"
+    },
+    {
+      "id": "M05-09",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-09-name",
+      "detail": "M05-09-detail",
+      "rule": "M05-09-rule"
+    },
+    {
+      "id": "M05-10",
+      "domain": "coaching",
+      "subgroup": "M05 全链路智能指导",
+      "name": "M05-10-name",
+      "detail": "M05-10-detail",
+      "rule": "M05-10-rule"
+    },
+    {
+      "id": "M06-01",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-01-name",
+      "detail": "M06-01-detail",
+      "rule": "M06-01-rule"
+    },
+    {
+      "id": "M06-02",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-02-name",
+      "detail": "M06-02-detail",
+      "rule": "M06-02-rule"
+    },
+    {
+      "id": "M06-03",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-03-name",
+      "detail": "M06-03-detail",
+      "rule": "M06-03-rule"
+    },
+    {
+      "id": "M06-04",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-04-name",
+      "detail": "M06-04-detail",
+      "rule": "M06-04-rule"
+    },
+    {
+      "id": "M06-05",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-05-name",
+      "detail": "M06-05-detail",
+      "rule": "M06-05-rule"
+    },
+    {
+      "id": "M06-06",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-06-name",
+      "detail": "M06-06-detail",
+      "rule": "M06-06-rule"
+    },
+    {
+      "id": "M06-07",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-07-name",
+      "detail": "M06-07-detail",
+      "rule": "M06-07-rule"
+    },
+    {
+      "id": "M06-08",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-08-name",
+      "detail": "M06-08-detail",
+      "rule": "M06-08-rule"
+    },
+    {
+      "id": "M06-09",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-09-name",
+      "detail": "M06-09-detail",
+      "rule": "M06-09-rule"
+    },
+    {
+      "id": "M06-10",
+      "domain": "coaching",
+      "subgroup": "M06 模拟评审与答辩训练",
+      "name": "M06-10-name",
+      "detail": "M06-10-detail",
+      "rule": "M06-10-rule"
+    },
+    {
+      "id": "M17-02",
+      "domain": "coaching",
+      "subgroup": "D02-S 诊断治理与反馈",
+      "name": "M17-02-name",
+      "detail": "M17-02-detail",
+      "rule": "M17-02-rule"
+    },
+    {
+      "id": "M17-05",
+      "domain": "coaching",
+      "subgroup": "D02-S 诊断治理与反馈",
+      "name": "M17-05-name",
+      "detail": "M17-05-detail",
+      "rule": "M17-05-rule"
+    },
+    {
+      "id": "M17-06",
+      "domain": "coaching",
+      "subgroup": "D02-S 诊断治理与反馈",
+      "name": "M17-06-name",
+      "detail": "M17-06-detail",
+      "rule": "M17-06-rule"
+    },
+    {
+      "id": "M09-01",
+      "domain": "mentoring",
+      "subgroup": "M09 常态化辅导与资源调度",
+      "name": "M09-01-name",
+      "detail": "M09-01-detail",
+      "rule": "M09-01-rule"
+    },
+    {
+      "id": "M09-02",
+      "domain": "mentoring",
+      "subgroup": "M09 常态化辅导与资源调度",
+      "name": "M09-02-name",
+      "detail": "M09-02-detail",
+      "rule": "M09-02-rule"
+    },
+    {
+      "id": "M09-03",
+      "domain": "mentoring",
+      "subgroup": "M09 常态化辅导与资源调度",
+      "name": "M09-03-name",
+      "detail": "M09-03-detail",
+      "rule": "M09-03-rule"
+    },
+    {
+      "id": "M09-04",
+      "domain": "mentoring",
+      "subgroup": "M09 常态化辅导与资源调度",
+      "name": "M09-04-name",
+      "detail": "M09-04-detail",
+      "rule": "M09-04-rule"
+    },
+    {
+      "id": "M09-05",
+      "domain": "mentoring",
+      "subgroup": "M09 常态化辅导与资源调度",
+      "name": "M09-05-name",
+      "detail": "M09-05-detail",
+      "rule": "M09-05-rule"
+    },
+    {
+      "id": "M10-01",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-01-name",
+      "detail": "M10-01-detail",
+      "rule": "M10-01-rule"
+    },
+    {
+      "id": "M10-02",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-02-name",
+      "detail": "M10-02-detail",
+      "rule": "M10-02-rule"
+    },
+    {
+      "id": "M10-03",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-03-name",
+      "detail": "M10-03-detail",
+      "rule": "M10-03-rule"
+    },
+    {
+      "id": "M10-04",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-04-name",
+      "detail": "M10-04-detail",
+      "rule": "M10-04-rule"
+    },
+    {
+      "id": "M10-05",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-05-name",
+      "detail": "M10-05-detail",
+      "rule": "M10-05-rule"
+    },
+    {
+      "id": "M10-06",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-06-name",
+      "detail": "M10-06-detail",
+      "rule": "M10-06-rule"
+    },
+    {
+      "id": "M10-07",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-07-name",
+      "detail": "M10-07-detail",
+      "rule": "M10-07-rule"
+    },
+    {
+      "id": "M10-08",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-08-name",
+      "detail": "M10-08-detail",
+      "rule": "M10-08-rule"
+    },
+    {
+      "id": "M10-09",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-09-name",
+      "detail": "M10-09-detail",
+      "rule": "M10-09-rule"
+    },
+    {
+      "id": "M10-10",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-10-name",
+      "detail": "M10-10-detail",
+      "rule": "M10-10-rule"
+    },
+    {
+      "id": "M10-11",
+      "domain": "mentoring",
+      "subgroup": "M10 导师辅导资产与督导闭环",
+      "name": "M10-11-name",
+      "detail": "M10-11-detail",
+      "rule": "M10-11-rule"
+    },
+    {
+      "id": "M12-01",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-01-name",
+      "detail": "M12-01-detail",
+      "rule": "M12-01-rule"
+    },
+    {
+      "id": "M12-02",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-02-name",
+      "detail": "M12-02-detail",
+      "rule": "M12-02-rule"
+    },
+    {
+      "id": "M12-03",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-03-name",
+      "detail": "M12-03-detail",
+      "rule": "M12-03-rule"
+    },
+    {
+      "id": "M12-04",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-04-name",
+      "detail": "M12-04-detail",
+      "rule": "M12-04-rule"
+    },
+    {
+      "id": "M12-05",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-05-name",
+      "detail": "M12-05-detail",
+      "rule": "M12-05-rule"
+    },
+    {
+      "id": "M12-06",
+      "domain": "mentoring",
+      "subgroup": "M12 学校导师智库管理",
+      "name": "M12-06-name",
+      "detail": "M12-06-detail",
+      "rule": "M12-06-rule"
+    },
+    {
+      "id": "M15-01",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-01-name",
+      "detail": "M15-01-detail",
+      "rule": "M15-01-rule"
+    },
+    {
+      "id": "M15-02",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-02-name",
+      "detail": "M15-02-detail",
+      "rule": "M15-02-rule"
+    },
+    {
+      "id": "M15-03",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-03-name",
+      "detail": "M15-03-detail",
+      "rule": "M15-03-rule"
+    },
+    {
+      "id": "M15-04",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-04-name",
+      "detail": "M15-04-detail",
+      "rule": "M15-04-rule"
+    },
+    {
+      "id": "M15-05",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-05-name",
+      "detail": "M15-05-detail",
+      "rule": "M15-05-rule"
+    },
+    {
+      "id": "M15-06",
+      "domain": "mentoring",
+      "subgroup": "M15 平台导师与跨校调度",
+      "name": "M15-06-name",
+      "detail": "M15-06-detail",
+      "rule": "M15-06-rule"
+    },
+    {
+      "id": "M08-01",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-01-name",
+      "detail": "M08-01-detail",
+      "rule": "M08-01-rule"
+    },
+    {
+      "id": "M08-02",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-02-name",
+      "detail": "M08-02-detail",
+      "rule": "M08-02-rule"
+    },
+    {
+      "id": "M08-03",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-03-name",
+      "detail": "M08-03-detail",
+      "rule": "M08-03-rule"
+    },
+    {
+      "id": "M08-04",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-04-name",
+      "detail": "M08-04-detail",
+      "rule": "M08-04-rule"
+    },
+    {
+      "id": "M08-05",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-05-name",
+      "detail": "M08-05-detail",
+      "rule": "M08-05-rule"
+    },
+    {
+      "id": "M08-06",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-06-name",
+      "detail": "M08-06-detail",
+      "rule": "M08-06-rule"
+    },
+    {
+      "id": "M08-07",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-07-name",
+      "detail": "M08-07-detail",
+      "rule": "M08-07-rule"
+    },
+    {
+      "id": "M08-08",
+      "domain": "competition",
+      "subgroup": "M08 项目导入与智能对标初筛",
+      "name": "M08-08-name",
+      "detail": "M08-08-detail",
+      "rule": "M08-08-rule"
+    },
+    {
+      "id": "M11-01",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-01-name",
+      "detail": "M11-01-detail",
+      "rule": "M11-01-rule"
+    },
+    {
+      "id": "M11-02",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-02-name",
+      "detail": "M11-02-detail",
+      "rule": "M11-02-rule"
+    },
+    {
+      "id": "M11-03",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-03-name",
+      "detail": "M11-03-detail",
+      "rule": "M11-03-rule"
+    },
+    {
+      "id": "M11-04",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-04-name",
+      "detail": "M11-04-detail",
+      "rule": "M11-04-rule"
+    },
+    {
+      "id": "M11-05",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-05-name",
+      "detail": "M11-05-detail",
+      "rule": "M11-05-rule"
+    },
+    {
+      "id": "M11-06",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-06-name",
+      "detail": "M11-06-detail",
+      "rule": "M11-06-rule"
+    },
+    {
+      "id": "M11-07",
+      "domain": "competition",
+      "subgroup": "M11 学校驾驶舱与全流程追踪",
+      "name": "M11-07-name",
+      "detail": "M11-07-detail",
+      "rule": "M11-07-rule"
+    },
+    {
+      "id": "M14-01",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-01-name",
+      "detail": "M14-01-detail",
+      "rule": "M14-01-rule"
+    },
+    {
+      "id": "M14-02",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-02-name",
+      "detail": "M14-02-detail",
+      "rule": "M14-02-rule"
+    },
+    {
+      "id": "M14-03",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-03-name",
+      "detail": "M14-03-detail",
+      "rule": "M14-03-rule"
+    },
+    {
+      "id": "M14-04",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-04-name",
+      "detail": "M14-04-detail",
+      "rule": "M14-04-rule"
+    },
+    {
+      "id": "M14-05",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-05-name",
+      "detail": "M14-05-detail",
+      "rule": "M14-05-rule"
+    },
+    {
+      "id": "M14-06",
+      "domain": "knowledge",
+      "subgroup": "M14 校本知识库管理",
+      "name": "M14-06-name",
+      "detail": "M14-06-detail",
+      "rule": "M14-06-rule"
+    },
+    {
+      "id": "M16-01",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-01-name",
+      "detail": "M16-01-detail",
+      "rule": "M16-01-rule"
+    },
+    {
+      "id": "M16-02",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-02-name",
+      "detail": "M16-02-detail",
+      "rule": "M16-02-rule"
+    },
+    {
+      "id": "M16-03",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-03-name",
+      "detail": "M16-03-detail",
+      "rule": "M16-03-rule"
+    },
+    {
+      "id": "M16-04",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-04-name",
+      "detail": "M16-04-detail",
+      "rule": "M16-04-rule"
+    },
+    {
+      "id": "M16-05",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-05-name",
+      "detail": "M16-05-detail",
+      "rule": "M16-05-rule"
+    },
+    {
+      "id": "M16-06",
+      "domain": "knowledge",
+      "subgroup": "M16 平台赛事知识与规则管理",
+      "name": "M16-06-name",
+      "detail": "M16-06-detail",
+      "rule": "M16-06-rule"
+    },
+    {
+      "id": "M17-03",
+      "domain": "knowledge",
+      "subgroup": "D05-S 案例与专家经验",
+      "name": "M17-03-name",
+      "detail": "M17-03-detail",
+      "rule": "M17-03-rule"
+    },
+    {
+      "id": "M17-04",
+      "domain": "knowledge",
+      "subgroup": "D05-S 案例与专家经验",
+      "name": "M17-04-name",
+      "detail": "M17-04-detail",
+      "rule": "M17-04-rule"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+export type TextBlock={id:string;text:string};
+export type Feature={id:string;domain:string;subgroup:string;scope?:string;name:string;detail:string;rule:string};
+export type ChapterItem={type:string;blockId?:string;level?:number;domain?:string|null;bullet?:boolean;rows?:string[][];ids?:string[];subgroup?:string};
+export type ReviewDocument={title:string;version:string;baseline:string;groups:{id:string;code:string;name:string;key:string;summary:string;owns:string;boundary:string;interfaces:string;count:number}[];chapters:{id:string;title:string;titleBlockId?:string;items:ChapterItem[]}[];blocks:Record<string,TextBlock>;features:Feature[]};
+export type Person={id:string;name:string};
+export type Edit={blockId:string;text:string;version:number;authorId:string;updatedAt:string};
+export type Review={featureId:string;userId:string;status:'approved'|'issue'|'pending';note:string;contentHash:string;updatedAt:string};
+export type Anchor={blockId:string;start:number;end:number;quote:string;prefix:string;suffix:string;version:number};
+export type Comment={id:string;parentId:string|null;featureId:string|null;authorId:string;body:string;anchors:Anchor[];resolved:boolean;resolvedBy:string|null;createdAt:string;updatedAt:string};
+export type Revision={id:string;blockId:string;authorId:string;beforeText:string;afterText:string;version:number;createdAt:string};
+export type ReviewState={people:Person[];edits:Edit[];reviews:Review[];comments:Comment[];revisions:Revision[]};

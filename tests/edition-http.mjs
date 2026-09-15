@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const base=process.env.REVIEW_TEST_ORIGIN||'http://localhost:5173';
+if(!['localhost','127.0.0.1'].includes(new URL(base).hostname))throw new Error('Local database only');
+const passcode=readFileSync('.env','utf8').split('\n').find(l=>l.startsWith('TEAM_PASSCODE='))?.slice(14);
+let cookie='',passed=0;
+async function api(path,body){const r=await fetch(base+path,{method:body?'POST':'GET',headers:{Cookie:cookie,Origin:base,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});if(r.ok&&r.headers.has('set-cookie'))cookie=r.headers.get('set-cookie').split(';')[0];return {status:r.status,data:await r.json()};}
+function check(v,label){assert.ok(v,label);passed++;console.log('PASS '+label);}
+const hash=s=>{let h=14695981039346656037n;for(let i=0;i<s.length;i++){h^=BigInt(s.charCodeAt(i));h=BigInt.asUintN(64,h*1099511628211n);}return h.toString(16);};
+check((await api('/api/release')).status===401,'台账须登录');
+check((await api('/api/document?edition=v2')).status===401,'V2 正文须登录');
+check((await api('/api/session',{name:'版本隔离验证-'+Date.now().toString(36),passcode})).status===200,'本地验证成员登录');
+const original=(await api('/api/review')).data,doc=(await api('/api/document?edition=v2')).data,release=(await api('/api/release')).data;
+check(doc.version.startsWith('V2')&&doc.features.length===122,'V2 独立文档完整');
+check((await api('/api/document?edition=missing')).status===400,'拒绝未知版本');
+check(!release.document&&release.entries.length===86&&release.entries.filter(e=>e.hasContent).length===57,'台账完整且接口不重复传输正文');
+check(new Set(release.entries.map(e=>e.id)).size===86&&new Set(release.entries.map(e=>e.authorId)).size===5,'条目唯一且保留五位署名');
+const blockChapters=new Map();for(const c of doc.chapters){if(c.titleBlockId)blockChapters.set(c.titleBlockId,c.id);for(const it of c.items){if(it.blockId)blockChapters.set(it.blockId,c.id);for(const row of it.rows??[])for(const id of row)blockChapters.set(id,c.id);for(const id of it.ids??[]){const f=doc.features.find(f=>f.id===id);for(const cell of [f.name,f.detail,f.rule])blockChapters.set(cell,c.id);}}}
+check(release.entries.every(e=>e.targets.length&&e.targets.every(t=>doc.blocks[t.blockId]?.text===t.text&&blockChapters.get(t.blockId)===t.chapterId)),'所有台账正文锚点和章节有效');
+const f=doc.features[0];let v2=(await api('/api/review?edition=v2')).data;
+const current=id=>v2.edits.find(e=>e.blockId===id)?.text??doc.blocks[id].text;
+const fh=()=>hash([f.name,f.detail,f.rule].map(current).join('\u0000'));
+check((await api('/api/review?edition=v2',{op:'review',featureId:f.id,status:'approved',note:'版本隔离测试',contentHash:fh()})).status===200,'V2 可独立逐项确认');
+let comment=await api('/api/review?edition=v2',{op:'comment',featureId:f.id,body:'V2 隔离讨论 '+Date.now()});
+check(comment.status===200,'V2 讨论写入');const root=comment.data.comments.at(-1);
+check((await api('/api/review',{op:'comment',parentId:root.id,body:'跨版本回复'})).status===403,'阻止旧版向 V2 回复');
+check((await api('/api/review',{op:'resolve',id:root.id,resolved:true})).status===403,'阻止旧版解决 V2 讨论');
+check((await api('/api/review',{op:'comment-edit',id:root.id,body:'跨版本修改'})).status===403,'阻止旧版修改 V2 评论');
+check((await api('/api/review?edition=v2',{op:'comment',parentId:root.id,body:'同版回复'})).status===200,'V2 同版回复可见');
+const id=f.detail,before=current(id),version=v2.edits.find(e=>e.blockId===id)?.version??0,oldHash=fh();
+const anchor={blockId:id,start:0,end:5,quote:before.slice(0,5),prefix:'',suffix:before.slice(5,45),version};
+check((await api('/api/review?edition=v2',{op:'comment',anchors:[anchor],body:'V2 划线隔离'})).status===200,'V2 全文划线保存');
+check((await api('/api/review?edition=v2',{op:'edit',blockId:id,baseVersion:version,text:before+'\n本地版本验证。'})).status===200,'V2 正文修订');
+check((await api('/api/review?edition=v2',{op:'edit',blockId:id,baseVersion:version,text:before+'过期'})).status===409,'V2 过期修订拒绝');
+check((await api('/api/review?edition=v2',{op:'review',featureId:f.id,status:'approved',note:'',contentHash:oldHash})).status===409,'V2 修订后旧确认拒绝');
+v2=(await api('/api/review?edition=v2')).data;
+check(v2.edits.find(e=>e.blockId===id)?.text===before+'\n本地版本验证。'&&v2.revisions.some(r=>r.blockId===id&&r.beforeText===before),'V2 修订前后原文可追踪');
+check(v2.comments.some(c=>c.id===root.id)&&v2.comments.some(c=>c.parentId===root.id),'V2 根讨论和回复完整');
+check(JSON.stringify((await api('/api/review')).data)===JSON.stringify(original),'所有 V2 写入均未改变原版记录');
+check(!v2.edits.some(e=>e.blockId.startsWith('v2::'))&&!v2.comments.some(c=>c.anchors.some(a=>a.blockId.startsWith('v2::'))),'前端接收公共锚点编号');
+console.log(JSON.stringify({passed,database:'local only'}));

@@ -1,0 +1,13 @@
+import {spawn} from 'node:child_process';
+import {existsSync} from 'node:fs';
+import {loadConfig,checkConfig} from './config.mjs';
+import {initializeDatabase} from './database.mjs';
+const path=loadConfig();checkConfig();console.log(JSON.stringify(initializeDatabase(path)));
+const dev=process.argv.includes('--dev');
+const standalone=dev?null:(process.env.STANDALONE_SERVER||'.next/standalone/server.js');
+const args=standalone?[standalone]:['node_modules/next/dist/bin/next',dev?'dev':'start',...(dev?['--webpack']:[]),'-p',process.env.PORT||'3000','-H',process.env.HOSTNAME_BIND||'0.0.0.0'];
+if(standalone&&!existsSync(standalone))throw new Error('standalone server.js 不存在。');
+const child=spawn(process.execPath,args,{stdio:'inherit',env:{...process.env,DATABASE_PATH:path,NEXT_TELEMETRY_DISABLED:'1',HOSTNAME:process.env.HOSTNAME_BIND||'0.0.0.0'}});
+for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>child.kill(signal));
+child.on('error',e=>{console.error(e.message);process.exitCode=1;});
+child.on('exit',code=>process.exit(code??0));

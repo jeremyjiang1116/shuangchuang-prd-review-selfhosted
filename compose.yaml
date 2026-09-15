@@ -1,0 +1,23 @@
+services:
+  app:
+    image: shuangchuang-prd-review:2.0.0
+    build:
+      context: .
+      args:
+        NODE_IMAGE: ${NODE_IMAGE:-node:24-bookworm-slim}
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      DATABASE_PATH: /app/data/review.sqlite
+      PORT: "3000"
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:3000:3000"
+    volumes:
+      - review_data:/app/data
+      - review_backups:/app/backups
+    stop_grace_period: 30s
+volumes:
+  review_data:
+  review_backups:
